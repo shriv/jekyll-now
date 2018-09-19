@@ -445,7 +445,7 @@ The route between the nodes uses the edges (streets and roads) of the spatial ne
 The following example looks at the distance and route between two Z stations: Z Kilbernie and Z Vivian St. The red line in the figure is the shortest route that connects the two stations. From the street shapes, you can see that the route is wending it's way around Evans Bay and Basin Reserve, before entering the central city street grid. This route has a distance of 4.6 km - a value that corresponds quite closely to that given by [Google Maps](https://bit.ly/2Mvjr0L). 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_29_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_29_0.png)
 
 
 
@@ -459,7 +459,7 @@ The following example looks at the distance and route between two Z stations: Z 
  In the toy example, I only downloaded the street network within a 5km radius of Z Kilbirnie. For the main analysis though, we want all the streets and roads within the defined bounding box. The updated figure now shows the route between Z Kilbirnie and Z Vivian St overlayed on all the roads in the Wellington + Lower Hutt bounding box.  
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_31_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_31_0.png)
 
 
 
@@ -552,7 +552,7 @@ The procedure is to first calculate the route and distance between all possible 
 Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A plot of the results shows that we have an asymmetric distribution of distances. A significant number clustered around 2km but also some which are more than twice the distance away. The average (both mean and median) inter-station separation is just over 2km 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_35_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_35_0.png)
 
 
 # Analysis: Number of neighbours for Z stations
@@ -571,7 +571,7 @@ We can visualise the network structure of the simpler, recast data. Some interes
 - The connectivity of the Wellington City cluster reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt. 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_39_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_39_0.png)
 
 
 The explicit connectivity of each Z station is given by a metric called 'degree' in network analysis. The degree distribution is useful for understanding characteristics of structure in larger &/ complex networks. Here, it's simply useful to use the node degree to understand the highly connected / central Z stations. As expected, these stations are the ones in the city centre: Z Harboour City, Z Vivian St, Z Taranaki Street.   
@@ -705,7 +705,7 @@ The interconnectivity network for BP shares some similar characteristics to the 
 All these points indicate that while Z and BP cover similar areas of Wellington, *Z is better represented in Wellington City while BP dominates in Lower Hutt*. It would be very interesting to see if revenue per station is signficantly different for a Z station in Wellington City vs. Lower Hutt.  
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_48_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_48_0.png)
 
 
 Because the Z station network was a loosely connected network with two strongly connected clusters, we could calculate the average degree per cluster, with little loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network. 
@@ -717,7 +717,7 @@ The physical coverage of Z vs. BP stations using the inter-station separation co
 From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_51_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_51_0.png)
 
 
     Average (mean) inter-station distances:
@@ -1068,11 +1068,11 @@ The accessibility heatmaps indicate that both Z and BP have reasonable coverage 
 The northern peripheries of the map (e.g. Taita north on the Lower Hutt side and Churton Park north on the Porirua side are not be considered in this analysis as we're missing the complete fuel station data for these areas. 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_64_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_64_0.png)
 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_65_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_65_0.png)
 
 
 The points made in the above section can be seen more clearly with differences between Z and BP accessibility. Since the accessibility analysis uses the same nodes for both stations, we can calculate a differential value of BP accessibility from Z acessibility: Z accessibibiity - BP accessibility. In other words, 
@@ -1086,7 +1086,7 @@ A summary of the differential heatmap colours:
 - Yellow tones indicate good coverage for both stations (i.e. equivalent distance to both Z and BP station). 
 
 
-![png](Fuel%20Stations%20Analysis_files/Fuel%20Stations%20Analysis_67_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_67_0.png)
 
 
 The convenience of the common accessibility nodes can help us approximate an average accessibility to a Z / BP station for the Wellington region. The histograms plot the distance to the nearest Z / BP station. The mean and median show two quite interesting points:
