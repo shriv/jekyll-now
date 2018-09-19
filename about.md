@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
-
-### More Information
-
-A place to include any other types of information that you'd like to include about yourself.
+I'm an ex-academic turned Data Scientist - pretty run of the mill stuff! I'm based in Aotearoa (*land of the long white cloud*, a.k.a New Zealand).  
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[ravi.shrividya@gmail.com](mailto:ravi.shrividya@gmail.com)
