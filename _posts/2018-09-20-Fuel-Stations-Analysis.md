@@ -1,26 +1,3 @@
-
-
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
- 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/main.css">
-
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<script src="https://rawgit.com/ipython-contrib/jupyter_contrib_nbextensions/master/src/jupyter_contrib_nbextensions/nbextensions/toc2/toc2.js"></script>
-
-<script>
-$( document ).ready(function(){
-
-            var cfg = {"base_numbering": 1, "nav_menu": {"height": "0px", "width": "298px"}, "number_sections": true, "sideBar": true, "skip_h1_title": false, "title_cell": "Table of Contents", "title_sidebar": "Contents", "toc_cell": false, "toc_position": {"height": "calc(100% - 180px)", "left": "10px", "top": "150px", "width": "344px"}, "toc_section_display": true, "toc_window_display": true};
-
-            // fire the main function with these parameters
-            require(['nbextensions/toc2/toc2'], function (toc2) {
-                toc2.table_of_contents(cfg);
-            });
-    });
-</script>
 # Introduction
 This report showcases a preliminary set of possibilities that explore the concept of 'value in the fuel station network' for Z. The definition of 'Value' is given as the importance, worth, or usefulness of something. In the case of a fuel station network, we can break down its *usefulness* to some high level aspects:
 
@@ -229,7 +206,6 @@ Getting data from Open Street Map is fairly simple via the Overpass API. All you
 </div>
 
 
-
 ## Get Fuel Stations
 The data downloaded from OSM (via Overpass) includes _all_ nodes and ways tagged as 'fuel'. The brand of the fuel station can be be used to filter for station-specific analysis. In NZ, there are 4 retailer brands: Z, Caltex, BP and Mobil. Since the merger in 2016, Z and Caltex can be regarded as two brands from a single entity. Additional details of brand coverage [here](https://www.greaterauckland.org.nz/2016/06/09/petrol-station-shakeup/). In this preliminary version of the analysis, I've only include the explicit Z branded fuel stations. For a more general analysis of the Z *entity*, we'd also need to include the Caltex branded fuel stations. 
 
@@ -238,7 +214,7 @@ We can query the Wellington fuel stations dataset to only get those that are ass
 - Inconsistency between the operator and brand attributes. 
 - No geolocation for some stations. 
 
-![](assets/ways_without_geoloc.png)
+![]({{ site.baseurl }}/images/ways_without_geoloc.png)
 
 The key problem with the data is that a significant portion of the stations don't have location coordinates. This problem, unfortunately stems from the two main types of OSM topological entities: ways and nodes. Depending on how a user marks out the location of a fuel station, the entity can be either a way or a node. 
 
@@ -247,8 +223,6 @@ The key problem with the data is that a significant portion of the stations don'
 
 ### Resolving data issues
 Since the underlying problem is a data issue, we can add / edit the data ourselves. You can sign up and verify your email as an OSM editor - quite easy to do. Once I got the permission to edit OSM, I simply went in and added / updated the nodes for the Z fuel stations. Later, I also updated the BP and Mobil stations in the Wellington bounding box used for the analysis. The corrected list of Z stations is now at parity with the Z website. 
-
-
 
 
 <div>
