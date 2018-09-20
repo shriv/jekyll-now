@@ -109,7 +109,7 @@ A key technical point is that [bounding box conventions do vary](https://wiki.op
 - The general definition uses (min Longitude , min Latitude , max Longitude , max Latitude), or  (W, S, E, N) 
 - Pandana and Overpass use (S, W, N, E).
 
-![]({{ site.baseurl }}/images/2018-09-20-Fuel-Station-Analysis/bounding_box_selection.png)
+![]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/bounding_box_selection.png)
 
 
 ## Create Query
@@ -221,7 +221,7 @@ We can query the Wellington fuel stations dataset to only get those that are ass
 - Inconsistency between the operator and brand attributes. 
 - No geolocation for some stations. 
 
-![]({{ site.baseurl }}/images/2018-09-20-Fuel-Station-Analysis/ways_without_geoloc.png)
+![]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/ways_without_geoloc.png)
 
 The key problem with the data is that a significant portion of the stations don't have location coordinates. This problem, unfortunately stems from the two main types of OSM topological entities: ways and nodes. Depending on how a user marks out the location of a fuel station, the entity can be either a way or a node. 
 

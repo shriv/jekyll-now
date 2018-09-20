@@ -32,7 +32,7 @@ The northern peripheries of the map (e.g. Taita north on the Lower Hutt side and
 
 Accessibility to Z         |  Accessibility to BP
 :-------------------------:|:-------------------------:
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Station-Analysis/Fuel%20Stations%20Analysis_64_0.png) |  ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Station-Analysis/Fuel%20Stations%20Analysis_65_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_64_0.png) |  ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_65_0.png)
 
 
 
@@ -46,7 +46,7 @@ A summary of the differential heatmap colours:
 - Blue and green indicate better Z coverage (i.e. Z station is closer).
 - Yellow tones indicate good coverage for both stations (i.e. equivalent distance to both Z and BP station). 
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Station-Analysis/Fuel%20Stations%20Analysis_67_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel%20Stations%20Analysis_67_0.png)
 
 The convenience of the common accessibility nodes can help us approximate an average accessibility to a Z / BP station for the Wellington region. The histograms plot the distance to the nearest Z / BP station. The mean and median show two quite interesting points:
 - There are more nodes that are more than 5km from a Z station. These "inaccessible" nodes increase the mean accessibility to a Z station for the region. The difference in the mean accessibility of Z and BP are fairly close.  Z stations are only closer by 100 m. 
