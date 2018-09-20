@@ -1,7 +1,7 @@
-# Recap of Parts 1 & 2
+The previous two parts [Part 1](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/) and [Part 2](https://shriv.github.io/Fuel-Stations-Analysis-Part-2/) retrieved open spatial data for plotting onto a map from OpenStreetMap; and abstracted spatial networks to networks for connectivity analyses.
 
 # Accessibility analysis
-The above analyses only consider the fuel stations and quantify implicit interactions (via road distance) between them. But we get the real benefit of spatial analyses when we consider interactions between the fuel stations and other entities - from humans to other businesses. One type of interaction with general entities is accessibility. Simple accessibility analyses convert the base geography of the region into a point grid, and compute distances between every point and the POIS. 
+The previous analyses have only considered the fuel stations and quantify implicit interactions (via road distance) between them. But we get the real benefit of spatial analyses when we consider interactions between the fuel stations and other entities - from humans to other businesses. One type of interaction with general entities is accessibility. Simple accessibility analyses convert the base geography of the region into a point grid, and compute distances between every point and the POIS. 
 
 Accessibility is a core analysis in urban planning. Some examples [here](https://www.slideshare.net/DimkaG/transitaccess-27460698). There are even tools which score regions with scores based on accessibility
 e.g. [WalkScore](https://www.walkscore.com/). 

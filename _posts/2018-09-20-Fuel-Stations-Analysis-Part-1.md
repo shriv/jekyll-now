@@ -1,50 +1,60 @@
-# Introduction
-This report showcases a preliminary set of possibilities that explore the concept of 'value in the fuel station network' for Z. The definition of 'Value' is given as the importance, worth, or usefulness of something. In the case of a fuel station network, we can break down its *usefulness* to some high level aspects:
+> Journeys begin with a question
+> How we can measure value derived from spatial placement? 
 
-- Fuel station locations 
-    - coverage
+This question ended up on my lap and my fascination with figuring out how to answer it led me down the exciting field of urban data science! Read on..
 
-- Interactions of fuel stations with the environment
-    - With Humans: accessibility, convenience
-    - With Other entities (e.g. amenities like cafes, cinema theatres etc.): locale
-
-- Fuel station characteristics
-    - Available amenities (e.g. toilets, fuel types, food etc.) - supply
-    - Uptake of availabile amenities (i.e. higher scores for amenities that are used more) - where supply meets demand
-
-To make concrete comparisons, we need to further break down these high level aspects into proxy metrics, or quantitative analyses. Metrics provide simplistic, single number comparisons while quantitative analyses generate a more complex picture. For example, we can describe coverage with the following metrics:
+The question of value from amenities is an important one for the private and public sector alike. In this short series, I'll be comparing two brands of fuel station networks that are well represented in Wellington, New Zealand: Z and BP.
 
 
-Metric | Definition
---- | ---
-Density| stations per unit area
-Average spatial separation | typical distance between any two Z stations
-Station connectivity | # of Z stations within a particular driving radius
-
-
-Quantitative analyses of coverage include:
-- Nearest neighbours of Z stations
-    - The subset with competitor stations as their closest neighbours can be used to identify zones / regions with some degree of poaching by the competitor.
-- Using the number of neighbours within a radius to identify the "important" / "centrally" located stations.
-
-## Report Overview
-The focus of this report is mainly on the *Coverage* aspect of fuel station value. A natural business question is:
+Since data science is about delivering value to some entity, a natural business question we can track throughout the analyses is:
 > *Does Z have better coverage than their competitor(s) in Wellington? If so, how?*
 
-The 'how' will involve an analysis of:
-- Average spatial separation between two fuel stations
-- Station connectivity
-- Nearest neighbour fuel stations: same brand or competitor 
-- Driving accessibility 
 
-The main competitor used for comparison is BP. The report will also include details of acquiring and cleaning spatial data. 
+# Setting the metric scene
+We can approximate value as *usefulness*. For fuel station networks, usefulness can be broken down to some high level aspects:
 
-## Resources
+- Fuel station locations 
+-- Coverage
+
+- Interactions of fuel stations with the environment
+-- With Humans: accessibility, convenience
+-- With Other entities (e.g. amenities like cafes, cinema theatres etc.): locale
+
+- Fuel station characteristics
+-- Available amenities (e.g. toilets, fuel types, food etc.) - supply
+-- Uptake of availabile amenities (i.e. higher scores for amenities that are used more) - where supply meets demand
+
+To make concrete comparisons between competing fuel station brands, we need to break down the high level aspects into proxy metrics, or quantitative analyses.
+
+- Coverage
+-- Structure of fuel station inter-connectivity
+-- Average spatial separation between two fuel stations
+-- Nearest neighbours: same brand or competitor? 
+- Interactions with the 'human' environment
+-- Driving accessibility 
+
+The above analyses are split into 3 posts since the entirity is almost unreadable:
+
+- Part 1 (this post)
+-- Introduction to spatial data
+-- Getting fuel station data from OpenStreetMap
+
+- Part 2
+-- Abstracting spatial networks into networks
+-- Calculating inter-connectivity metrics 
+
+- Part 3
+-- Driving accessibility analysis
+
+# Resources
 I've used studies from urban data science as inspiration. Some resources I've consulted include:
 - [Talk on Urban Data Science by Dr. Cecilia Mascolo](https://www.youtube.com/watch?v=eNpdvzORWVc&t=2162s)
 - [Understanding Traffic with Open Data by researchers at Oxford Internet Institute](https://www.youtube.com/watch?v=0GM0sEvQ2-M)
 - [Geoff Boening's blog - especially his package OSMnx](https://geoffboeing.com/2016/11/osmnx-python-street-networks/)
 - [Proximity and accessibility analyses with Pandana](https://github.com/gboeing/urban-data-science/blob/master/20-Accessibility-Walkability/pandana-accessibility-demo-full.ipynb)
+
+The code and formalised report of the analysis can be found in a [github repo](https://github.com/shriv/fuel-stations). The text is almost identical to the blog posts.
+
 
 # Introduction to Spatial data
 Spatial data includes geographical information for physical entities in our world. Since we're focusing on man-made entities like fuel stations, the simplest geographical information we require is geolocation. This information can be enriched with attributes that describe local geography - derived from the surrounding environment.    

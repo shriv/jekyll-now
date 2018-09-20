@@ -1,8 +1,11 @@
-# Recap
+In the previous section, we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. Our goal is to understand the usefulness of the fuel station spatial network. Before this, we can abstract the spatial network into a network. This abstraction allows us to measure and visualise network structure with fairly simple methodology.
+
+Constructing the abstract network requires generation of the connecting edges between fuel stations. Since we're reducing a spatial network, distancea  is a sensible edge metric. In particular, we'd want to know about the distance of the best route between the fuel stations. We build up the abstract network in two steps:
+- First, fuel station nodes connected by the best route.
+- And a further reduction to fuel station nodes connected by the *distance* of the best route. 
+
 
 # Introduction to street network analysis
-Having geolocation alone is not very useful beyond plotting points on a map. To know anything useful about the fuel station network, we need the roads connecting the fuel stations. In particular, we'd want to know about the best routes between the fuel stations. With this additional information, we have a trivial network structure: fuel station nodes connected by routes.
-
 The package, OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx), is a great package for doing network anlysis with street data. The underlying representation used by this package is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx. 
 
 With the OSMnx package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
