@@ -1,12 +1,12 @@
-Journeys begin with a curiousity question
+Journeys begin with a question. A chance discovery of an [excellent introduction and tutorial on urban modelling by Sir Alan Wilson](https://www.youtube.com/watch?v=Vb0CTAB4Ym4&t=4146s) led me to think about a more general proposition:  
 > How can we measure value derived from spatial placement of amenities? 
 
-This question landed on my lap through work, and my fascination with figuring out how to answer it led me to the exciting (and burgeoning!) field of urban data science. 
+The question of value from amenities is an important one for both the private and public sectors. The public sector might care about value derived from amending a bus route or, adding a new bridge / flyover. The private sector might care about value derived from a new supermarket - with questions around potential cannibalism of sales from nearby branches of the same brand to managing competition in the vicinity. The possibilities are extensive! But to keep this exploration tractable, I'll just be comparing two brands of fuel stations that are well represented in Wellington, New Zealand: *Z and BP*. 
+
+This series is an exploration of simple methods to identify and compare value derived from spatial placement. I'll be using some well-known spatial techniques (e.g. accessibility analysis) and some lesser used ones (network analysis to discern structure). 
 
 
 # Towards a business question
-
-The question of value from amenities is an important one for both the private and public sector. As an example, I'll be comparing two brands of *fuel station networks* that are well represented in Wellington, New Zealand: *Z and BP*.
 
 We can approximate value as *usefulness*. For fuel station networks, usefulness can be broken down into some high level aspects:
 
@@ -19,7 +19,7 @@ We can approximate value as *usefulness*. For fuel station networks, usefulness 
 
 - Fuel station characteristics
 -- Available amenities (e.g. toilets, fuel types, food etc.) - supply
--- Uptake of availabile amenities (i.e. higher scores for amenities that are used more) - where supply meets demand
+-- Uptake of availabile amenities (i.e. higher scores for amenities that are used more) - where supply meets
 
 To make concrete comparisons between competing fuel station brands, we need to break down the high level aspects into proxy metrics, or quantitative analyses.
 

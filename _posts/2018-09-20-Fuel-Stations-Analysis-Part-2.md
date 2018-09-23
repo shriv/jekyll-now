@@ -1,25 +1,27 @@
-In the previous section, we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. Our goal is to understand the usefulness of the fuel station spatial network. Before this, we can abstract the spatial network into a network. This abstraction allows us to measure and visualise network structure with fairly simple methodology.
+In the previous section, we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics. 
 
-Constructing the abstract network requires generation of the connecting edges between fuel stations. Since we're reducing a spatial network, distancea  is a sensible edge metric. In particular, we'd want to know about the distance of the best route between the fuel stations. We build up the abstract network in two steps:
-- First, fuel station nodes connected by the best route.
-- And a further reduction to fuel station nodes connected by the *distance* of the best route. 
+We build up the abstract network in 4 steps:
+- Calculate the best route / as the crow flies distance between every fuel station pair. 
+- Only consider fuel stations as nearest neighbout if within a certain distance (e.g. 10 km) 
+- Connect nearest neighbour neighbour stations with an edge; with weight equal to the distance.
+- Remove the geolocation property of the fuel stations.
+
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/constructing_spatial_network.png)
 
 
 # Introduction to street network analysis
-The package, OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx), is a great package for doing network anlysis with street data. The underlying representation used by this package is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx. 
+To construct the network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
 
-With the OSMnx package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
+The underlying representation used by OSMnx is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx. 
 
-The route between the nodes uses the edges (streets and roads) of the spatial network. The route calculation algorithm is an analogue of the [typical shortest path analyses done in network science](https://en.wikipedia.org/wiki/Shortest_path_problem). In a spatial network, the path length can be equated to distance. The base unit of length is metres. 
+The route between the nodes uses the edges (streets and roads) of the spatial network. The route calculation algorithm is an analogue of the [typical shortest path analyses done in network science](https://en.wikipedia.org/wiki/Shortest_path_problem). In our spatial network, the path length can be equated to distance. The base unit of length is metres. 
 
-## Toy Example: route between Z Kilbirnie and Z Vivian St
+## Simple example: route between Z Kilbirnie and Z Vivian St
 The following example looks at the distance and route between two Z stations: Z Kilbernie and Z Vivian St. The red line in the figure is the shortest route that connects the two stations. From the street shapes, you can see that the route is wending it's way around Evans Bay and Basin Reserve, before entering the central city street grid. This route has a distance of 4.6 km - a value that corresponds quite closely to that given by [Google Maps](https://bit.ly/2Mvjr0L). 
-
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_29_0.png)
 
-
-Text(0.5,1,'Shortest distance between Z Kilbirnie and Z Vivian St is 4577.443 m')
+*Shortest distance between Z Kilbirnie and Z Vivian St is 4577.443 m*
 
 
 ## Get street network for Wellington
@@ -28,7 +30,7 @@ Text(0.5,1,'Shortest distance between Z Kilbirnie and Z Vivian St is 4577.443 m'
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_31_0.png)
 
-Text(0.5,1,'Shortest distance between Z Kilbirnie and Z Vivian St is 4268.96 m')
+*Shortest distance between Z Kilbirnie and Z Vivian St is 4268.96 m*
 
 
 # Analysis: Average distance between Z stations in Wellington
@@ -234,17 +236,14 @@ The explicit connectivity of each Z station is given by a metric called 'degree'
 
 The average degree / connectivity for the Wellington City Z stations is much higher than Lower Hutt. The typical Z station in Wellington City is connected to 2 more Z stations than a typicsl Z station in Lower Hutt.   
 
-    Z stations in Wellington region have an average of 5.71 neighbours
-    Z stations in Wellington City have an average of 6.5 neighbours
-    Z stations in Lower Hutt have an average of 4.67 neighbours
+- Z stations in Wellington region have an average of 5.71 neighbours
+- Z stations in Wellington City have an average of 6.5 neighbours
+- Z stations in Lower Hutt have an average of 4.67 neighbours
 
 
 <a id='Competitor-Analysis'></a>
 # Competitor Analysis: Number of neighbours for BP stations
 The same network analysis can be done for a competitor. I chose BP, since it *seems* to have a similar coverage to Z in the Wellington region - extending in an arc from Wellington City to the Northern Suburbs to Hutt Valley. 
-
-
-
 
 The interconnectivity network for BP shares some similar characteristics to the Z network but also has some obvious differences. 
 - Wellington City and Lower Hutt clusters persist.
