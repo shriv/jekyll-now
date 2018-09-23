@@ -268,10 +268,9 @@ From this comparison, we can say that Z stations are better spread in the Wellin
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
 
-
-    Average (mean) inter-station distances:
-    - Z stations in Wellington are 2.412 km apart on average
-    - BP stations in Wellington are 3.125 km apart on average
+Average (mean) inter-station distances:
+- Z stations in Wellington are 2.412 km apart on average
+- BP stations in Wellington are 3.125 km apart on average
 
 
 # Analysis: Nearest neighbours in joint Z- BP fuel station network
@@ -354,9 +353,9 @@ For this analysis, we need to generate the shortest distances between all statio
 </div>
 
 
-> Out of 28 Z and BP stations, 19 are closest to a competitor and 9 are next to one of their own
-> Of the 9 stations next to their own, 8 are from Z
-> Of the 19 stations next to a competitor, 10 are from Z
+- Out of 28 Z and BP stations, 19 are closest to a competitor and 9 are next to one of their own
+- Of the 9 stations next to their own, 8 are from Z
+- Of the 19 stations next to a competitor, 10 are from Z
 
 
 <div>
