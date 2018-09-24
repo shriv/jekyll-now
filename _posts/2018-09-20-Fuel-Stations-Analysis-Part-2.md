@@ -3,11 +3,14 @@ In the previous section, we obtained and plotted locations of Z and BP stations 
 We build up the abstract network in 4 steps:
 - Get fuel stations in region
 -- Done in the previous post
+
 - Find nearest neighbours within radius, r
 -- Calculate the best route / as the crow flies distance between every fuel station pair. 
 -- Only consider fuel stations as nearest neighbout if within a certain radial distance (e.g. 10 km)
+
 - Connect nearest neighbours
 -- Connect nearest neighbour stations with an edge; with an edge weight equal to the distance.
+
 - Abstract to a network without geolocation
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/constructing_spatial_network.png)
@@ -44,10 +47,8 @@ The following example looks at the distance and route between two Z stations: Z 
 *Shortest distance between Z Kilbirnie and Z Vivian St is 4268.96 m*
 
 
-# Analysis: Average distance between Z stations in Wellington
-This first analysis builds on the toy example to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*. 
-
-The procedure is to first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from a bunch of Z stations to Z Broadway (in Strathmore). 
+# Average inter-station separation
+This first analysis builds on the toy example to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*. The procedure is to first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from a bunch of Z stations to Z Broadway (in Strathmore). 
 
 
 <div>
@@ -134,28 +135,37 @@ Average (mean) inter-station distances:
 
 
 # Abstract networks
-
-## Visualising the Z fuel station network
-The 13x13 table of pairwise distances can be used to analyse the number of neighbours for a Z station within a particular radius. For this analysis, I've recast the data into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
+The table of pairwise distances can be used to analyse the number of neighbours for a Z/BP station within a particular radius. For this analysis, I've recast the data into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
 
 The steps of the recasting are: 
-- Filter the 13x13 distances to only include separations less than or equal to 10km. This step would remove the connection between Z Broadway and Z Petone for example. 
-- Store the filtered distance matrix as a network data structure. This means:
-    - 13 Z stations become nodes
-    - Any Z station within 10km of each node becomes a connecting edge
-    - The distance value is stored as a weight. With shorter distances having a higher 'weight'
+
+- Filter the pairiwse distance table to only include separations less than or equal to 10km. This step would remove the connection between Z Broadway and Z Petone for example. 
+- Store the filtered distance table as a network data structure. This means:
+-- Stations become nodes
+-- Any node within 10km becomes a connecting edge
+-- The distance between the nodes is stored as a weight - with shorter distances having a higher 'weight'
 - Remove the geolocation information for the nodes
 
 We can visualise the network structure of the simpler, recast data. The weighted edges come in useful since closer nodes have thicker edges and are closer together than nodes that are further away. Some interesting insights include:
-- 2 clusters are apparent in the Z station network for Wellington: Wellington City and Lower Hutt. 
-- The Wellington City cluster is very tightly connected for the central and southern suburbs. 
-- The connectivity of the Wellington City cluster reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt. 
+- 2 components are apparent in the Z station network for Wellington: Wellington City and Lower Hutt. 
+- The Z Wellington City component is very tightly connected for the central and southern suburbs. 
+- The connectivity of the Z Wellington City component reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt. 
+- BP stations in the northern suburbs are a little better connected. 
+- The BP Wellington component is not as well connected as the Z station Wellington City component. 
+- The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z. 
 
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png)
+Z station network | BP station network
+-----------------:|:------------------
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png) | ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)
+
+All these points indicate that while Z and BP cover similar areas of Wellington, *Z is better represented in Wellington City while BP dominates in Lower Hutt*. It would be very interesting to see if revenue per station is signficantly different for a Z station in Wellington City vs. Lower Hutt.
 
 
-The explicit connectivity of each Z station is given by a metric called 'degree' in network analysis. The degree distribution is useful for understanding characteristics of structure in larger &/ complex networks. Here, it's simply useful to use the node degree to understand the highly connected / central Z stations. As expected, these stations are the ones in the city centre: Z Harboour City, Z Vivian St, Z Taranaki Street.   
+## Z Network analysis: degree
+Because the Z station network was a loosely connected network with two strongly connected components, we can calculate the average degree per component, without much loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network - so we can't analyse the BP components separately.. 
+
+The explicit connectivity of each Z station is given by a metric called 'degree' in network analysis. The degree distribution is useful for understanding characteristics of structure in larger &/ complex networks. Here, it's simply useful to use the node degree to understand the highly connected / central Z stations. As expected, these stations are the ones in the city centre: Z Harboour City, Z Vivian St, Z Taranaki Street.
 
 <div>
 <style scoped>
@@ -262,22 +272,7 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 - Z stations in Lower Hutt have an average of 4.67 neighbours
 
 
-## Visualising the BP fuel station network
-The interconnectivity network for BP shares some similar characteristics to the Z network but also has some obvious differences. 
-- Wellington City and Lower Hutt clusters persist.
-- The northern suburbs are a little better connected. 
-- The Wellington cluster is not as well connected as the Z station network. 
-- The Lower Hutt cluster for BP is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z. 
-
-All these points indicate that while Z and BP cover similar areas of Wellington, *Z is better represented in Wellington City while BP dominates in Lower Hutt*. It would be very interesting to see if revenue per station is signficantly different for a Z station in Wellington City vs. Lower Hutt.  
-
-
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)
-
-Because the Z station network was a loosely connected network with two strongly connected clusters, we could calculate the average degree per cluster, with little loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network. 
-
-
-# Analysis: Nearest neighbours in joint Z- BP fuel station network
+# Nearest neighbours of the joint Z- BP fuel station network
 
 A key characteristic of good coverage is location in relation to other entities - especially competitors. A franchise should ideally be placed close to its own rather than near a competitor. A simple set of comparative analyses that explore the type pf nearest neighbour include:
 - Seeing whether Z stations neighbour each other or a competitor
