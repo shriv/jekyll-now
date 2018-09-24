@@ -1,16 +1,27 @@
 In the previous section, we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics. 
 
 We build up the abstract network in 4 steps:
-- Calculate the best route / as the crow flies distance between every fuel station pair. 
-- Only consider fuel stations as nearest neighbout if within a certain distance (e.g. 10 km) 
-- Connect nearest neighbour neighbour stations with an edge; with weight equal to the distance.
-- Remove the geolocation property of the fuel stations.
+- Get fuel stations in region
+-- Done in the previous post
+- Find nearest neighbours within radius, r
+-- Calculate the best route / as the crow flies distance between every fuel station pair. 
+-- Only consider fuel stations as nearest neighbout if within a certain radial distance (e.g. 10 km)
+- Connect nearest neighbours
+-- Connect nearest neighbour stations with an edge; with an edge weight equal to the distance.
+- Abstract to a network without geolocation
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/constructing_spatial_network.png)
 
 
+We can think of the abstract network of a different data structure and this format allows for some novel characterisation of the fuel station coverage. The ones considered here are:
+- Average inter-station separation distance
+- Neighbour analysis: own brand / competitor
+
+These metrics quantify the interaction  between Z and BP fuel stations and they help build a picture of coverage.
+
+
 # Introduction to street network analysis
-To construct the network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
+To construct the abstract network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
 
 The underlying representation used by OSMnx is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx. 
 
@@ -110,12 +121,21 @@ The procedure is to first calculate the route and distance between all possible 
 </div>
 
 
-Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A plot of the results shows that we have an asymmetric distribution of distances. A significant number clustered around 2km but also some which are more than twice the distance away. The average (both mean and median) inter-station separation is just over 2km 
+Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A similar calculation can be performed for the BP station network. The physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric and indicative of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference in the two modes seems to be larger for BP.
+
+From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
 
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_35_0.png)
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
 
-# Analysis: Number of neighbours for Z stations
+Average (mean) inter-station distances:
+- Z stations in Wellington are 2.412 km apart on average
+- BP stations in Wellington are 3.125 km apart on average
+
+
+# Abstract networks
+
+## Visualising the Z fuel station network
 The 13x13 table of pairwise distances can be used to analyse the number of neighbours for a Z station within a particular radius. For this analysis, I've recast the data into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
 
 The steps of the recasting are: 
@@ -123,9 +143,10 @@ The steps of the recasting are:
 - Store the filtered distance matrix as a network data structure. This means:
     - 13 Z stations become nodes
     - Any Z station within 10km of each node becomes a connecting edge
-    - The distance value is stored as a weight. With shorter distances have a higher 'weight'
+    - The distance value is stored as a weight. With shorter distances having a higher 'weight'
+- Remove the geolocation information for the nodes
 
-We can visualise the network structure of the simpler, recast data. Some interesting insights include:
+We can visualise the network structure of the simpler, recast data. The weighted edges come in useful since closer nodes have thicker edges and are closer together than nodes that are further away. Some interesting insights include:
 - 2 clusters are apparent in the Z station network for Wellington: Wellington City and Lower Hutt. 
 - The Wellington City cluster is very tightly connected for the central and southern suburbs. 
 - The connectivity of the Wellington City cluster reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt. 
@@ -241,10 +262,7 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 - Z stations in Lower Hutt have an average of 4.67 neighbours
 
 
-<a id='Competitor-Analysis'></a>
-# Competitor Analysis: Number of neighbours for BP stations
-The same network analysis can be done for a competitor. I chose BP, since it *seems* to have a similar coverage to Z in the Wellington region - extending in an arc from Wellington City to the Northern Suburbs to Hutt Valley. 
-
+## Visualising the BP fuel station network
 The interconnectivity network for BP shares some similar characteristics to the Z network but also has some obvious differences. 
 - Wellington City and Lower Hutt clusters persist.
 - The northern suburbs are a little better connected. 
@@ -256,21 +274,7 @@ All these points indicate that while Z and BP cover similar areas of Wellington,
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)
 
-
 Because the Z station network was a loosely connected network with two strongly connected clusters, we could calculate the average degree per cluster, with little loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network. 
-
-# Competitor Analysis: Average distance between stations (Z vs. BP)
-
-The physical coverage of Z vs. BP stations using the inter-station separation continues to show the asymmetric distribution of separations. The key difference is that some BP stations are *much* better connected than others. The effect is more noticeable than for Z.
-
-From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
-
-
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
-
-Average (mean) inter-station distances:
-- Z stations in Wellington are 2.412 km apart on average
-- BP stations in Wellington are 3.125 km apart on average
 
 
 # Analysis: Nearest neighbours in joint Z- BP fuel station network
