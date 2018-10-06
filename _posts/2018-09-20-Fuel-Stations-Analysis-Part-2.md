@@ -258,7 +258,7 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 - Z stations in Wellington City have an average of 6.5 neighbours
 - Z stations in Lower Hutt have an average of 4.67 neighbours
 
-# Nearest neighbours: Average inter-station separation
+# Nearest neighbours: Inter-station separation
 We can further reduce the pairwise distance matrix to the closest neighbour per statiion to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*.
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
