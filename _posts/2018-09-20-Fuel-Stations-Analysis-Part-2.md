@@ -258,26 +258,27 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 - Z stations in Wellington City have an average of 6.5 neighbours
 - Z stations in Lower Hutt have an average of 4.67 neighbours
 
-# Average inter-station separation
-This first analysis builds on the toy example to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*. Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A similar calculation can be performed for the BP station network. The physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric and indicative of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference in the two modes seems to be larger for BP.
-
-From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
-
+# Nearest neighbours: Average inter-station separation
+We can further reduce the pairwise distance matrix to the closest neighbour per statiion to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*.
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
+
+The plots show that the physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric. There is also some indication of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference between the two modes seems to be larger for BP.
+
+From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
 
 Average (mean) inter-station distances:
 - Z stations in Wellington are 2.412 km apart on average
 - BP stations in Wellington are 3.125 km apart on average
 
 
-# Nearest neighbours of the joint Z- BP fuel station network
+# Nearest neighbours: same brand / competitor?
 
-A key characteristic of good coverage is location in relation to other entities - especially competitors. A franchise should ideally be placed close to its own rather than near a competitor. A simple set of comparative analyses that explore the type pf nearest neighbour include:
+A key characteristic of good coverage is location in relation to other entities - especially competitors. A simplistic view of good coverage is that a franchise should ideally be placed close to one of its own rather than near a competitor. Some comparative analyses that explore the type of nearest neighbour include:
 - Seeing whether Z stations neighbour each other or a competitor
 - Which Z stations are in a zone of poaching risk - i.e. their customers might go to a nearby competitor. 
 
-For this analysis, we need to generate the shortest distances between all station pairs for *both* Z and BP stations together. The computation is not fast unfortunately so we definitely need to manage this calculation better for a larger dataset. Also, N.B. there is an implicit redundancy in the numbers cited above: some station pairs are each others nearest neighbours. 
+For this analysis, we need to generate the shortest distances between all station pairs for *both* Z and BP stations together. Unfortunately, the computation is not fast and needs to better managed in the future for a larger dataset. Also, note that there is an implicit redundancy in the numbers cited below: some station pairs are each others nearest neighbours. 
 
 
 <div>
