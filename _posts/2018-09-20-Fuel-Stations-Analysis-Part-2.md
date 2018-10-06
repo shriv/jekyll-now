@@ -47,8 +47,9 @@ The following example looks at the distance and route between two Z stations: Z 
 *Shortest distance between Z Kilbirnie and Z Vivian St is 4268.96 m*
 
 
-# Average inter-station separation
-This first analysis builds on the toy example to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*. The procedure is to first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from a bunch of Z stations to Z Broadway (in Strathmore). 
+
+# Abstract networks
+To construct the abstract network, we first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from several Z stations to Z Broadway (in Strathmore). 
 
 
 <div>
@@ -122,20 +123,7 @@ This first analysis builds on the toy example to calculate the average distance 
 </div>
 
 
-Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A similar calculation can be performed for the BP station network. The physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric and indicative of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference in the two modes seems to be larger for BP.
-
-From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
-
-
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
-
-Average (mean) inter-station distances:
-- Z stations in Wellington are 2.412 km apart on average
-- BP stations in Wellington are 3.125 km apart on average
-
-
-# Abstract networks
-The table of pairwise distances can be used to analyse the number of neighbours for a Z/BP station within a particular radius. For this analysis, I've recast the data into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
+The table of pairwise distances can now be used to analyse the number of neighbours for a Z/BP station within a particular radius and recast into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
 
 The steps of the recasting are: 
 
@@ -155,7 +143,6 @@ We can visualise the network structure of the simpler, recast data. The weighted
 - The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z. 
 
 
-Z station network | BP station network
 -----------------:|:------------------
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png) | ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)
 
@@ -270,6 +257,18 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 - Z stations in Wellington region have an average of 5.71 neighbours
 - Z stations in Wellington City have an average of 6.5 neighbours
 - Z stations in Lower Hutt have an average of 4.67 neighbours
+
+# Average inter-station separation
+This first analysis builds on the toy example to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*. Once we have 13x13 distances, we can get the closest station from every one of the 13 stations. A similar calculation can be performed for the BP station network. The physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric and indicative of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference in the two modes seems to be larger for BP.
+
+From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
+
+
+![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
+
+Average (mean) inter-station distances:
+- Z stations in Wellington are 2.412 km apart on average
+- BP stations in Wellington are 3.125 km apart on average
 
 
 # Nearest neighbours of the joint Z- BP fuel station network
