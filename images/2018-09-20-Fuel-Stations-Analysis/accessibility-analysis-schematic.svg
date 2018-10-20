@@ -10,13 +10,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="450.46567mm"
-   height="104.98393mm"
-   viewBox="0 0 450.46566 104.98393"
+   width="454.59296mm"
+   height="102.37746mm"
+   viewBox="0 0 454.59295 102.37746"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="accessibolity-analysis-schematic.svg">
+   sodipodi:docname="accessibility-analysis-schematic.svg">
   <defs
      id="defs2">
     <linearGradient
@@ -51,8 +51,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.27066205"
-     inkscape:cx="1959.4561"
-     inkscape:cy="192.42226"
+     inkscape:cx="1254.5996"
+     inkscape:cy="192.42227"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -82,7 +82,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-23.466135,-25.479753)">
+     transform="translate(-19.338856,-28.086227)">
     <g
        id="g1440">
       <g
