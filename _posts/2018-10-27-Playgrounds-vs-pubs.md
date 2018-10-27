@@ -7,80 +7,8 @@ Since we're focusing on a single city, the aim of the post is to establish the f
 - Getting and processing the data
 - Setting up metrics and visualisations for the comparative analysis
 
-# Get alcohol vendor data fromOSM
-This section is somewhat techincal. The specifics are not necessary to understand the analysis. 
 
-
-```python
-# Import some packages
-import warnings
-import pandas as pd
-import osmnx as ox 
-import networkx as nx
-import pandana as pa
-import matplotlib.pyplot as plt
-import utils.data_processing as dp
-import utils.accessibility_analysis as aa
-import geopandas
-import numpy as np
-import seaborn as sns
-import folium
-
-# Some configs
-warnings.filterwarnings('ignore')
-ox.config(log_console=True, use_cache=True)
-pd.set_option('display.max_columns', 200)
-#%matplotlib inline
-```
-
-## Set bounding box
-
-A bounding box of lattitude and longitude coordinates describes a rectangular geospatial region. For this report, I've chosen a bounding box that includes Wellington City and some of Lower Hutt. This selection is important since only the entities *within* the bounding box are used in the analysis. The visual tool [here](http://boundingbox.klokantech.com/) is useful for obtaining the bounding box coordinates from a user-defined rectangle on the map. 
-
-A key technical point is that [bounding box conventions do vary](https://wiki.openstreetmap.org/wiki/Bounding_Box
-):
-- The general definition uses (min Longitude , min Latitude , max Longitude , max Latitude), or  (W, S, E, N) 
-- Pandana and Overpass use (S, W, N, E).
-
-![](assets/wellington-city-bounding-box.png)
-
-
-
-```python
-# Define bounding box (W, S, E, N) for the area of Wellington we're interested in
-# Copied from http://boundingbox.klokantech.com/
-general_bbox = [174.57,-41.38,174.84,-41.1527]
-
-# Separate out the bounding box list into 4 vertices. 
-south = general_bbox[1]
-west = general_bbox[0]
-north = general_bbox[3]
-east = general_bbox[2]
-
-# Set OSM bounding box
-osm_bbox = [south, west, north, east]
-
-# centroids of bounding box
-mean_lat = np.mean([north, south])
-mean_lon = np.mean([west, east])
-```
-
-## Create Query
-The following section creates a query to get fuel station data from Open Street Maps. The tags list can also be amended to get other amenities. The full list is [here](https://wiki.openstreetmap.org/wiki/Key:amenity). For example, we can easily get data for cafes and restaurants by adding these to the tags list.  
-
-The Overpass API query is not very easy to read but the main components are: 
-- The bounding box: the area where we want the search performed. 
-- Data Primitives: ways, nodes, tags, relations.
-
-The data primities of OSM have an intrinsic hierarchy with nodes being the root primitive. 
-- Nodes: Single point with explicit [lat, lon] coordinates. Root primitive
-- Ways: Collection of nodes that defines a polygon (e.g. a building) or polyline (e.g. a road). 
-- Relations: Represent the relationship of existing nodes and ways
-- Tags: Metadata stored as key-value pairs. 
-
-The main primitives used in this report are nodes and tags. The nodes give the geolocation while we use the tags to filter specifically for fuel station nodes. More information about the entities of Open Street Maps can be found [here](https://en.wikipedia.org/wiki/OpenStreetMap#Operation). 
-
-## Getting data from Overpass 
+# Getting data
 Getting data from Open Street Map is fairly simple via the Overpass API. All you need to do is construct the search query and reshape the result JSON into your data structure of choice. 
 
 Given that pubs, alcohol shops and bars can be described as both nodes and ways, we need two queries to extract the data. Following the data extraction we have to (1) process ways as polygons reduce to POIs, (2) label nodes as POIs, and (3) join the two datasets together. 
@@ -112,12 +40,6 @@ alcohol_nodes = (osmdf_nodes[['id', 'lat', 'lon', 'name', 'amenity', 'type']]
 print alcohol_nodes.shape
 alcohol_nodes.head(5)
 ```
-
-    (133, 6)
-
-
-
-
 
 <div>
 <style scoped>
@@ -209,15 +131,8 @@ compactOverpassQLstring = dp.generate_overpass_query(tags, objects, osm_bbox, en
 # Store ways as df
 osmdf_ways = dp.get_osm_data(compactOverpassQLstring, osm_bbox)
 alcohol_ways = osmdf_ways[['id', 'lat', 'lon', 'name', 'amenity', 'type', 'nodes']]
-print alcohol_ways.shape
 alcohol_ways.head(5)
 ```
-
-    (262, 7)
-
-
-
-
 
 <div>
 <style scoped>
@@ -422,8 +337,7 @@ plt.xlim(174.5, 175.1);
 plt.ylim(-41.5, -41.0);
 ```
 
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_20_0.png)
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
 
 
@@ -496,8 +410,7 @@ aa.plot_accessibility(network, alco_accessibility[n], osm_bbox,
                       fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
 ```
 
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_27_0.png)
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
 
 
 
@@ -508,8 +421,7 @@ aa.plot_accessibility(network, park_accessibility[n], osm_bbox,
                       fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
 ```
 
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_28_0.png)
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)
 
 
 ## Differential accessbility: playgrounds vs. alcohol
@@ -533,9 +445,7 @@ bmap = aa.plot_accessibility(network, diff_accessibility, osm_bbox,
                              bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
 ```
 
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_30_0.png)
-
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)
 
 
 ```python
@@ -570,9 +480,7 @@ bmap = aa.plot_accessibility(network_access_1000, access_1000, osm_bbox,
                              bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
 ```
 
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_33_0.png)
-
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)
 
 
 ```python
@@ -588,13 +496,11 @@ bmap = aa.plot_accessibility(network_access_neg_1000, access_neg_1000, osm_bbox,
                              bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
 ```
 
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
 
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_34_0.png)
 
 
 ## Accessibility statistics
-
-
 ```python
 # Put accessibility data together
 nearest_park = park_accessibility[1].reset_index(name='distance')
@@ -605,7 +511,6 @@ nearest_alco['type'] = 'Alcohol'
 
 
 ```python
-# Plot Z and BP accessibility together
 nearest_p = pd.concat([nearest_park, nearest_alco])
 nearest_p = nearest_p.query('distance < 5000')
 g = sns.FacetGrid(col='type', data=nearest_p, size=5)
@@ -614,13 +519,5 @@ g.map(plt.hist, 'distance', normed=True, bins=100)
 g.add_legend()
 ```
 
-
-
-
-    <seaborn.axisgrid.FacetGrid at 0x7f4f36cd0150>
-
-
-
-
-![png](Playgrounds%20vs%20Pubs_files/Playgrounds%20vs%20Pubs_37_1.png)
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
