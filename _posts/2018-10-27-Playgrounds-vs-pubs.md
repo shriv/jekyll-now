@@ -1,5 +1,3 @@
-
-# Introduction
 This post applies accessibility analysis for comparing two types of social amenities: playgrounds / green spaces and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. This post just runs the analysis for Wellington. A follow up post will compare Auckland and Wellington. 
 
 Since we're focusing on a single city, the aim of the post is to establish the following:
@@ -23,23 +21,6 @@ entities = ['shop', 'amenity', 'building']
 ```
 
 ### Get nodes
-
-
-```python
-# Generate the query string for nodes
-objects = ['node'] # like way, node, relation
-compactOverpassQLstring = dp.generate_overpass_query(tags, objects, osm_bbox, entities)
-
-# Store nodes as df
-osmdf_nodes = dp.get_osm_data(compactOverpassQLstring, osm_bbox)
-alcohol_nodes = (osmdf_nodes[['id', 'lat', 'lon', 'name', 'amenity', 'type']]
-                 .sort_values(['lat', 'lon'])
-                 .reset_index()
-                 .drop(columns='index')
-                 .fillna('No Name'))
-print alcohol_nodes.shape
-alcohol_nodes.head(5)
-```
 
 <div>
 <style scoped>
@@ -121,18 +102,6 @@ alcohol_nodes.head(5)
 
 ### Get and process ways
 Processing ways for accessibility analysis means we need to find a way of reducing polygons to points. 
-
-
-```python
-# Generate the query string for ways
-objects = ['way'] # like way, node, relation
-compactOverpassQLstring = dp.generate_overpass_query(tags, objects, osm_bbox, entities)
-
-# Store ways as df
-osmdf_ways = dp.get_osm_data(compactOverpassQLstring, osm_bbox)
-alcohol_ways = osmdf_ways[['id', 'lat', 'lon', 'name', 'amenity', 'type', 'nodes']]
-alcohol_ways.head(5)
-```
 
 <div>
 <style scoped>
@@ -287,9 +256,6 @@ wcc_parks = geopandas.read_file('zip://./data/WCC_Parks_and_Reserves.zip')
 wcc_parks['centroid'] = wcc_parks.centroid
 ```
 
-## Sample points from a polygon
-
-
 ```python
 # Sampling parameters
 lon_corr = 0.1
@@ -320,36 +286,7 @@ park_set_pois= dp.geopandas_to_lat_lon(intersecting_points, 'geometry')
 park_pois_df = dp.lat_lon_to_geopandas(park_set_pois)
 ```
 
-
-```python
-# Plot transformation
-f, (ax1, ax2, ax3) = plt.subplots(1, 3, sharex=True, sharey=True,figsize=(10, 4))
-ax1.set_title('Park Polygons')
-wcc_parks.plot(ax=ax1)
-ax2.set_title('2D Gaussian Points')
-points.plot(ax=ax2, markersize=2)
-ax3.set_title('Points within Park Polygons')
-park_pois_df.plot(ax=ax3, markersize=2)
-plt.subplots_adjust(hspace=-0.2)
-
-# Limits
-plt.xlim(174.5, 175.1);
-plt.ylim(-41.5, -41.0);
-```
-
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
-
-
-
-```python
-map_parks = folium.Map(location=[mean_lat, mean_lon], zoom_start = 11)
-
-for each in park_set_pois.iterrows():
-    folium.Marker(location = [each[1]['lat'],each[1]['lon']]).add_to(map_parks)
-#    folium.Popup(each[1]['name']).add_to(map_alcohol)
-
-map_parks
-```
 
 
 
@@ -373,53 +310,8 @@ All the above steps are carried out by the Python package Pandana. Of the above 
 - Filter out poorly connected points
 
 
-```python
-# Set some parameters for accessibility analysis
-n = 1 # nth closest nodes to fuel station. n = 1 means the closest.
-distance = 5000.0 # distance bound for accessibility calculation; impedance limit.
-num_pois = 10
-
-# Plotting parameters
-bbox_aspect_ratio = (osm_bbox[2] - osm_bbox[0]) / (osm_bbox[3] - osm_bbox[1])
-fig_kwargs = {'facecolor':'w', 
-              'figsize':(10, 10 * bbox_aspect_ratio)}
-#plot_kwargs = {'s':5, 
-#               'alpha':0.9, 
-#               'cmap':'viridis_r', 
-#               'edgecolor':'none'}
-
-bmap_kwargs={'epsg':'2193','resolution':'f'}
-plot_kwargs={'cmap':'viridis_r','s':4,'edgecolor':'none'}
-```
-
-
-```python
-# Generate accessibility network
-network = aa.get_pandana_network(osm_bbox, impedance=distance)
-alco_accessibility = aa.get_accessibility(network, alcohol_pois, distance=distance, num_pois=num_pois)
-park_accessibility = aa.get_accessibility(network, park_set_pois, distance=distance, num_pois=num_pois)
-```
-
-## Accessibility to alcohol
-
-
-```python
-# Plot driving accessibility alcohol vendors
-aa.plot_accessibility(network, alco_accessibility[n], osm_bbox, 
-                      amenity_type='Alcohol Vendor', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-```
 
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
-
-
-
-```python
-# Plot driving accessibility for Parks
-aa.plot_accessibility(network, park_accessibility[n], osm_bbox,
-                      amenity_type='WCC Park / Reserve', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-```
 
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)
 
@@ -427,97 +319,16 @@ aa.plot_accessibility(network, park_accessibility[n], osm_bbox,
 ## Differential accessbility: playgrounds vs. alcohol
 
 
-```python
-# Plotting parameters
-diff_kwargs = plot_kwargs.copy()
-diff_kwargs['cmap'] = 'Spectral_r'
-bmap_kwargs={'epsg':'2193','resolution':'f'}
-cbar_kwargs = {'location': 'right'}
-
-# Plot differential coverage
-
-
-diff_accessibility = park_accessibility[1] - alco_accessibility[1]
-bmap = aa.plot_accessibility(network, diff_accessibility, osm_bbox, 
-                             amenity_type="Park vs. Alcohol accessibility",
-                             place_name='Wellington', 
-                             fig_kwargs=fig_kwargs, plot_kwargs=diff_kwargs, 
-                             bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
-```
-
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)
 
 
-```python
-orig_nodes = network.nodes_df 
-def filtered_accessibility_network(pandana_network, filtered_accessibility):
-
-    network_nodes = pandana_network.nodes_df.reset_index()
-    new_network_nodes = []
-    for node in filtered_accessibility.reset_index()['id'].tolist():
-        val = network_nodes[network_nodes['id'] == node]
-        new_network_nodes.append(val)
-    
-    new_network_nodes = pd.concat(new_network_nodes).set_index('id')
-    pandana_network.nodes_df = new_network_nodes
-    return pandana_network, filtered_accessibility
-
-```
-
-
-```python
-# Get filtered network for plotting
-network_access_1000, access_1000 = filtered_accessibility_network(network, 
-                                                                  diff_accessibility[diff_accessibility > 1000])
-```
-
-
-```python
-bmap = aa.plot_accessibility(network_access_1000, access_1000, osm_bbox, 
-                             amenity_type="Where parks are further than alcohol vendors",
-                             place_name='Wellington', 
-                             fig_kwargs=fig_kwargs, plot_kwargs=diff_kwargs, 
-                             bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
-```
-
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)
-
-
-```python
-# Get filtered network for plotting
-network.nodes_df = orig_nodes
-network_access_neg_1000, access_neg_1000 = filtered_accessibility_network(network, 
-                                                                          diff_accessibility[diff_accessibility < -1000])
-
-bmap = aa.plot_accessibility(network_access_neg_1000, access_neg_1000, osm_bbox, 
-                             amenity_type="Where alcohol vendors are further away than parks",
-                             place_name='Wellington', 
-                             fig_kwargs=fig_kwargs, plot_kwargs=diff_kwargs, 
-                             bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
-```
 
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
 
 
 
 ## Accessibility statistics
-```python
-# Put accessibility data together
-nearest_park = park_accessibility[1].reset_index(name='distance')
-nearest_alco = alco_accessibility[1].reset_index(name='distance')
-nearest_park['type'] = 'Park / Reserve'
-nearest_alco['type'] = 'Alcohol'
-```
-
-
-```python
-nearest_p = pd.concat([nearest_park, nearest_alco])
-nearest_p = nearest_p.query('distance < 5000')
-g = sns.FacetGrid(col='type', data=nearest_p, size=5)
-g.map(plt.hist, 'distance', normed=True, bins=100)
-#g.map(aa.vertical_average_lines, 'distance')
-g.add_legend()
-```
 
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
