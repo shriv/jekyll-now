@@ -1,21 +1,26 @@
-This post applies accessibility analysis for comparing two types of social amenities: playgrounds / green spaces and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. This post just runs the analysis for Wellington. A follow up post will compare Auckland and Wellington. 
 
-Since we're focusing on a single city, the aim of the post is to establish the following:
-- The data sources: availability and credibility
-- Getting and processing the data
-- Setting up metrics and visualisations for the comparative analysis
 
+This post applies accessibility analysis to compare two types of social amenities: council parks and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. While the accessibility concept is unchanged from the [fuel station analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), the post shows how we can bring together different types (and sources) of spatial data for a richer (and ultimately more insightful) analysis.
+
+This post covers:
+- Getting and processing OpenStreetMap (OSM) ways and nodes into point entities.
+- Converting polygon data into points.
+- Bringing together the two different spatial sources for comparing accessibility.
+- Manipulating the pandana data structure to plot accessibilities within regions of interest. 
+
+If bits of the above list don't make sense, feel free to visit the previous blog post for an [introduction to OSM](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/) and [accessibility analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/). 
 
 # Getting data
-Getting data from Open Street Map is fairly simple via the Overpass API. All you need to do is construct the search query and reshape the result JSON into your data structure of choice. 
+## Alcohol vendors from OpenStreetMap (OSM)
+As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. Here, we have to extend the query to deal with two different OSM entities since pubs, alcohol shops and bars can be described as both nodes and ways. We can do this with two queries since the resulting data structure is different for nodes and ways. For this analysis, 'shop', 'amenity' and 'building' entities with the tags 'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket' were extracted from OSM. 
 
-Given that pubs, alcohol shops and bars can be described as both nodes and ways, we need two queries to extract the data. Following the data extraction we have to (1) process ways as polygons reduce to POIs, (2) label nodes as POIs, and (3) join the two datasets together. 
+Following the data extraction we have to:
+- Process ways as polygons and then reduce to POIs
+- Label nodes as POIs
+- Join the two datasets together 
+
 
 There is a reasonable probability that we have duplicates - where the same place has been annotated as both a way and a node. For the first pass of the analysis, I'm going to assume that these are a minority. De-duplication will be a part of the more polished analysis. 
-
-
-tags = ['alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine', 'supermarket']
-entities = ['shop', 'amenity', 'building']
 
 
 ### Get nodes
@@ -257,23 +262,6 @@ All the above steps are carried out by the Python package Pandana. Of the above 
 
 
 ## Accessibility statistics
-```python
-# Put accessibility data together
-nearest_park = park_accessibility[1].reset_index(name='distance')
-nearest_alco = alco_accessibility[1].reset_index(name='distance')
-nearest_park['type'] = 'Park / Reserve'
-nearest_alco['type'] = 'Alcohol'
-```
-
-
-```python
-nearest_p = pd.concat([nearest_park, nearest_alco])
-nearest_p = nearest_p.query('distance < 5000')
-g = sns.FacetGrid(col='type', data=nearest_p, size=5)
-g.map(plt.hist, 'distance', normed=True, bins=100)
-#g.map(aa.vertical_average_lines, 'distance')
-g.add_legend()
-```
 
 ![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
