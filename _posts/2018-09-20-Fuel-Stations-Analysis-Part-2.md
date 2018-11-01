@@ -573,3 +573,5 @@ Z stations with a BP station within the *average station-station separation dist
   </tbody>
 </table>
 </div>
+
+For the conclusion of which fuel station covers Wellington better, go to [final instalment of the series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) or you can revisit the [introductory post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/). 
