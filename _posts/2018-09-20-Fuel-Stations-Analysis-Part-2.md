@@ -1,4 +1,4 @@
-In the previous section, we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics. 
+In the [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics. 
 
 We build up the abstract network in 4 steps:
 - Get fuel stations in region
@@ -21,7 +21,6 @@ We can think of the abstract network of a different data structure and this form
 - Neighbour analysis: own brand / competitor
 
 These metrics quantify the interaction  between Z and BP fuel stations and they help build a picture of coverage.
-
 
 # Introduction to street network analysis
 To construct the abstract network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
@@ -574,4 +573,5 @@ Z stations with a BP station within the *average station-station separation dist
 </table>
 </div>
 
+# What next?
 For the conclusion of which fuel station covers Wellington better, go to [final instalment of the series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) or you can revisit the [introductory post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/). 

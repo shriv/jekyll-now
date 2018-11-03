@@ -1,5 +1,3 @@
-
-
 This post applies accessibility analysis to compare two types of social amenities: council parks and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. While the accessibility concept is unchanged from the [fuel station analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), the post shows how we can bring together different types (and sources) of spatial data for a richer (and ultimately more insightful) analysis.
 
 This post covers:
@@ -10,8 +8,7 @@ This post covers:
 
 If bits of the above list don't make sense, feel free to visit the previous blog post for an [introduction to OSM](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/) and [accessibility analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/). 
 
-# Getting data
-## Alcohol vendors from OpenStreetMap (OSM)
+# Getting alcohol vendors from OpenStreetMap (OSM)
 As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. Here, we have to extend the query to deal with two different OSM entities since pubs, alcohol shops and bars can be described as both nodes and ways. We can do this with two queries since the resulting data structure is different for nodes and ways. For this analysis, 'shop', 'amenity' and 'building' entities with the tags 'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket' were extracted from OSM. 
 
 Following the data extraction we have to:
@@ -19,12 +16,10 @@ Following the data extraction we have to:
 - Label nodes as POIs
 - Join the two datasets together 
 
+There is a reasonable probability that we have a small number of duplicates - where the same place has been annotated as both a way and a node. However, for the first pass of the analysis, I'm going to assume that these are negligible. De-duplication will be a part of a more polished, future analysis. 
 
-There is a reasonable probability that we have duplicates - where the same place has been annotated as both a way and a node. For the first pass of the analysis, I'm going to assume that these are a minority. De-duplication will be a part of the more polished analysis. 
 
-
-### Get nodes
-
+## Nodes 
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -103,7 +98,7 @@ There is a reasonable probability that we have duplicates - where the same place
 
 
 
-### Get and process ways
+## Get and process ways
 Processing ways for accessibility analysis means we need to find a way of reducing polygons to points. 
 
 <div>
