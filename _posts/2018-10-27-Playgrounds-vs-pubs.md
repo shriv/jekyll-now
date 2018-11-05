@@ -216,9 +216,10 @@ As of 18 Sept, I've only done the analysis on the polygon data of parks and rese
 
 ## Sample points from a polygon
 
+<div class="iframe_container">
 <iframe src={{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_parks.html
 style="width: 100%; height: 450px;"></iframe>
-
+</div>
 
 # Accessibility analysis
 
