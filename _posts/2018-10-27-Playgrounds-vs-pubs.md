@@ -100,9 +100,11 @@ The nodes dataset is quite simple. We can easily pull out the geolocation column
 </div>
 
 
-
 ## Get and process ways
-Way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that can be joined together to form the way. 
+Way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that can be joined together to form the way. This means that we can get the geolocations for each node in the way from a nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes and process an 'average' lattitude and longitude for each way.
+
+The function [**data_processing.extend_ways_to_node_view()**](https://github.com/shriv/playgrounds-pubs/blob/master/utils/data_processing.py) expands the ways data structure into a tall node list with geolocation. We can then perform a simple aggregation of a mean lattitude and longitude for each way ID. The mean geolocation is basically the centre of the way - assuming of course that the nodes in the way are distriuted evenly! 
+
 
 <div>
 <style scoped>
@@ -187,8 +189,11 @@ Way data from OSM comes without an explicit geolocation. Instead, it contains a 
 </div>
 
 
+<div class="iframe_container">
+<iframe src="{{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_alcohol.html"
+style="width: 100%; height: 450px;"></iframe>
+</div>
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_alcohol.html)
 
 # Quality of alcohol vendor data
 The paper by [Bright et al.](https://www.sciencedirect.com/science/article/pii/S1353829217305804) gives an excellent overview of why alcohol research is important - in terms of spatial availability. It also evaluates the use of alcohol vendor data from Open Street Map. Though the analysis was carried out for the UK, we can extrapolate the general principle that data is unlikely to be complete for NZ. Possibly even more so since we're a smaller country, and OSM has a much greater set of contributers in the UK - owing to the fact that OSM began in the UK.
@@ -223,7 +228,7 @@ style="width: 100%; height: 450px;"></iframe>
 
 
 ## Sample points from a polygon
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
 # Accessibility analysis
 
