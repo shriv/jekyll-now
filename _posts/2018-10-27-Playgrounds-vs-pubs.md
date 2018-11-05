@@ -10,17 +10,19 @@ If bits of the above list don't make sense, feel free to visit the previous blog
 
 
 # Getting alcohol vendors from OSM
-As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. For this analysis, 'shop', 'amenity' and 'building' entities with the tags 'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket' were extracted from OSM. The key difference to the fuel stations analysis is that we have to extend the query to deal with both nodes _and_ ways. For a complete dataset of alcohol vendors, we need two queries since the results are different for nodes and ways.
-
-Following the data extraction we have to:
-- Process ways as polygons and then reduce to POIs
-- Label nodes as POIs
-- Join the two datasets together
+As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. For this analysis, *'shop', 'amenity' and 'building'* entities with the tags *'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket'* were extracted from OSM. The key difference to the fuel stations analysis is that we have to extend the query to deal with both nodes _and_ ways. For a complete dataset of alcohol vendors, we need two queries since the results are different for nodes and ways.
 
 There is a reasonable probability that we have a small number of duplicates - where the same place has been annotated as both a way and a node. However, for the first pass of the analysis, I'm going to assume that these are negligible. De-duplication will be a part of a more polished, future analysis.
 
+Following the data extraction from OSM, we have to reduce both nodes and ways as POIs (Points of Interest):
+- Save the geolocation of nodes
+- Process ways as polygons and then reduce to a single geolocation
+- Join the two datasets together
+
 
 ## Nodes
+The nodes dataset is quite simple. We can easily pull out the geolocation columns.
+
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -100,7 +102,7 @@ There is a reasonable probability that we have a small number of duplicates - wh
 
 
 ## Get and process ways
-Processing ways for accessibility analysis means we need to find a way of reducing polygons to points.
+Way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that can be joined together to form the way. 
 
 <div>
 <style scoped>
@@ -214,12 +216,14 @@ We have two sources of park data available from WCC:
 As of 18 Sept, I've only done the analysis on the polygon data of parks and reserves. Repeating the analysis with playgrounds as the focus will be on how family friendly the region is.
 
 
-## Sample points from a polygon
-
 <div class="iframe_container">
-<iframe src={{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_parks.html
+<iframe src="{{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
 style="width: 100%; height: 450px;"></iframe>
 </div>
+
+
+## Sample points from a polygon
+![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
 
 # Accessibility analysis
 
