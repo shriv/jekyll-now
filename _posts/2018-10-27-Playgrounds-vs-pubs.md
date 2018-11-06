@@ -103,7 +103,7 @@ The nodes dataset is quite simple. We can easily pull out the geolocation column
 ## Get and process ways
 Way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that can be joined together to form the way. This means that we can get the geolocations for each node in the way from a nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes and process an 'average' lattitude and longitude for each way.
 
-The function [**data_processing.extend_ways_to_node_view()**](https://github.com/shriv/playgrounds-pubs/blob/master/utils/data_processing.py) expands the ways data structure into a tall node list with geolocation. We can then perform a simple aggregation of a mean lattitude and longitude for each way ID. The mean geolocation is basically the centre of the way - assuming of course that the nodes in the way are distriuted evenly! 
+The function [**data_processing.extend_ways_to_node_view()**](https://github.com/shriv/playgrounds-pubs/blob/master/utils/data_processing.py) expands the ways data structure into a tall node list with geolocation. We can then perform a simple aggregation of a mean lattitude and longitude for each way ID. The mean geolocation is basically the centre of the way - assuming of course that the nodes in the way are distriuted evenly!
 
 
 <div>
@@ -228,7 +228,7 @@ style="width: 100%; height: 450px;"></iframe>
 
 
 ## Sample points from a polygon
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
 # Accessibility analysis
 
@@ -246,23 +246,23 @@ All the above steps are carried out by the Python package Pandana. Of the above 
 
 
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)
 
 
 ## Differential accessbility: playgrounds vs. alcohol
 
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)
 
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
 
 
 
 ## Accessibility statistics
 
-![]({{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
