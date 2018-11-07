@@ -9,8 +9,8 @@ This post covers:
 If bits of the above list don't make sense, feel free to visit the previous blog post for an [introduction to OSM](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/) and [accessibility analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/). As usual, the code for this post is up as a [Jupyter notebook on my github](https://github.com/shriv/playgrounds-pubs/blob/master/Playgrounds%20vs%20Pubs.ipynb).
 
 
-# Getting alcohol vendors from OSM
-As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. For this analysis, *'shop', 'amenity' and 'building'* entities with the tags *'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket'* were extracted from OSM. The key difference to the fuel stations analysis is that we have to extend the query to deal with both nodes _and_ ways. For a complete dataset of alcohol vendors, we need two queries since the results are different for nodes and ways.
+# Get alcohol vendors from OSM
+As highlighted in a [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), getting data from OSM is quite easy with the Overpass API. For this analysis, **'shop', 'amenity' and 'building'** entities with the tags **'alcohol', 'pub', 'bar', 'beverages', 'biergarten', 'wine' and 'supermarket'** were extracted from OSM. The key difference to the fuel stations analysis is that we have to extend the query to deal with both nodes _and_ ways. For a complete dataset of alcohol vendors, we need two queries since the results are different for nodes and ways.
 
 There is a reasonable probability that we have a small number of duplicates - where the same place has been annotated as both a way and a node. However, for the first pass of the analysis, I'm going to assume that these are negligible. De-duplication will be a part of a more polished, future analysis.
 
@@ -21,176 +21,35 @@ Following the data extraction from OSM, we have to reduce both nodes and ways as
 
 
 ## Nodes
-The nodes dataset is quite simple. We can easily pull out the geolocation columns.
+As we can see in the table below, the nodes dataset is quite simple and the geolocation columns can be easily pulled out.
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>lat</th>
-      <th>lon</th>
-      <th>name</th>
-      <th>amenity</th>
-      <th>type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>4522166458</td>
-      <td>-41.328972</td>
-      <td>174.811298</td>
-      <td>Cook Strait Bar</td>
-      <td>bar</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>623879839</td>
-      <td>-41.325184</td>
-      <td>174.820872</td>
-      <td>The Strathmore Local</td>
-      <td>pub</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>625080280</td>
-      <td>-41.319506</td>
-      <td>174.794358</td>
-      <td>Bay 66</td>
-      <td>pub</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4362160389</td>
-      <td>-41.318292</td>
-      <td>174.794757</td>
-      <td>No Name</td>
-      <td>No Name</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>627273501</td>
-      <td>-41.318117</td>
-      <td>174.794450</td>
-      <td>Kilbirnie Tavern</td>
-      <td>pub</td>
-      <td>node</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|id|lat|lon|name|amenity|type|
+|--- |--- |--- |--- |--- |--- |
+|4522166458|-41.328972|174.811298|Cook Strait Bar|bar|node|
+|623879839|-41.325184|174.820872|The Strathmore Local|pub|node|
+|625080280|-41.319506|174.794358|Bay 66|pub|node|
+|4362160389|-41.318292|174.794757|No Name|No Name|node|
+|627273501|-41.318117|174.794450|Kilbirnie Tavern|pub|node|
 
 
-## Get and process ways
-Way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that can be joined together to form the way. This means that we can get the geolocations for each node in the way from a nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes and process an 'average' lattitude and longitude for each way.
+## Ways
+Unlike the nodes dataset, way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that link to form the way. This means that we can get the multiple geolocations for a way - one for each node in the nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes. This extende dataset can be reduced by calculating an 'average' lattitude and longitude for each way.
 
-The function [**data_processing.extend_ways_to_node_view()**](https://github.com/shriv/playgrounds-pubs/blob/master/utils/data_processing.py) expands the ways data structure into a tall node list with geolocation. We can then perform a simple aggregation of a mean lattitude and longitude for each way ID. The mean geolocation is basically the centre of the way - assuming of course that the nodes in the way are distriuted evenly!
+|id|lat|lon|name|amenity|type|nodes|
+|--- |--- |--- |--- |--- |--- |--- |
+|26509771|NaN|NaN|New World|NaN|way|[290565312, 290565316, 2990208452, 2990208451,...|
+|49396700|NaN|NaN|Countdown|NaN|way|[627273504, 4699896634, 627273505, 4199712656,...|
+|62153738|NaN|NaN|Mac's Brewery|pub|way|[775428527, 775428528, 775428657, 775428658, 2...|
+|62154227|NaN|NaN|Countdown Johnsonville|NaN|way|[1439843310, 1439843337, 1439843339, 143984333...|
+|133129214|NaN|NaN|Thistle Inn|bar|way|[1464807182, 1464807184, 1464807179, 146480718...|
 
+The function [**data_processing.extend_ways_to_node_view()**](https://github.com/shriv/playgrounds-pubs/blob/master/utils/data_processing.py) expands the ways data structure into a tall node list with multiple geolocations per way. We can then perform a simple aggregation of a mean lattitude and longitude for each way ID. The mean geolocation is basically the centre of the way (centroid) - assuming of course that the nodes in the way are distriuted evenly!
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>lat</th>
-      <th>lon</th>
-      <th>name</th>
-      <th>amenity</th>
-      <th>type</th>
-      <th>nodes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>26509771</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>New World</td>
-      <td>NaN</td>
-      <td>way</td>
-      <td>[290565312, 290565316, 2990208452, 2990208451,...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>49396700</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Countdown</td>
-      <td>NaN</td>
-      <td>way</td>
-      <td>[627273504, 4699896634, 627273505, 4199712656,...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>62153738</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Mac's Brewery</td>
-      <td>pub</td>
-      <td>way</td>
-      <td>[775428527, 775428528, 775428657, 775428658, 2...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>62154227</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Countdown Johnsonville</td>
-      <td>NaN</td>
-      <td>way</td>
-      <td>[1439843310, 1439843337, 1439843339, 143984333...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>133129214</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Thistle Inn</td>
-      <td>bar</td>
-      <td>way</td>
-      <td>[1464807182, 1464807184, 1464807179, 146480718...</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
+## Alcohol vendors in Wellington
+The centroid geolocation for the ways and the point locations for nodes can be plotted on a map. As expected, the Wellington CBD contains the highest density of alcohol vendors.
 
 <div class="iframe_container">
-<iframe src="{{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_alcohol.html"
+<iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_alcohol.html"
 style="width: 100%; height: 450px;"></iframe>
 </div>
 
@@ -207,28 +66,39 @@ While text can be extracted from the pdfs, the retreival of information requires
 - Searching the text with well-constructed regular expressions to get the name of venue and the decision.
 - Matching the licence venues to a geolocation. Adding in missing venues to OSM.
 
-I think this can actually be done. I'd need some help in crafting the regular expression and, the project will take some time - which menas I need to decide how and why it would be worth scraping the database.
-
+While this can actually be done, I'd need some help in crafting the regular expression. The project will consume a lot of time and will require careful thought around when it would be worth scraping the database.
 
 ## Alternatives: Healthspace
 A Google search led me to this page which [aggregates alcohol-related data and research for NZ](https://www.alcohol.org.nz/resources-research/facts-and-statistics/where-to-find-other-alcohol-statistics). From there, I navigated to Healthspace, which makes available [Statistical Area 2 level alcohol licence data](http://healthspace.ac.nz/resource/view?resourceId=37). The data download portal [here](http://healthspace.ac.nz/explorer/resources/listbytheme) as xlsx tables. The interface is clunky unfortunately and the latest data is from 2016. Nonetheless, if we want SA2 or larger area unit aggregates, this data is great. I will make a request to see if they have the licence information available at the individual outlet level.
 
-# Get parks data
-We have two sources of park data available from WCC:
+# Get parks data from WCC
+While we can use OSM to get data of parks in Wellington, we can utilise easily available open government data! There are two sources of park data available from Wellington City Council (WCC):
 - [WCC parks and reserves](https://data-wcc.opendata.arcgis.com/datasets/581d698fd2614a4c8f860c8007e4e104_0)
 - [WCC playgrounds](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)
 
-As of 18 Sept, I've only done the analysis on the polygon data of parks and reserves. Repeating the analysis with playgrounds as the focus will be on how family friendly the region is.
+As of 18 Sept, I've only done the analysis on the polygon data of **WCC arks and reserves**. Repeating the analysis with playgrounds is a sensible option for a future iteration of this analysis as this allows us to focus on how family friendly a particular region is.
+
+While the WCC data can be regarded as a complete and well-maintained dataset, the data format is intrinsically different to OSM. Instead of nodes or ways, we have polygons.
+
+|name_|address|geometry|
+|--- |--- |--- |
+|Ex Wellington Bowling Club Land|Tanera Crescent|POLYGON ((174.765237429376 -41.300402529001, 1...|
+|Waimapihi Reserve|Holloway Road|POLYGON ((174.755229696891 -41.2989941468547, ...|
+|Newlands Plunket/Kenmore Street Play Area|108 Kenmore Street, Horokiwi Road|POLYGON ((174.825350752449 -41.223283485097, 1...|
+|Railway Station Reserve, Bunny Street|Bunny Street|POLYGON ((174.780368233065 -41.2795407305749, ...|
+|Seatoun Wharf and Boatsheds|Marine Parade|(POLYGON ((174.829013038144 -41.3179656818365,...|
+
+
+
+![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
+
 
 
 <div class="iframe_container">
-<iframe src="{{ site.baseurl }}/images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
+<iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
 style="width: 100%; height: 450px;"></iframe>
 </div>
 
-
-## Sample points from a polygon
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
 # Accessibility analysis
 
