@@ -33,7 +33,7 @@ As we can see in the table below, the nodes dataset is quite simple and the geol
 
 
 ## Ways
-Unlike the nodes dataset, way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of nodes that link to form the way. This means that we can get the multiple geolocations for a way - one for each node in the nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes. This extende dataset can be reduced by calculating an 'average' lattitude and longitude for each way.
+Unlike the nodes dataset, way data from OSM comes without an explicit geolocation. Instead, it contains a column with a list of node IDs that link to form the way. This means that we can get the multiple geolocations for a way - one for each node in the nodelist. Helpfully, OSM sends such a nodelist so we can extend the ways to a list of nodes. This extended dataset can be reduced by calculating an 'average' lattitude and longitude for each way.
 
 |id|lat|lon|name|amenity|type|nodes|
 |--- |--- |--- |--- |--- |--- |--- |
@@ -78,7 +78,7 @@ While we can use OSM to get data of parks in Wellington, we can utilise easily a
 
 As of 18 Sept, I've only done the analysis on the polygon data of **WCC arks and reserves**. Repeating the analysis with playgrounds is a sensible option for a future iteration of this analysis as this allows us to focus on how family friendly a particular region is.
 
-While the WCC data can be regarded as a complete and well-maintained dataset, the data format is intrinsically different to OSM. Instead of nodes or ways, we have polygons.
+While the WCC data can be regarded as a complete and well-maintained dataset, the data format is intrinsically different to OSM. Instead of a list of node IDs, we have a polygon object.
 
 |name_|address|geometry|
 |--- |--- |--- |
@@ -88,11 +88,15 @@ While the WCC data can be regarded as a complete and well-maintained dataset, th
 |Railway Station Reserve, Bunny Street|Bunny Street|POLYGON ((174.780368233065 -41.2795407305749, ...|
 |Seatoun Wharf and Boatsheds|Marine Parade|(POLYGON ((174.829013038144 -41.3179656818365,...|
 
+Polygons are special spatial (oh homophonic joy!) data structures that can be manipulated with dedicated spatial software, e.g. the suite of GIS (Geographic Information Systems) like ESRI, ARCGis etc. Hardly one to be left out, Python also provides a suite for spatial data management and manipulation. Enter Geopandas. This library extends dataframes to spatial dataframes. Some of the extensions include methods that operate on spatial data formats. Like polygons. With these methods, it's very easy to convert a polygon to a centroid - as easy as **df['polygon_column'].centroid**. None of the rigamarole that we wen through in the previous section!
 
+Unfortunately, generating a centroid for a park is not sufficient for a representative accessibility analysis. Some parks are massive and a centroid is not really representative of the the close-ness to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
+
+The concept of generating many random but evenly spaced points within a polygon is illustrated in the next figure. We basically superimpose a 2D normal distribution of random coordinates over the park polygons. The joined dataset are now a set of coordinates constrained by the shape of the parks.
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
-
+We can visualise the distribution of these points in an interactive map. 
 
 <div class="iframe_container">
 <iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
