@@ -92,11 +92,11 @@ Polygons are special spatial (oh homophonic joy!) data structures that can be ma
 
 Unfortunately, generating a centroid for a park is not sufficient for a representative accessibility analysis. Some parks are massive and a centroid is not really representative of the the close-ness to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
 
-The concept of generating many random but evenly spaced points within a polygon is illustrated in the next figure. We basically superimpose a 2D normal distribution of random coordinates over the park polygons. The joined dataset are now a set of coordinates constrained by the shape of the parks.
+The concept of generating many random but evenly spaced points within a polygon is illustrated in the next figure. We basically superimpose a 2D Gaussian distribution of random coordinates over the park polygons. The joined dataset are now a set of coordinates constrained by the shape of the parks.
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
-We can visualise the distribution of these points in an interactive map. 
+We can visualise the distribution of these points in an interactive map. The density of points isn't high but can be easily increased by altering the parameters of the Gaussian random sampling. I used the plots in the above figure as a qualitative check that the Wellington park geography was within the ¬1 $\sigma$ region of the random points. I can always go back and either increase the number of samples, or change the scale parameter to cover a greater coordinate space.
 
 <div class="iframe_container">
 <iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
@@ -105,33 +105,23 @@ style="width: 100%; height: 450px;"></iframe>
 
 
 # Accessibility analysis
-
-## Calculating accessibility
-Here, we consider accessibility as the driving distance in meters from each grid point (also referred to as nodes) to the nearest POIS: a fuel station. To do a visual acessibility analysis we need to:
-- Break up the map into grid of points (I)
-- Calculate the distance from each point to the nth nearest POIS (II)
+We now have alcohol vendors and parks described by discrete POIs and ready for calculating accessibility. Like the [previous series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) we consider accessibility as the driving distance in meters from each street grid point (also referred to as nodes) to the nearest POI. As a recap, we proceed by the following steps to generate an accessibility heatmap:
+- Break up the street map of Wellington into grid of points (I)
+- Calculate the distance from each point to the nth nearest POI (II)
 - Visualise distance as a heatmap (III)
 
-All the above steps are carried out by the Python package Pandana. Of the above steps, I has a few sub-steps. These are:
-- Download OSM data within the specified bounding box
-- Convert map to point grid. Remember, this is easy since all OSM streets and roads are *ways* which are simply a collection of nodes / points.
-- Store points data in a convenient data structure: a Pandas dataframe
-- Filter out poorly connected points
+All the above steps are carried out by the Python package Pandana. More technical details are described in [an earlier post](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/).
 
-
-
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)
-
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)
+| | |
+|--- | --- |
+|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)|
 
 
 ## Differential accessbility: playgrounds vs. alcohol
 
-
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)
-
-
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)
+| | |
+|--- | --- |
+|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)|
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
 
