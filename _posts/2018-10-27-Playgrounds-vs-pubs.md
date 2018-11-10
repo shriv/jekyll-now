@@ -90,13 +90,13 @@ While the WCC data can be regarded as a complete and well-maintained dataset, th
 
 Polygons are special spatial (oh homophonic joy!) data structures that can be manipulated with dedicated spatial software, e.g. the suite of GIS (Geographic Information Systems) like ESRI, ARCGis etc. Hardly one to be left out, Python also provides a suite for spatial data management and manipulation. Enter Geopandas. This library extends dataframes to spatial dataframes. Some of the extensions include methods that operate on spatial data formats. Like polygons. With these methods, it's very easy to convert a polygon to a centroid - as easy as **df['polygon_column'].centroid**. None of the rigamarole that we wen through in the previous section!
 
-Unfortunately, generating a centroid for a park is not sufficient for a representative accessibility analysis. Some parks are massive and a centroid is not really representative of the the close-ness to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
+Unfortunately, generating a centroid for a park is not sufficient for accessibility analysis. Some parks are massive and a centroid is not really representative of distance to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
 
-The concept of generating many random but evenly spaced points within a polygon is illustrated in the next figure. We basically superimpose a 2D Gaussian distribution of random coordinates over the park polygons. The joined dataset are now a set of coordinates constrained by the shape of the parks.
+The concept of generating many random but evenly spaced points within a park is simple: we basically superimpose a 2D Gaussian distribution of random coordinates over the park polygons. The joined dataset is now a set of coordinates constrained by the shape of the parks. The illustrative figure shows how the park polygons become a collection of points constrained by the polygon boundaries.
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
-We can visualise the distribution of these points in an interactive map. The density of points isn't high but can be easily increased by altering the parameters of the Gaussian random sampling. I used the plots in the above figure as a qualitative check that the Wellington park geography was within the ¬1 $\sigma$ region of the random points. I can always go back and either increase the number of samples, or change the scale parameter to cover a greater coordinate space.
+We can visualise the distribution of these points in an interactive map. The density of points isn't high but can be easily increased by altering the parameters of the Gaussian random sampling. I used the plots in the above figure for qualitative checks - that the Wellington park geography was within the ~1 $\sigma$ region of the random points. I can always go back and either increase the number of samples, or change the scale parameter to cover a greater coordinate space.
 
 <div class="iframe_container">
 <iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
@@ -105,28 +105,30 @@ style="width: 100%; height: 450px;"></iframe>
 
 
 # Accessibility analysis
-We now have alcohol vendors and parks described by discrete POIs and ready for calculating accessibility. Like the [previous series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) we consider accessibility as the driving distance in meters from each street grid point (also referred to as nodes) to the nearest POI. As a recap, we proceed by the following steps to generate an accessibility heatmap:
 - Break up the street map of Wellington into grid of points (I)
-- Calculate the distance from each point to the nth nearest POI (II)
-- Visualise distance as a heatmap (III)
+We now have alcohol vendors and parks described by discrete POIs and ready for calculating accessibility. Like the [previous series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), accessibility is calculated as the driving distance (meters) from each street grid point (also referred to as nodes) to the nearest POI. This driving distance is visualised as a heatmap.
 
-All the above steps are carried out by the Python package Pandana. More technical details are described in [an earlier post](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/).
+All the above steps are carried out by the Python package Pandana. Technical details are described in [an earlier post](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/).
+
+The accessibility heatmaps illustrate that both parks and alcohol vendors are well distributed (focus on the distribution of the yellow) but there are definite hot spots for both. For example, Wellington CBD is closer to alcohol vendors. This is obvious and easy to pick out from the heatmap. However, there are other non-obvious hotspots of alcohol vendots that are harder to perceive.
 
 | | |
 |--- | --- |
 |![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_27_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_28_0.png)|
 
+One way to see the relative closeness of an alcohol vendor compared to a park is with a differential accessibility map. Here, we simply take the difference between the distance to the nearest alcohol vendor and park at every street grid point. Positive values indicate greater closeness to an alchol vendor while a negative value means a park is closer. I've thresholded the map so that only the street grid points that are closest / furthest away from an alcohol vendor are seen.
 
-## Differential accessbility: playgrounds vs. alcohol
+These maps now start to show some interesting things (other than the obvious CBD proximity to alcohol!):
 
-| | |
+- The western part of the Miramar peninsula is much closer to alcohol - though part of this is bias from the airport industrial area.
+- There are also pockets of high alcohol vendor proximity in Island Bay, Johnsonville, Newtown.
+- The usual suburban suspects, that ring the city and are close to the town belt, are much closer to parks.  
+
+| Furthest from alcohol vendor | Closest to alcohol vendor |
 |--- | --- |
-|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_30_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)|
-
-![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)
+|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)|
 
 
-
-## Accessibility statistics
+In addition to spatial visualisation, we can also summarise the accessibility values as distributions. Currently, the point distribution of the POIs within the parks may not be ideal so it's not sensible to read too much into the shape of the accessibility distributions. 
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
