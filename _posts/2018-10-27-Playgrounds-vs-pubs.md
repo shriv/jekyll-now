@@ -128,7 +128,10 @@ These maps now start to show some interesting things (other than the obvious CBD
 |--- | --- |
 |![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_34_0.png)|![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_33_0.png)|
 
+# From Spatial to Bayesian
 
-In addition to spatial visualisation, we can also summarise the accessibility values as distributions. Currently, the point distribution of the POIs within the parks may not be ideal so it's not sensible to read too much into the shape of the accessibility distributions. 
+In addition to spatial visualisation, we can also summarise the accessibility values as distributions. Currently, the point distribution of the POIs within the parks may not be ideal so it's not sensible to read too much into the shape of the accessibility distributions.
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
+
+Reducing the data now enables some statistical modelling. My current thoughts are around modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - with a potential extension to the SA2 (loosely corresponding to suburb units). The aim with this analysis is to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park.
