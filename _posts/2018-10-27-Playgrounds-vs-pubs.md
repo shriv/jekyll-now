@@ -88,6 +88,7 @@ While the WCC data can be regarded as a complete and well-maintained dataset, th
 |Railway Station Reserve, Bunny Street|Bunny Street|POLYGON ((174.780368233065 -41.2795407305749, ...|
 |Seatoun Wharf and Boatsheds|Marine Parade|(POLYGON ((174.829013038144 -41.3179656818365,...|
 
+## Polygons to POIs
 Polygons are special spatial (oh homophonic joy!) data structures that can be manipulated with dedicated spatial software, e.g. the suite of GIS (Geographic Information Systems) like ESRI, ARCGis etc. Hardly one to be left out, Python also provides a suite for spatial data management and manipulation. Enter Geopandas. This library extends dataframes to spatial dataframes. Some of the extensions include methods that operate on spatial data formats. Like polygons. With these methods, it's very easy to convert a polygon to a centroid - as easy as **df['polygon_column'].centroid**. None of the rigamarole that we wen through in the previous section!
 
 Unfortunately, generating a centroid for a park is not sufficient for accessibility analysis. Some parks are massive and a centroid is not really representative of distance to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
@@ -96,6 +97,7 @@ The concept of generating many random but evenly spaced points within a park is 
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_20_0.png)
 
+## Visualising parks as POIs
 We can visualise the distribution of these points in an interactive map. The density of points isn't high but can be easily increased by altering the parameters of the Gaussian random sampling. I used the plots in the above figure for qualitative checks - that the Wellington park geography was within the ~1 $\sigma$ region of the random points. I can always go back and either increase the number of samples, or change the scale parameter to cover a greater coordinate space.
 
 <div class="iframe_container">
@@ -105,11 +107,11 @@ style="width: 100%; height: 450px;"></iframe>
 
 
 # Accessibility analysis
-- Break up the street map of Wellington into grid of points (I)
 We now have alcohol vendors and parks described by discrete POIs and ready for calculating accessibility. Like the [previous series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), accessibility is calculated as the driving distance (meters) from each street grid point (also referred to as nodes) to the nearest POI. This driving distance is visualised as a heatmap.
 
-All the above steps are carried out by the Python package Pandana. Technical details are described in [an earlier post](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/).
+Accessibility analyis made very accessible (pun intended!) by the Python package Pandana. Technical details are described in [an earlier post](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/).
 
+## Spatial distribution of playgrounds vs. pubs
 The accessibility heatmaps illustrate that both parks and alcohol vendors are well distributed (focus on the distribution of the yellow) but there are definite hot spots for both. For example, Wellington CBD is closer to alcohol vendors. This is obvious and easy to pick out from the heatmap. However, there are other non-obvious hotspots of alcohol vendots that are harder to perceive.
 
 | | |
