@@ -1,6 +1,15 @@
 This post applies accessibility analysis to compare two types of social amenities: council parks and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. While the accessibility concept is unchanged from the [fuel station analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), the post shows how we can bring together different types (and sources) of spatial data for a richer, and ultimately more insightful analysis.
 
-This post covers:
+The motivation for comparing alcohol vendors and parks are two-fold:
+
+- To evaluate local environments by distance to (societally) positive and negative amenities.
+- To build a methodology for understanding deprivation as function of the local environment.
+
+The adverse effects of proximity to alcohol are well-documented in research e.g. [1](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=7&cad=rja&uact=8&ved=2ahUKEwjMl729vs_eAhVWWisKHXoXBtwQFjAGegQIARAB&url=https%3A%2F%2Fwww.msd.govt.nz%2Fabout-msd-and-our-work%2Fpublications-resources%2Fjournals-and-magazines%2Fsocial-policy-journal%2Fspj25%2Fwhat-works-reduce-alcohol-related-harm-25-pages-118-141.html&usg=AOvVaw2whEvQ2wONiaBgg2zfORbQ). But alcohol isn't the only societal ill which determines the quality of life in a neighbourhood. There are combined effects due to the surrounding nearby amenities - and likely these effects heavily interact with each other.
+
+However, we want to start simple. And simple means assuming non-interactivity. So, we're only comparing the independent impact of alcohol vendor vs. park proximity - assuming no tradeoffs or conjoined effects between the two.
+
+To accomplish this analysis, we need to manage certain technicalities with obtaining and processing the relevant data. This post covers:
 - Getting and processing OpenStreetMap (OSM) ways and nodes into point entities.
 - Converting polygon data into points.
 - Bringing together the two different spatial sources for comparing accessibility.
@@ -124,7 +133,7 @@ These maps now start to show some interesting things (other than the obvious CBD
 
 - The western part of the Miramar peninsula is much closer to alcohol - though part of this is bias from the airport industrial area.
 - There are also pockets of high alcohol vendor proximity in Island Bay, Johnsonville, Newtown.
-- The usual suburban suspects, that ring the city and are close to the town belt, are much closer to parks.  
+- The usual suburban suspects, that ring the city and are close to the town belt, are much closer to parks.
 
 | Furthest from alcohol vendor | Closest to alcohol vendor |
 |--- | --- |
@@ -136,4 +145,4 @@ In addition to spatial visualisation, we can also summarise the accessibility va
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
-Reducing the data now enables some statistical modelling. My current thoughts are around modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - with a potential extension to the SA2 (loosely corresponding to suburb units). The aim with this analysis is to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park.
+The advantage of a reduced dataset is the ability to do statistical modelling. My current thoughts include modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - with a potential extension to the SA2 (loosely corresponding to suburb units). The aim of this analysis would be to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park.
