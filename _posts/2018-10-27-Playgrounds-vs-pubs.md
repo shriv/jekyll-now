@@ -5,9 +5,9 @@ The motivation for comparing alcohol vendors and parks are two-fold:
 - To evaluate local environments by distance to (societally) positive and negative amenities.
 - To build a methodology for understanding deprivation as function of the local environment.
 
-The adverse effects of proximity to alcohol are well-documented in research e.g. [1](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=7&cad=rja&uact=8&ved=2ahUKEwjMl729vs_eAhVWWisKHXoXBtwQFjAGegQIARAB&url=https%3A%2F%2Fwww.msd.govt.nz%2Fabout-msd-and-our-work%2Fpublications-resources%2Fjournals-and-magazines%2Fsocial-policy-journal%2Fspj25%2Fwhat-works-reduce-alcohol-related-harm-25-pages-118-141.html&usg=AOvVaw2whEvQ2wONiaBgg2zfORbQ). But alcohol isn't the only societal ill which determines the quality of life in a neighbourhood. There are combined effects due to the surrounding nearby amenities - and likely these effects heavily interact with each other.
+The adverse effects of proximity to alcohol are well-documented in research [1](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=7&cad=rja&uact=8&ved=2ahUKEwjMl729vs_eAhVWWisKHXoXBtwQFjAGegQIARAB&url=https%3A%2F%2Fwww.msd.govt.nz%2Fabout-msd-and-our-work%2Fpublications-resources%2Fjournals-and-magazines%2Fsocial-policy-journal%2Fspj25%2Fwhat-works-reduce-alcohol-related-harm-25-pages-118-141.html&usg=AOvVaw2whEvQ2wONiaBgg2zfORbQ). But alcohol isn't the only societal ill that determines the quality of life in a neighbourhood. There are also effects from other nearby amenities - and likely these amenities heavily interact with each other.
 
-However, we want to start simple. And simple means assuming non-interactivity. So, we're only comparing the independent impact of alcohol vendor vs. park proximity - assuming no tradeoffs or conjoined effects between the two.
+However, we want to start simple. And simple means assuming non-interactivity. So in this post, we're only looking at the proximity to an alcohol vendor or park proximity as if they were independent from each other i.e. assuming no tradeoffs or conjoined effects between the two.
 
 To accomplish this analysis, we need to manage certain technicalities with obtaining and processing the relevant data. This post covers:
 - Getting and processing OpenStreetMap (OSM) ways and nodes into point entities.
@@ -85,7 +85,7 @@ While we can use OSM to get data of parks in Wellington, we can utilise easily a
 - [WCC parks and reserves](https://data-wcc.opendata.arcgis.com/datasets/581d698fd2614a4c8f860c8007e4e104_0)
 - [WCC playgrounds](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)
 
-As of 18 Sept, I've only done the analysis on the polygon data of **WCC arks and reserves**. Repeating the analysis with playgrounds is a sensible option for a future iteration of this analysis as this allows us to focus on how family friendly a particular region is.
+As of 18 Sept, I've only done the analysis on the polygon data of **WCC parks and reserves**. Repeating the analysis with playgrounds is a sensible option for a future iteration of this analysis as this allows us to focus on how family friendly a particular region is.
 
 While the WCC data can be regarded as a complete and well-maintained dataset, the data format is intrinsically different to OSM. Instead of a list of node IDs, we have a polygon object.
 
@@ -98,7 +98,7 @@ While the WCC data can be regarded as a complete and well-maintained dataset, th
 |Seatoun Wharf and Boatsheds|Marine Parade|(POLYGON ((174.829013038144 -41.3179656818365,...|
 
 ## Polygons to POIs
-Polygons are special spatial (oh homophonic joy!) data structures that can be manipulated with dedicated spatial software, e.g. the suite of GIS (Geographic Information Systems) like ESRI, ARCGis etc. Hardly one to be left out, Python also provides a suite for spatial data management and manipulation. Enter Geopandas. This library extends dataframes to spatial dataframes. Some of the extensions include methods that operate on spatial data formats. Like polygons. With these methods, it's very easy to convert a polygon to a centroid - as easy as **df['polygon_column'].centroid**. None of the rigamarole that we wen through in the previous section!
+Polygons are special spatial (oh homophonic joy!) data structures that can be manipulated with dedicated spatial software, e.g. the suite of GIS (Geographic Information Systems) like ESRI, ARCGis etc. Hardly one to be left out, Python also provides a suite for spatial data management and manipulation. Enter Geopandas. This library extends dataframes to spatial dataframes. Some of the extensions include methods that operate on spatial data formats. Like polygons. With these methods, it's very easy to convert a polygon to a centroid - as easy as **df['polygon_column'].centroid**. None of the rigamarole that we went through in the previous section!
 
 Unfortunately, generating a centroid for a park is not sufficient for accessibility analysis. Some parks are massive and a centroid is not really representative of distance to the park from a nearby street. What we need are several evenly distributed points _within_ the park. With the power of geopandas, this is actually pretty easy to do.
 
@@ -145,4 +145,4 @@ In addition to spatial visualisation, we can also summarise the accessibility va
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
-The advantage of a reduced dataset is the ability to do statistical modelling. My current thoughts include modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - with a potential extension to the SA2 (loosely corresponding to suburb units). The aim of this analysis would be to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park.
+Once the POIs methodology is sorted, we have a key advantage of a reduced dataset: the ability to do statistical modelling. My current thoughts include modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - and a potential extension to the SA2 (loosely corresponding to suburb units). The aim of this analysis would be to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park. 
