@@ -2,7 +2,8 @@
 layout: post
 title: Understanding walkability in Wellington with accessibility analyses
 ---
-In his recent book, Alain Bertuad beautifully lays out the value proposition of urban life:
+
+In his recent book, Alain Bertaud beautifully lays out the value proposition of urban life:
 
 > .. allowing for core indispensable values of urban life ..
 - A commute short enough that one has time for leisure activities.
@@ -13,28 +14,46 @@ In his recent book, Alain Bertuad beautifully lays out the value proposition of 
 Order without Design, Alain Bertaud (p 19)
 </p>
 
-As a life-long urbanite with stints around the world, I have given deep thought to each of those points when evaluating a place to live - from the city itself to a suburb / area. I even moved back to New Zealand after a few years in the UK solely for #2 and #3! As I was looking for rental property, #1 and #3 were primary on my mind.
 
-The above three points are typical core values for _individuals_. For individuals in a family, #3 would grow to include other amenities like schools, medical services and retail. Metrics like the NDAI (Neighbourhood Destination Accessibility Index) offer a comprehensive representation of #3.
+As a life-long urbanite with stints around the world, I have given thought to each of these points when evaluating a place to live - from the city itself to a suburb / area. I even moved back to New Zealand after a few years in the UK solely for #2 and #3. As I was looking for rental property, #1 and #3 were primary on my mind.
 
-As urbanites, we can transport ourselves to our amenity with some form of motorised transport like a car, bus train or even hired vehicles (a taxi or Uber). We can also use active transport like walking, cycling, running, skateboarding or scooting! Active transport has become particularly relevant in the current climes.
+The above three points are typical core values for _individuals_. For individuals in a family, #3 would grow to include other amenities like schools, medical services, retail etc. A comprehensive evaluation of amenities can be found in metrics like the NDAI (Neighbourhood Destination Accessibility Index).
+
+## Accessing amenities
+As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like a car, bus, train or hired vehicles (taxi or Uber). Active transport is a _physical activity_ - like walking, cycling, running, skateboarding or even scooting! Enabling and encouraging active transport modes has become particularly relevant in the current climes.
 
 > Reducing car reliance and encouraging more transport-related physical activity are now recognised as beneficial objectives from health, social and environmental perspectives. Evidence is accumulating that a number of built environment attributes are associated with the likelihood of residents using active transport.
 
 <p style='text-align: right; font-style: italic; font-size: 90%;'>
 Measuring neighbourhood walkability in NZ cities</p>
 
-The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. In this series, I'll be restricting the analyses to walking - rather than a comprehensive view of active transport.
 
-Walkability is a measure of how conducive an area is for walking. This concept is getting increasing traction in diverse domains - from public health to urban planning - since walking is a healthy physical activity that also has economic, social and environmental advantages.
+The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport.
 
-Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for active transport.
+Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for any choice of active transport.
 
 > Valid and reliable measures of these urban attributes are critical to improving our understanding of the relationship between the built environment and transport mode use.
 
 <p style='text-align: right; font-style: italic; font-size: 90%;'>
 Measuring neighbourhood walkability in NZ cities</p>
 
-In economics terms, behavioural characteristics (of the actor) and the nature of critical urban attributes will determine the opportunity cost of walking to the required amenity - from a visit to the local grocery store, to commuting for work.
+
+## Objective measures
+Walkability is a measure of how conducive an area is for walking. This concept is gaining increasing traction in diverse domains - from public health to urban planning - since walking is a healthy physical activity that also has economic, social and environmental advantages.
+
+In economic terms, behavioural characteristics (of the actor) and the nature of critical urban attributes will determine the _opportunity cost_ of walking to the required amenity - from a visit to the local grocery store, to commuting for work.
 
 Setting aside the wide spectrum of inclinations and behavioural characteristics, we can focus on the more tractable attributes associated with walking to an amenity. To simplify _even further_, let's consider walking to the local playground.
+
+The predominant question that encapsulates opportunity cost for any transport mode, more so for active modes which take longer, is
+ > How long will it take me?
+
+ Commute time is a critical variable that depends on:
+- topology of the route(s)
+- greenery / green spaces en route
+- safety of the route
+
+ As shown by [Finnis et al.](https://www.tandfonline.com/doi/abs/10.1080/00140130701812147), characteristics of the pedestrian are also important when considering the walkability of an environment. For example:
+- luggage / other cumbersome items that need to be carried
+- accompanying dependents
+- type of shoe worn
