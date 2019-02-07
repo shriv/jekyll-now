@@ -5,14 +5,16 @@ title: Understanding walkability in Wellington with accessibility analyses
 
 In his recent book, Alain Bertaud beautifully lays out the value proposition of urban life:
 
-> .. allowing for core indispensable values of urban life ..
-- A commute short enough that one has time for leisure activities.
-- An open job market that allows one to change jobs and - through trial and error - find a job that best suits.
-- A residence from which access to social life or nature is quick and easy.
-
-<p style='text-align: right; font-style: italic; font-size: 90%;'>
-Order without Design, Alain Bertaud (p 19)
+<blockquote>
+<p  'font-size: 90%'>
+.. allowing for core indispensable values of urban life ..
+<li> A commute short enough that one has time for leisure activities.
+<li> An open job market that allows one to change jobs and - through trial and error - find a job that best suits.
+<li> A residence from which access to social life or nature is quick and easy.
 </p>
+</blockquote>
+
+<cite>– Order without Design, Alain Bertaud (p 19)</cite>
 
 
 As a life-long urbanite with stints around the world, I have given thought to each of these points when evaluating a place to live - from the city itself to a suburb / area. I even moved back to New Zealand after a few years in the UK solely for #2 and #3. As I was looking for rental property, #1 and #3 were primary on my mind.
@@ -22,10 +24,13 @@ The above three points are typical core values for _individuals_. For individual
 ## Accessing amenities
 As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like a car, bus, train or hired vehicles (taxi or Uber). Active transport is a _physical activity_ - like walking, cycling, running, skateboarding or even scooting! Enabling and encouraging active transport modes has become particularly relevant in the current climes.
 
-> Reducing car reliance and encouraging more transport-related physical activity are now recognised as beneficial objectives from health, social and environmental perspectives. Evidence is accumulating that a number of built environment attributes are associated with the likelihood of residents using active transport.
+<blockquote>
+<p  'font-size: 90%'>
+Reducing car reliance and encouraging more transport-related physical activity are now recognised as beneficial objectives from health, social and environmental perspectives. Evidence is accumulating that a number of built environment attributes are associated with the likelihood of residents using active transport.
+</p>
+</blockquote>
 
-<p style='text-align: right; font-style: italic; font-size: 90%;'>
-Measuring neighbourhood walkability in NZ cities</p>
+<cite>– Measuring neighbourhood walkability in NZ cities</cite>
 
 
 The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport.
@@ -34,8 +39,8 @@ Urban attributes are critical for understanding if people will substitute automo
 
 > Valid and reliable measures of these urban attributes are critical to improving our understanding of the relationship between the built environment and transport mode use.
 
-<p style='text-align: right; font-style: italic; font-size: 90%;'>
-Measuring neighbourhood walkability in NZ cities</p>
+<cite>– Measuring neighbourhood walkability in NZ cities</cite>
+
 
 
 ## Objective measures
