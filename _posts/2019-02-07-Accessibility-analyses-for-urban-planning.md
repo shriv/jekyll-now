@@ -6,11 +6,11 @@ title: Understanding walkability in Wellington with accessibility analyses
 In his recent book, Alain Bertaud beautifully lays out the value proposition of urban life:
 
 <blockquote>
-<p style= 'font-size: 90%;'>
+<p>
 .. allowing for core indispensable values of urban life ..
-<li> A commute short enough that one has time for leisure activities.
-<li> An open job market that allows one to change jobs and - through trial and error - find a job that best suits.
-<li> A residence from which access to social life or nature is quick and easy.
+<li> A commute short enough that one has time for leisure activities.</li>
+<li> An open job market that allows one to change jobs and - through trial and error - find a job that best suits. </li>
+<li> A residence from which access to social life or nature is quick and easy.</li>
 </p>
 </blockquote>
 
@@ -25,7 +25,7 @@ The above three points are typical core values for _individuals_. For individual
 As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like a car, bus, train or hired vehicles (taxi or Uber). Active transport is a _physical activity_ - like walking, cycling, running, skateboarding or even scooting! Enabling and encouraging active transport modes has become particularly relevant in the current climes.
 
 <blockquote>
-<p style= 'font-size: 90%;'>
+<p>
 Reducing car reliance and encouraging more transport-related physical activity are now recognised as beneficial objectives from health, social and environmental perspectives. Evidence is accumulating that a number of built environment attributes are associated with the likelihood of residents using active transport.
 </p>
 </blockquote>
