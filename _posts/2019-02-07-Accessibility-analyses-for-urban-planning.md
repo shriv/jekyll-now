@@ -6,7 +6,7 @@ title: Understanding walkability in Wellington with accessibility analyses
 In his recent book, Alain Bertaud beautifully lays out the value proposition of urban life:
 
 <blockquote>
-<p  'font-size: 90%'>
+<p style: 'font-size: 90%;'>
 .. allowing for core indispensable values of urban life ..
 <li> A commute short enough that one has time for leisure activities.
 <li> An open job market that allows one to change jobs and - through trial and error - find a job that best suits.
@@ -25,7 +25,7 @@ The above three points are typical core values for _individuals_. For individual
 As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like a car, bus, train or hired vehicles (taxi or Uber). Active transport is a _physical activity_ - like walking, cycling, running, skateboarding or even scooting! Enabling and encouraging active transport modes has become particularly relevant in the current climes.
 
 <blockquote>
-<p  'font-size: 90%'>
+<p style: 'font-size: 90%;'>
 Reducing car reliance and encouraging more transport-related physical activity are now recognised as beneficial objectives from health, social and environmental perspectives. Evidence is accumulating that a number of built environment attributes are associated with the likelihood of residents using active transport.
 </p>
 </blockquote>
@@ -33,9 +33,7 @@ Reducing car reliance and encouraging more transport-related physical activity a
 <cite>– Measuring neighbourhood walkability in NZ cities</cite>
 
 
-The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport.
-
-Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for any choice of active transport.
+The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for any choice of active transport.
 
 > Valid and reliable measures of these urban attributes are critical to improving our understanding of the relationship between the built environment and transport mode use.
 
@@ -44,7 +42,11 @@ Urban attributes are critical for understanding if people will substitute automo
 
 
 ## Objective measures
-Walkability is a measure of how conducive an area is for walking. This concept is gaining increasing traction in diverse domains - from public health to urban planning - since walking is a healthy physical activity that also has economic, social and environmental advantages.
+In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport.
+
+Walkability is a measure of how conducive an area is for walking.
+
+This concept is gaining increasing traction in diverse domains - from public health to urban planning - since walking is a healthy physical activity that also has economic, social and environmental advantages.
 
 In economic terms, behavioural characteristics (of the actor) and the nature of critical urban attributes will determine the _opportunity cost_ of walking to the required amenity - from a visit to the local grocery store, to commuting for work.
 
