@@ -3,18 +3,16 @@ layout: post
 title: Understanding walkability in Wellington with accessibility analyses
 ---
 
-In his recent book, Alain Bertaud beautifully lays out the value proposition of urban life:
+In his recent book, _Order without Design_, Alain Bertaud beautifully lays out the value proposition of urban life:
 
-<blockquote>
-<p>
-.. allowing for core indispensable values of urban life ..
+<ul style='font-size: 90%;'>
 <li> A commute short enough that one has time for leisure activities.</li>
 <li> An open job market that allows one to change jobs and - through trial and error - find a job that best suits. </li>
 <li> A residence from which access to social life or nature is quick and easy.</li>
-</p>
-</blockquote>
+</ul>
 
-<cite>– Order without Design, Alain Bertaud (p 19)</cite>
+<cite style='font-size: 90%;'>– Order without Design, Alain Bertaud (p 19)</cite>
+<br>
 
 
 As a life-long urbanite with stints around the world, I have given thought to each of these points when evaluating a place to live - from the city itself to a suburb / area. I even moved back to New Zealand after a few years in the UK solely for #2 and #3. As I was looking for rental property, #1 and #3 were primary on my mind.
@@ -31,6 +29,7 @@ Reducing car reliance and encouraging more transport-related physical activity a
 </blockquote>
 
 <cite>– Measuring neighbourhood walkability in NZ cities</cite>
+<br>
 
 
 The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for any choice of active transport.
