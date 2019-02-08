@@ -13,7 +13,7 @@ In his recent book, _Order without Design_, Alain Bertaud beautifully lays out t
 </ul>
 </blockquote>
 
-<p style='font-size: 90%; text-align: right;'>
+<p style='font-size: 90%; text-align: right; font-style:italic;'>
   - Order without Design, Alain Bertaud (p 19)
 </p>
 <br>
@@ -32,47 +32,38 @@ Reducing car reliance and encouraging more transport-related physical activity a
 </p>
 </blockquote>
 
-<p style='font-size: 90%; text-align: right;'>
+<p style='font-size: 90%; text-align: right; font-style:italic;'>
   – Measuring neighbourhood walkability in NZ cities</p>
 <br>
-
 
 The above quote from a [research paper published by Knowledge Auckland](http://knowledgeauckland.org.nz/assets/publications/Measuring_Neighbourhood_Walkability_in_New_Zealand_Cities.pdf) succinctly summarises the connection between transport, physical activity and the built urban environment. Urban attributes are critical for understanding if people will substitute automobile transport (particularly the car) for any choice of active transport.
 
 <blockquote>
 <p style='font-size: 90%;'>
-Valid and reliable measures of these urban attributes are critical to improving our understanding of the relationship between the built environment and transport mode use.
+Valid and reliable measures of these urban attributes are critical for improving our understanding of the relationship between the built environment and transport mode use.
 </p>
 </blockquote>
 
-<p style='font-size: 90%; text-align: right;'>
-  – Measuring neighbourhood walkability in NZ cities</cite>
+<p style='font-size: 90%; text-align: right; font-style:italic;'>
+  – Measuring neighbourhood walkability in NZ cities
 </p>
 
 
 ## Objective measures
-In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport.
+In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport. The combined impact of urban attributes that enable walking can be measured objectively with _Walkability_ metrics. [WalkScore](www.walkscore.com) is _an_ implementation of walkability. The Walkability Index, described in _Measuring Neighbourhood Walkability in New Zealand Cities_, is another.
 
-Walkability is a measure of how conducive an area is for walking.
-
-This concept is gaining increasing traction in diverse domains - from public health to urban planning - since walking is a healthy physical activity that also has economic, social and environmental advantages.
-
-In economic terms, behavioural characteristics (of the actor) and the nature of critical urban attributes will determine the _opportunity cost_ of walking to the required amenity - from a visit to the local grocery store, to commuting for work.
-
-Setting aside the wide spectrum of inclinations and behavioural characteristics, we can focus on the more tractable attributes associated with walking to an amenity. To simplify _even further_, let's consider walking to the local playground.
-
-The predominant question that encapsulates opportunity cost for any transport mode, more so for active modes which take longer, is
+Walkability typically presents a comprehensive picture. But at its core is the predominant question that encapsulates opportunity cost for any transport mode:
  > How long will it take me?
 
- Commute time is a critical variable that depends on:
-- topology of the route(s)
-- greenery / green spaces en route
-- safety of the route
-
- As shown by [Finnis and Walton.](https://www.tandfonline.com/doi/abs/10.1080/00140130701812147), pedestrian characteristics are also important when considering the walkability of an environment. For example:
-- luggage / other cumbersome items that need to be carried
-- accompanying dependents
-- type of shoe worn
+While we all consider itinerary-specific travel times, a general view of travel times to amenities can be quantified and visualised with [accessibility heatmaps](https://towardsdatascience.com/measuring-pedestrian-accessibility-97900f9e4d56).
 
 
-## Towards simplistic measures
+## Probing walkability in Wellington with accessibility
+This introductory post is followed by a series that will examine accessibility, by travel time, to playgrounds in Wellington. Playgrounds are an important recreation resource and are typically accessed on foot. The posts will consider just how reasonable their pedestrian accessibility actually is.
+
+The topic is narrow, but intended for covering concepts in depth. The following posts will cover:
+- The impact of topology (hills) on travel times
+- Modelling and visualising differences between suburbs
+- The impact of adding new playgrounds on travel times. Do they make a difference to the suburban average?
+
+The final post will close the series by examining how accessibility analyses can inform about the "liveability" of an urban environment. 
