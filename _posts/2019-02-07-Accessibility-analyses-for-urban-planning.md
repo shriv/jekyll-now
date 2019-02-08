@@ -1,8 +1,9 @@
 ---
 layout: post
-title: Understanding walkability in Wellington with accessibility analyses
+title: Walking to playgrounds in Wellington: Introduction
 ---
 
+## Benefits of an urban life
 In his recent book, _Order without Design_, Alain Bertaud beautifully lays out the value proposition of urban life:
 
 <blockquote>
@@ -23,8 +24,8 @@ As a life-long urbanite with stints around the world, I have given thought to ea
 
 The above three points are typical core values for _individuals_. For individuals in a family, #3 would grow to include other amenities like schools, medical services, retail etc. A comprehensive evaluation of amenities can be found in metrics like the NDAI (Neighbourhood Destination Accessibility Index).
 
-## Accessing amenities
-As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like a car, bus, train or hired vehicles (taxi or Uber). Active transport is a _physical activity_ - like walking, cycling, running, skateboarding or even scooting! Enabling and encouraging active transport modes has become particularly relevant in the current climes.
+## Accessing amenities by passive or active transport
+As urbanites, we can access an amenity with several modes of passive or active transport. Passive transport is usually _motorised_ transport like cars, buses, trains or hired vehicles (taxi or Uber). By contrast, active transport is a _physical activity_ - including walking, cycling, running, and skateboarding. Enabling and encouraging active transport modes has become particularly relevant in the current climes.
 
 <blockquote>
 <p style='font-size: 90%;'>
@@ -49,21 +50,27 @@ Valid and reliable measures of these urban attributes are critical for improving
 </p>
 
 
-## Objective measures
+## Measuring walkability to amenities
 In this series, the analyses will be constrained to walking - rather than a comprehensive view of active transport. The combined impact of urban attributes that enable walking can be measured objectively with _Walkability_ metrics. [WalkScore](www.walkscore.com) is _an_ implementation of walkability. The Walkability Index, described in _Measuring Neighbourhood Walkability in New Zealand Cities_, is another.
 
 Walkability typically presents a comprehensive picture. But at its core is the predominant question that encapsulates opportunity cost for any transport mode:
+
  > How long will it take me?
 
 While we all consider itinerary-specific travel times, a general view of travel times to amenities can be quantified and visualised with [accessibility heatmaps](https://towardsdatascience.com/measuring-pedestrian-accessibility-97900f9e4d56).
 
 
-## Probing walkability in Wellington with accessibility
-This introductory post is followed by a series that will examine accessibility, by travel time, to playgrounds in Wellington. Playgrounds are an important recreation resource and are typically accessed on foot. The posts will consider just how reasonable their pedestrian accessibility actually is.
+## Walkability by example: walking to playgrounds in Wellington
+This introductory post is followed by a series that will examine walkability to playgrounds in Wellington using accessibility analyses by travel time. Playgrounds are an important recreation resource and are typically accessed on foot. The posts will consider just how reasonable their pedestrian accessibility actually is.
 
 The topic is narrow, but intended for covering concepts in depth. The following posts will cover:
-- The impact of topology (hills) on travel times
-- Modelling and visualising differences between suburbs
-- The impact of adding new playgrounds on travel times. Do they make a difference to the suburban average?
+- The impact of topology (hills) on travel times.
+  - _How prohibitive is Wellington's topology on pedestrian accessibility?_
+- Modelling and visualising differences between suburbs.
+  - _Can we interpret pedestrian accessibility to playgrounds with a 'family-friendly' angle?_
+- Accessibility to council playgrounds vs. school playgrounds
+  - _Does the inclusion of school playgrounds improve accessibility? By how much?_
+- The impact of adding new playgrounds on travel times.
+  - _What is the impact of the new Berhampore playground on accessibility in Berhampore and nearby suburbs?_
 
-The final post will close the series by examining how accessibility analyses can inform about the "liveability" of an urban environment. 
+The final post will close the series by examining how accessibility analyses can inform about the "liveability" of an urban environment.
