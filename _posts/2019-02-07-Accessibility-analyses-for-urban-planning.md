@@ -1,8 +1,3 @@
----
-layout: post
-title: Walking to playgrounds in Wellington: Introduction
----
-
 ## Benefits of an urban life
 In his recent book, _Order without Design_, Alain Bertaud beautifully lays out the value proposition of urban life:
 
