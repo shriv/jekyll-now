@@ -1,3 +1,12 @@
+#  Walking to playgrounds in Wellington: Introduction
+This post introduces a series of walkability analyses for Wellington - with a specific focus on walking to playgrounds. The analyses will allow us to examine the following questions:
+- _How prohibitive is Wellington's topology on pedestrian accessibility to playgrounds?_
+- _Can we interpret pedestrian accessibility to playgrounds with a 'family-friendly' angle?_
+- _Does the inclusion of school playgrounds to the analysis improve accessibility? If so, by how much?_
+- _What is the impact of the new Berhampore playground on accessibility in Berhampore and nearby suburbs?_
+
+But to understand the importance of these specific questions, we need to zoom out to a more high level perspective.
+
 ## Benefits of an urban life
 In his recent book, _Order without Design_, Alain Bertaud beautifully lays out the value proposition of urban life:
 
@@ -13,7 +22,6 @@ In his recent book, _Order without Design_, Alain Bertaud beautifully lays out t
   - Order without Design, Alain Bertaud (p 19)
 </p>
 <br>
-
 
 As a life-long urbanite with stints around the world, I have given thought to each of these points when evaluating a place to live - from the city itself to a suburb / area. I even moved back to New Zealand after a few years in the UK solely for #2 and #3. As I was looking for rental property, #1 and #3 were primary on my mind.
 
