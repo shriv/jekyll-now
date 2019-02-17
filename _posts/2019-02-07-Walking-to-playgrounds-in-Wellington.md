@@ -1,4 +1,3 @@
-#  Walking to playgrounds in Wellington: Introduction
 This post introduces a series of walkability analyses for Wellington - with a specific focus on walking to playgrounds. The analyses will allow us to examine the following questions:
 - _How prohibitive is Wellington's topology on pedestrian accessibility to playgrounds?_
 - _Can we interpret pedestrian accessibility to playgrounds with a 'family-friendly' angle?_
