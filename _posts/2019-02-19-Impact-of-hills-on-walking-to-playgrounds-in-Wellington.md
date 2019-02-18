@@ -317,6 +317,7 @@ For a travel time analysis, we need to split the components of the graph.
 
 
 ## Better travel time
+
 | Flat land assumption | Accounting for Hills |
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
 
