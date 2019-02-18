@@ -19,25 +19,6 @@ To do this analysis, we need to overcome some technical aspects:
     - Include road inclines in the pandana network
     - Estimate the impact of inclination on travel time
 
-```python
-# Define bounding box (W, S, E, N) for the area of Wellington we're interested in
-# Copied from http://boundingbox.klokantech.com/
-general_bbox = [174.57,-41.38,174.84,-41.1527]
-
-# Separate out the bounding box list into 4 vertices.
-south = general_bbox[1]
-west = general_bbox[0]
-north = general_bbox[3]
-east = general_bbox[2]
-
-# Set OSM bounding box
-osm_bbox = [south, west, north, east]
-
-# centroids of bounding box
-mean_lat = np.mean([north, south])
-mean_lon = np.mean([west, east])
-```
-
 # Load datasets
 
 There are 3 key datasets used in this analysis:
@@ -54,7 +35,7 @@ There are 3 key datasets used in this analysis:
 ## WCC Playgrounds
 
 <div class="iframe_container">
-<iframe src="../images/2018-10-27-Playgrounds-vs-pubs/map_parks.html"
+<iframe src="../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/map_playgrounds.html"
 style="width: 100%; height: 450px;"></iframe>
 </div>
 
@@ -134,7 +115,7 @@ Brunsdon | 3.557 | 2.03 | 0.133
 
 ## Pandana network with travel times
 
-# Dealing with MultiDiGraph
+### Dealing with MultiDiGraph
 Osmnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
 For a travel time analysis, we need to split the components of the graph.
 
@@ -336,31 +317,16 @@ For a travel time analysis, we need to split the components of the graph.
 
 
 ## Better travel time
-
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)
-
-
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)
+| Flat land assumption | Accounting for Hills |
+| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
 
 
-
-```python
-total_hills_2 = (playground_hills_inv_accessibility[2] + playground_hills_accessibility[2])
-aa.plot_accessibility(network_hills, total_hills_2, osm_bbox,
-                      amenity_type='Council Playground', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-plt.title('Total Walking time (mins) to second nearest Council Playground in Wellington: hill accounting');
-```
+| Nearest playground | Second nearest playground |
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
 
 
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)
-
-
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png)
-
-
-
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)
+| Difference | Difference greater than 2.5 minutes |
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)|
 
 
 
