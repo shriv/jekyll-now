@@ -100,7 +100,7 @@ $$
 \nu = a\exp^{\left(-b.|slope~+~c|\right)}
 $$
 
-Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
+Note that $$slope$$ here is the dimensionless quantity: $$\frac{dh}{dx}$$ (or, rise / run). Tobler's function can also be written with slope in degrees ($$^{\circ}$$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
