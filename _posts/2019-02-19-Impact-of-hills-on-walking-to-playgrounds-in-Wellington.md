@@ -1,5 +1,3 @@
-
-# Introduction
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time. Most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
 > _How prohibitive is Wellington’s topology on pedestrian accessibility to playgrounds?_
@@ -63,23 +61,6 @@ style="width: 100%; height: 450px;"></iframe>
 ## Wellington street network: without elevation
 Getting the Wellington street network in a form suitable for accessibility analysis is trivial. The previous posts [on fuel station](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) and [playground](https://shriv.github.io/Playgrounds-vs-pubs/) acessibility cover the process in detail. Without delving into the specifics, the process basically involves calling _pandana's_ OpenStreetMap loader. And voila, we have a street network that can be consumed by _pandana_ for the accessibility analysis.
 
-
-```python
-# Set some parameters for accessibility analysis
-n = 1 # nth closest nodes to fuel station. n = 1 means the closest.
-distance = 5000.0 # distance bound for accessibility calculation; impedance limit.
-num_pois = 10
-
-# Plotting parameters
-bbox_aspect_ratio = (osm_bbox[2] - osm_bbox[0]) / (osm_bbox[3] - osm_bbox[1])
-fig_kwargs = {'facecolor':'w',
-              'figsize':(10, 10 * bbox_aspect_ratio)}
-
-bmap_kwargs={'epsg':'2193','resolution':'f'}
-plot_kwargs={'cmap':'viridis_r','s':4,'edgecolor':'none'}
-```
-
-
 The _pandana_ network above has edge weights in the default units of metres, which means that the accessibility analyses will also be in metres. We can post-hoc convert the distance units to travel time with an average walking speed of 5 km/h or, 83 m/minute if we want travel time in minutes.
 
 ## Wellington street network: with elevation
@@ -94,7 +75,6 @@ The above steps have been simplified to terse oneliners by the excellent Python 
 - Adding inclination (grade) to edges
 - Converting edge weights to travel time
 - Creating a _pandana_ network from an _osmnx_ graph
-
 
 
 ```python
@@ -118,41 +98,16 @@ G = ox.add_edge_grades(G)
 ### Wellington street elevation profile
 Osmnx can download the Google street elevations and generate an edge weight based on the node elevation values. The graph with street elevations can be shows that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
 
-
-```python
-ec = ox.get_edge_colors_by_attr(G, 'grade', cmap='viridis', num_bins=10)
-fig, ax = ox.plot_graph(G, fig_height=10, edge_color=ec, edge_linewidth=0.8, node_size=0, show=True)
-
-# Create copy of the osmnx network
-G_flat = G.copy()
-
-# Identify edges that have an absolute incline greater than 5%
-flat_land = [(u, v, k) for u, v, k, d
-             in G.edges(keys=True, data=True)
-             if not (d['grade'] > -0.05 and d['grade'] < 0.05)]
-
-# Remove hilly edges of the street network
-G_flat.remove_edges_from(flat_land)
-G_flat = ox.remove_isolated_nodes(G_flat)
-
-# Don't seem to need this
-#G_flat = ox.simplify_graph(G_flat)
-
-# Generate plot
-ec = ox.get_edge_colors_by_attr(G_flat, 'grade', cmap='viridis', num_bins=1)
-fig, ax = ox.plot_graph(G_flat, fig_height=10, edge_color=ec, edge_linewidth=0.8, node_size=0, show=True)
-```
-
 | All street inclines | Street inclines |
-|![png](output_14_0.png)} | ![png](output_15_0.png) |
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_14_0.png)} | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_15_0.png) |
 
 
 # Accessibility analysis using network with street gradients
 
 ## Reproducing existing accessibility analysis
-![png](output_19_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_19_0.png)
 
-![png](output_20_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_20_0.png)
 
 
 ## Converting distance to travel time
@@ -174,45 +129,7 @@ Function | a | b | c
 Tobler | 6 | 3.5 | 0.05
 Brunsdon | 3.557 | 2.03 | 0.133
 
-
-
-```python
-# Function parameters
-toblers = [6.0, 3.5, 0.05]
-brunsdon = [3.557, 2.03, 0.13]
-```
-
-
-```python
-street_grades = np.arange(-0.4, 0.4, 0.001)
-travel_time_df = pd.DataFrame({'grade':street_grades})
-travel_time_df['distance'] = 100
-
-travel_time_df['toblers'] = ut.hiking_time(travel_time_df['grade'], travel_time_df['distance'], params_list=toblers)
-travel_time_df['brunsdon'] = ut.hiking_time(travel_time_df['grade'], travel_time_df['distance'], params_list=brunsdon)
-travel_time_df['flat_5khr'] = ut.flat_travel_time(travel_time_df['distance'])
-travel_time_df['flat_3khr'] = ut.flat_travel_time(travel_time_df['distance'], 3.0)
-
-travel_speed_df = pd.DataFrame({'grade':street_grades})
-travel_speed_df['toblers'] = ut.hiking_speed(travel_speed_df['grade'], params_list=toblers)
-travel_speed_df['brunsdon'] = ut.hiking_speed(travel_speed_df['grade'], params_list=brunsdon)
-```
-
-
-```python
-plt.figure(figsize=(10,8))
-ax1 = plt.subplot(221)
-travel_time_df[['toblers', 'brunsdon', 'flat_5khr', 'flat_3khr', 'grade']].plot(x='grade', ax = ax1)
-plt.ylabel('Time to travel 100m (minutes)');
-
-ax2 = plt.subplot(222)
-travel_speed_df[['toblers', 'brunsdon','grade']].plot(x='grade', ax = ax2)
-plt.ylabel('Speed (km/h)');
-
-```
-
-
-![png](output_24_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_24_0.png)
 
 
 ## Pandana network with travel times
@@ -221,44 +138,9 @@ plt.ylabel('Speed (km/h)');
 Osmnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
 For a travel time analysis, we need to split the components of the graph.
 
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_27_0.png)
 
-```python
-# Extract edge grades from osmnx network object
-edge_grades = [data['grade'] for u, v, k, data in ox.get_undirected(G).edges(keys=True, data=True)]
-
-# Plot distribution of road and walkway gradients in Wellington
-plt.hist(edge_grades, bins=1000);
-plt.xlim(-0.5,0.5);
-plt.xlabel('Grade');
-plt.title("Wellington roads and walkway gradients: $\mu$ = {:.3f}, $\sigma$= {:.2f}".format(np.mean(edge_grades),
-                                                                                            np.std(edge_grades)));
-```
-
-
-![png](output_27_0.png)
-
-
-
-```python
-G_undir = G.to_undirected()
-graph_undir_df = ox.graph_to_gdfs(G_undir)
-nodes_gdfs_undir = graph_undir_df[0]
-edges_gdfs_undir = graph_undir_df[1]
-
-# Get the inverse
-edges_gdfs_undir_inv = edges_gdfs_undir.copy()
-edges_gdfs_undir_inv['u'] = edges_gdfs_undir['v']
-edges_gdfs_undir_inv['v'] = edges_gdfs_undir['u']
-edges_gdfs_undir_inv['grade'] = -edges_gdfs_undir['grade']
-```
-
-
-```python
-edges_gdfs_undir.head(2)
-```
-
-
-
+#### Undirected graph
 
 <div>
 <style scoped>
@@ -355,14 +237,7 @@ edges_gdfs_undir.head(2)
 </div>
 
 
-
-
-```python
-edges_gdfs_undir_inv.head(2)
-```
-
-
-
+#### Inverse graph
 
 <div>
 <style scoped>
@@ -462,73 +337,10 @@ edges_gdfs_undir_inv.head(2)
 
 ## Better travel time
 
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)
 
 
-```python
-
-# Add the travel times
-edges_gdfs_undir['time_5khr'] = ut.flat_travel_time(edges_gdfs_undir['length'])
-edges_gdfs_undir['time_tobler'] = ut.hiking_time(edges_gdfs_undir['grade'], edges_gdfs_undir['length'], params_list=toblers)
-edges_gdfs_undir_inv['time_tobler'] = ut.hiking_time(edges_gdfs_undir_inv['grade'], edges_gdfs_undir_inv['length'], params_list=toblers)
-
-# Create the expected indices for pandana edges
-edges_gdfs_undir['from_idx'] = edges_gdfs_undir['u']
-edges_gdfs_undir['to_idx'] = edges_gdfs_undir['v']
-edges_gdfs_undir= edges_gdfs_undir.set_index(['from_idx', 'to_idx'])
-edges_gdfs_undir.index.names= ['','']
-
-# Create the expected indices for pandana edges: for the inverse
-edges_gdfs_undir_inv['from_idx'] = edges_gdfs_undir_inv['u']
-edges_gdfs_undir_inv['to_idx'] = edges_gdfs_undir_inv['v']
-edges_gdfs_undir_inv= edges_gdfs_undir_inv.set_index(['from_idx', 'to_idx'])
-edges_gdfs_undir_inv.index.names= ['','']
-
-# Create pandana network objects for flat and hilly terrain travel times
-network = pa.Network(nodes_gdfs['x'], nodes_gdfs['y'],
-                     edges_gdfs_undir['u'], edges_gdfs_undir['v'],
-                     edges_gdfs_undir[['time_5khr']])
-
-network_hills = pa.Network(nodes_gdfs['x'], nodes_gdfs['y'],
-                           edges_gdfs_undir['u'], edges_gdfs_undir['v'],
-                           edges_gdfs_undir[['time_tobler']])
-
-network_hills_inv = pa.Network(nodes_gdfs['x'], nodes_gdfs['y'],
-                               edges_gdfs_undir_inv['u'], edges_gdfs_undir_inv['v'],
-                               edges_gdfs_undir_inv[['time_tobler']])
-```
-
-
-```python
-# Calculate accessibility
-playground_accessibility = aa.get_accessibility(network, wcc_playgrounds, distance=30, num_pois=10)
-playground_hills_accessibility = aa.get_accessibility(network_hills, wcc_playgrounds, distance=30, num_pois=10)
-playground_hills_inv_accessibility = aa.get_accessibility(network_hills_inv, wcc_playgrounds, distance=30, num_pois=10)
-```
-
-
-```python
-total_flat = (playground_accessibility[1] + playground_accessibility[1])
-aa.plot_accessibility(network, total_flat, osm_bbox,
-                      amenity_type='Council Playground', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-plt.title('Total Walking time (mins) to nearest Council Playground in Wellington: flat assumption');
-```
-
-
-![png](output_34_0.png)
-
-
-
-```python
-total_hills_1 = (playground_hills_inv_accessibility[1] + playground_hills_accessibility[1])
-aa.plot_accessibility(network_hills, total_hills_1, osm_bbox,
-                      amenity_type='Council Playground', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-plt.title('Total Walking time (mins) to nearest Council Playground in Wellington: hill accounting');
-```
-
-
-![png](output_35_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)
 
 
 
@@ -541,67 +353,16 @@ plt.title('Total Walking time (mins) to second nearest Council Playground in Wel
 ```
 
 
-![png](output_36_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)
+
+
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png)
 
 
 
-```python
-diff_hills = total_hills_1 - total_flat
-aa.plot_accessibility(network_hills, diff_hills, osm_bbox,
-                      amenity_type='Council Playground', place_name='Wellington',
-                      fig_kwargs=fig_kwargs, plot_kwargs=plot_kwargs, bmap_kwargs=bmap_kwargs)
-plt.title('Difference in walking time (mins) due to hilly topology of Wellington');
-```
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)
 
 
-![png](output_37_0.png)
-
-
-
-```python
-# Plotting parameters for differential plot
-diff_kwargs = plot_kwargs.copy()
-bmap_kwargs={'epsg':'2193','resolution':'f'}
-cbar_kwargs = {'location': 'right'}
-
-# Get filtered network for plotting
-network_filt, access_filt, orig_nodes = aa.filtered_accessibility_network(network_hills,
-                                                                          diff_hills[diff_hills > 2])
-
-bmap = aa.plot_accessibility(network_filt, access_filt, osm_bbox,
-                             amenity_type="",
-                             place_name='Wellington',
-                             fig_kwargs=fig_kwargs, plot_kwargs=diff_kwargs,
-                             bmap_kwargs=bmap_kwargs, cbar_kwargs=cbar_kwargs)
-plt.title('Difference in walking time (mins) due to hilly topology of Wellington');
-
-# Get original network
-network_hills.nodes_df = orig_nodes
-```
-
-
-![png](output_38_0.png)
-
-
-
-```python
-# Set some parameters for accessibility analysis
-n = 1 # nth closest nodes to fuel station. n = 1 means the closest.
-distance = 5000.0 # distance bound for accessibility calculation; impedance limit.
-num_pois = 10
-
-# Plotting parameters
-bbox_aspect_ratio = (osm_bbox[2] - osm_bbox[0]) / (osm_bbox[3] - osm_bbox[1])
-fig_kwargs = {'facecolor':'w',
-              'figsize':(10, 10 * bbox_aspect_ratio)}
-#plot_kwargs = {'s':5,
-#               'alpha':0.9,
-#               'cmap':'viridis_r',
-#               'edgecolor':'none'}
-
-bmap_kwargs={'epsg':'2193','resolution':'f'}
-plot_kwargs={'cmap':'viridis_r','s':4,'edgecolor':'none'}
-```
 
 # Validating the accessibility analysis
 
@@ -609,121 +370,33 @@ plot_kwargs={'cmap':'viridis_r','s':4,'edgecolor':'none'}
 - [Uphill from the park](https://www.google.co.nz/maps/dir/Kipling+Street+Play+Area,+Johnsonville,+Wellington/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/@-41.2287819,174.7921861,15.94z/data=!4m14!4m13!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!3e2): 14 minutes
 - [Downhill to the park](https://www.google.co.nz/maps/dir/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/Kipling+Street+Play+Area,+Johnsonville,+Wellington/@-41.2287819,174.7921861,15.94z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!3e2): 11 minutes
 
-
-
-```python
-'110 John Sims Drive to Kipling Street Play Area: \
-Street distance is {:4.0f} m. \
-At 5km/hr, it takes {:4.1f} mins. \
-Going to the park (downhill) takes {:4.1f} mins. \
-Coming back from the park (uphill) takes {:4.1f} mins'.format(playground_accessibility_flat.loc[6083853567][1],
-                                                              playground_accessibility.loc[6083853567][1],
-                                                              playground_hills_accessibility.loc[6083853567][1],
-                                                              playground_hills_inv_accessibility.loc[6083853567][1])
-```
-
-
-
-
     '110 John Sims Drive to Kipling Street Play Area: Street distance is  925 m. At 5km/hr, it takes 11.1 mins. Going to the park (downhill) takes 11.9 mins. Coming back from the park (uphill) takes 12.3 mins'
 
 
 
 ## Park access isochrones
 
-
-```python
-center_node = ox.get_nearest_node(G, (wcc_playgrounds.ix[32]['lat'], wcc_playgrounds.ix[32]['lon']))
-
-trip_times = [5, 10, 15, 20, 25, 30]
-for u, v, k, data in G.edges(data=True, keys=True):
-    data['time'] =  ut.hiking_time(data['grade'], data['length'], params_list=toblers)
-
-iso_colors = ox.get_colors(n=len(trip_times), cmap='Reds', start=0.3, return_hex=True)
-# color the nodes according to isochrone then plot the street network
-node_colors = {}
-for trip_time, color in zip(sorted(trip_times, reverse=True), iso_colors):
-    subgraph = nx.ego_graph(G, center_node, radius=trip_time, distance='time')
-    for node in subgraph.nodes():
-        node_colors[node] = color
-nc = [node_colors[node] if node in node_colors else 'none' for node in G.nodes()]
-ns = [10 if node in node_colors else 0 for node in G.nodes()]
-fig, ax = ox.plot_graph(G, fig_height=8, node_color=nc, node_size=ns, node_alpha=0.8, node_zorder=2)
-```
-
-
-![png](output_43_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_43_0.png)
 
 
 [110 John Sims Drive centred map with radius ~1000m](https://www.google.co.nz/maps/place/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/@-41.2293256,174.7884295,1008m/data=!3m1!1e3!4m5!3m4!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!8m2!3d-41.229301!4d174.7921832)
 
 
 
-```python
-G_sub = ox.graph_from_point((-41.2292681, 174.7919818), distance=1000, network_type='walk')
-ox.plot_graph(G_sub)
-```
-
-
-![png](output_45_0.png)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_45_0.png)
 
 
 
 
 
-    (<Figure size 529.464x432 with 1 Axes>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x1a3184fc18>)
+
+
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_46_0.png)
 
 
 
 
-```python
-G_sub = ox.graph_from_point((-41.2292681, 174.7919818), distance=5000, network_type='walk')
-
-# Add elevation values for the nodes in the OSMNX graph
-G_sub = ox.add_node_elevations(G_sub, api_key=google_elevation_api_key)
-
-# Generate an edge grade (inclination) with the elevations at the nodes
-G_sub = ox.add_edge_grades(G_sub)
-
-
-center_node = ox.get_nearest_node(G_sub, (wcc_playgrounds.ix[32]['lat'], wcc_playgrounds.ix[32]['lon']))
-
-trip_times = [5, 10, 15, 20, 25, 30]
-for u, v, k, data in G_sub.edges(data=True, keys=True):
-    data['time'] =  ut.hiking_time(data['grade'], data['length'], params_list=toblers)
-
-iso_colors = ox.get_colors(n=len(trip_times), cmap='Reds', start=0.3, return_hex=True)
-# color the nodes according to isochrone then plot the street network
-node_colors = {}
-for trip_time, color in zip(sorted(trip_times, reverse=True), iso_colors):
-    subgraph = nx.ego_graph(G_sub, center_node, radius=trip_time, distance='time')
-    for node in subgraph.nodes():
-        node_colors[node] = color
-nc = [node_colors[node] if node in node_colors else 'none' for node in G_sub.nodes()]
-ns = [10 if node in node_colors else 0 for node in G_sub.nodes()]
-fig, ax = ox.plot_graph(G_sub, fig_height=8, node_color=nc, node_size=ns, node_alpha=0.8, node_zorder=2)
-```
-
-
-![png](output_46_0.png)
-
-
-
-```python
-G_sub = ox.graph_from_point((-41.2292681, 174.7919818), distance=1000, network_type='drive')
-ox.plot_graph(G_sub)
-```
-
-
-![png](output_47_0.png)
-
-
-
-
-
-    (<Figure size 338.715x432 with 1 Axes>,
-     <matplotlib.axes._subplots.AxesSubplot at 0x1a468ca4e0>)
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_47_0.png)
 
 
 
