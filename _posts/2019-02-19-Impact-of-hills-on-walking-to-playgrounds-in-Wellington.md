@@ -4,8 +4,8 @@ In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calcul
 
 Playgrounds are key amenities that can impact the quality of life for young families. Since they are also frequently accessed on foot, it's important to consider how accessible they really are. Particularly for suburbs with a high residential fraction.   
 
-# Technical details
-To do this analysis, we need to overcome some technical aspects:
+## Technical details
+We need to overcome some technical issues to do this analysis:
 - Re-do accessibility metric: from distance to travel time
 - Get elevation data for roads and walkways
 - Convert elevation to road / walkway inclination
@@ -15,23 +15,22 @@ To do this analysis, we need to overcome some technical aspects:
 
 ## Datasets
 
-Three key datasets are used in this analysis:
+Two key datasets are used in this analysis:
 - *WCC playground locations*: downloaded as a zip file
-- *Suburb boundaries for Wellington*
-    - StatsNZ 2013 Statistical Area 2 boundaries: downloaded as a geodatabase (gdb)
-    - StatsNZ 2013 meshblocks: downloaded  as a geodatabase (gdb). Used for easy filtering of the Statistical Area 2 boundaries
 - *Wellington street network*
     - without elevation: using OpenStreetMap via *pandana*
     - with elevation: using OpenStreetMap and Google Elevation API via *osmnx*
 
 
-## WCC Playgrounds
+### WCC Playgrounds
+The WCC playground data is easy to consume as it's just a set of geolocations. The form is appropriate for accessibility analysis too since 'Points of Interest' (POIs) are always single, representative coordinates (rather than polygons).
+
 <div class="iframe_container">
 <iframe src="../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/map_playgrounds.html"
 style="width: 100%; height: 450px;"></iframe>
 </div>
 
-## Wellington street network: without elevation
+### Wellington street network: without elevation
 Getting the Wellington street network in a form suitable for accessibility analysis is trivial. The previous posts [on fuel station](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) and [playground](https://shriv.github.io/Playgrounds-vs-pubs/) acessibility cover the process in detail. Without delving into the specifics, the process basically involves calling _pandana's_ OpenStreetMap loader. And voila, we have a street network that can be consumed by _pandana_ for the accessibility analysis.
 
 The _pandana_ network above has edge weights in the default units of metres, which means that the accessibility analyses will also be in metres. We can post-hoc convert the distance units to travel time with an average walking speed of 5 km/h or, 83 m/minute if we want travel time in minutes.
@@ -46,7 +45,7 @@ The accessibility data can be extracted and plotted as a histogram. Here, we see
 |---|---|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_20_0.png)| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_49_0.png)|
 
-## Wellington street network: with elevation
+### Wellington street network: with elevation
 Elevation information can be retrieved with the Google Elevation API to enrich both the nodes and edges of the network. For the nodes, we can just get the elevation at a single location. Elevation at the connecting nodes of an edge can be used to derive the _inclination_.
 
 The above steps have been simplified to terse oneliners by the excellent Python package, _osmnx_. The steps to generate a _pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/).
@@ -78,40 +77,13 @@ G = ox.add_node_elevations(G, api_key=google_elevation_api_key)
 G = ox.add_edge_grades(G)
 ```
 
-### Wellington street elevation profile
+#### Wellington street elevation profile
 Osmnx can download the Google street elevations and generate an edge weight based on the node elevation values. The graph with street elevations can be shows that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
 
 | All street inclines | "Flat" regions (within 5% gradient) |
 | --- | ---|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_14_0.png)| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_15_0.png) |
 
-
-# Accessibility analysis using network with street gradients
-
-
-## Converting distance to travel time
-
-A [simple search](https://books.google.co.nz/books?id=SyulBQAAQBAJ&pg=PA160&lpg=PA160&dq=walking+speed+gradient+accessibility&source=bl&ots=iKmtg73TIV&sig=ACfU3U3N5CAAtqoA0QzfSpJubylfjneWtA&hl=en&sa=X&ved=2ahUKEwiqqeKj3YTgAhVQXn0KHdSFDWsQ6AEwAHoECAkQAQ#v=onepage&q=walking%20speed%20gradient%20accessibility&f=false) led me to [Naismith's Rule](https://en.wikipedia.org/wiki/Naismith%27s_rule) and then to [Tobler's Hiking Function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function) to calculate travel time as a function of distance and gradient.
-
-I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $$\nu$$, is a shifted exponential with three parameters: $$a$$, $$b$$ and $$c$$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
-
-$$
-\nu = a\exp^{\left(-b.|slope~+~c|\right)}
-$$
-
-Note that $$slope$$ here is the dimensionless quantity: $$\frac{dh}{dx}$$ (or, rise / run). Tobler's function can also be written with slope in degrees ($$^{\circ}$$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
-
-While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
-
-Function | a | b | c
---- | --- | --- | ---
-Tobler | 6 | 3.5 | 0.05
-Brunsdon | 3.557 | 2.03 | 0.133
-
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_24_0.png)
-
-
-## Pandana network with travel times
 
 ### Dealing with MultiDiGraph
 Osmnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
@@ -134,19 +106,33 @@ For a travel time analysis, we need to split the components of the graph.
 |LINESTRING (174.7921165 -41.2280406, 174.79263...|0.0475|0.0475|65.443|50|Truscott Avenue|1259072943|1259077823|
 
 
-## Better travel time
+### Converting incline distance to travel time
 
+A [simple search](https://books.google.co.nz/books?id=SyulBQAAQBAJ&pg=PA160&lpg=PA160&dq=walking+speed+gradient+accessibility&source=bl&ots=iKmtg73TIV&sig=ACfU3U3N5CAAtqoA0QzfSpJubylfjneWtA&hl=en&sa=X&ved=2ahUKEwiqqeKj3YTgAhVQXn0KHdSFDWsQ6AEwAHoECAkQAQ#v=onepage&q=walking%20speed%20gradient%20accessibility&f=false) led me to [Naismith's Rule](https://en.wikipedia.org/wiki/Naismith%27s_rule) and then to [Tobler's Hiking Function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function) to calculate travel time as a function of distance and gradient.
+
+I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $$\nu$$, is a shifted exponential with three parameters: $$a$$, $$b$$ and $$c$$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
+
+$$
+\nu = a\exp^{\left(-b.|slope~+~c|\right)}
+$$
+
+Note that $$slope$$ here is the dimensionless quantity: $$\frac{dh}{dx}$$ (or, rise / run). Tobler's function can also be written with slope in degrees ($$^{\circ}$$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
+
+While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
+
+Function | a | b | c
+--- | --- | --- | ---
+Tobler | 6 | 3.5 | 0.05
+Brunsdon | 3.557 | 2.03 | 0.133
+
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_24_0.png)
+
+
+## Accessibility analysis for hilly Wellington
 
 | Flat land assumption | Accounting for Hills |
 |--- |--- |
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
-
-
-
-| Nearest playground | Second nearest playground|
-|--- |---|
-|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
-
 
 
 | Difference | Difference > 2.5 minutes |
@@ -155,9 +141,14 @@ For a travel time analysis, we need to split the components of the graph.
 
 
 
-# Validating the accessibility analysis
+| Nearest playground | Second nearest playground|
+|--- |---|
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
 
-## With Google Maps
+
+## Validating the accessibility analysis
+
+### With Google Maps
 [110 John Sim's Drive](https://www.openstreetmap.org/node/6083853567) to Kipling St Play Area in Johnsonville.
 - [Uphill from the park](https://www.google.co.nz/maps/dir/Kipling+Street+Play+Area,+Johnsonville,+Wellington/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/@-41.2287819,174.7921861,15.94z/data=!4m14!4m13!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!3e2): 14 minutes
 - [Downhill to the park](https://www.google.co.nz/maps/dir/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/Kipling+Street+Play+Area,+Johnsonville,+Wellington/@-41.2287819,174.7921861,15.94z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!3e2): 11 minutes
@@ -169,7 +160,7 @@ The current analysis functions (using Google Elevation, OSM street network and T
 We don't expect the OSM street data to differ much from Google (at least for a city!) and the elevation data should be identical. The key difference is likely the distance to time conversion. Tobler's time conversion is definitely an ambitious target - especially for families walking with young children. For a more accurate analysis, we'd need recommendations of a more sensible top speed and hill climbing speed retardation from Urban Planners.
 
 
-## With Graphhopper Routing API
+### With Graphhopper Routing API
 
 Visualised [here](https://www.openstreetmap.org/directions?engine=graphhopper_foot&route=-41.28228%2C174.76145%3B-41.28352%2C174.76559#map=17/-41.28247/174.76603)
 
