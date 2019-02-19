@@ -15,7 +15,7 @@ To do this analysis, we need to overcome some technical aspects:
 
 ## Datasets
 
-There are 3 key datasets used in this analysis:
+Three key datasets are used in this analysis:
 - *WCC playground locations*: downloaded as a zip file
 - *Suburb boundaries for Wellington*
     - StatsNZ 2013 Statistical Area 2 boundaries: downloaded as a geodatabase (gdb)
@@ -36,16 +36,15 @@ Getting the Wellington street network in a form suitable for accessibility analy
 
 The _pandana_ network above has edge weights in the default units of metres, which means that the accessibility analyses will also be in metres. We can post-hoc convert the distance units to travel time with an average walking speed of 5 km/h or, 83 m/minute if we want travel time in minutes.
 
-*Changes needed*
-- Convert 5000m threshold
-- Histogram of travel times?
-
 |Accessibility as distance | Accessibility as travel time |
 |---|---|
-|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_19_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_48_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|
 
+The accessibility data can be extracted and plotted as a histogram. Here, we see that the average distance to a playground is 700 m, or an 8 minute walk.
 
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_20_0.png)
+| Distance distribution | Time distribution |
+|---|---|
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_20_0.png)| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_49_0.png)|
 
 ## Wellington street network: with elevation
 Elevation information can be retrieved with the Google Elevation API to enrich both the nodes and edges of the network. For the nodes, we can just get the elevation at a single location. Elevation at the connecting nodes of an edge can be used to derive the _inclination_.
@@ -94,7 +93,7 @@ Osmnx can download the Google street elevations and generate an edge weight base
 
 A [simple search](https://books.google.co.nz/books?id=SyulBQAAQBAJ&pg=PA160&lpg=PA160&dq=walking+speed+gradient+accessibility&source=bl&ots=iKmtg73TIV&sig=ACfU3U3N5CAAtqoA0QzfSpJubylfjneWtA&hl=en&sa=X&ved=2ahUKEwiqqeKj3YTgAhVQXn0KHdSFDWsQ6AEwAHoECAkQAQ#v=onepage&q=walking%20speed%20gradient%20accessibility&f=false) led me to [Naismith's Rule](https://en.wikipedia.org/wiki/Naismith%27s_rule) and then to [Tobler's Hiking Function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function) to calculate travel time as a function of distance and gradient.
 
-I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $\nu$, is a shifted exponential with three parameters: $a$, $b$ and $c$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
+I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $$\nu$$, is a shifted exponential with three parameters: $$a$$, $$b$$ and $$c$$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
 
 $$
 \nu = a\exp^{\left(-b.|slope~+~c|\right)}
@@ -128,6 +127,7 @@ For a travel time analysis, we need to split the components of the graph.
 |LINESTRING (174.7921165 -41.2280406, 174.79263...|-0.0475|0.0475|65.443|50|Truscott Avenue|1259077823|1259072943|
 
 #### Inverse graph
+
 |geometry|grade|grade_abs|length|maxspeed|name|u|v|
 |--- |--- |--- |--- |--- |--- |--- |--- |
 |LINESTRING (174.7934694 -41.2275193, 174.79300...|-0.1319|0.1319|66.800|50|Truscott Avenue|1259072929|1259077823|
