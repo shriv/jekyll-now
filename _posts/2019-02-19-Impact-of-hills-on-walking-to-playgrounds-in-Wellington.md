@@ -110,18 +110,20 @@ For a travel time analysis, we need to split the components of the graph.
 
 A [simple search](https://books.google.co.nz/books?id=SyulBQAAQBAJ&pg=PA160&lpg=PA160&dq=walking+speed+gradient+accessibility&source=bl&ots=iKmtg73TIV&sig=ACfU3U3N5CAAtqoA0QzfSpJubylfjneWtA&hl=en&sa=X&ved=2ahUKEwiqqeKj3YTgAhVQXn0KHdSFDWsQ6AEwAHoECAkQAQ#v=onepage&q=walking%20speed%20gradient%20accessibility&f=false) led me to [Naismith's Rule](https://en.wikipedia.org/wiki/Naismith%27s_rule) and then to [Tobler's Hiking Function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function) to calculate travel time as a function of distance and gradient.
 
-I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $$\nu$$, is a shifted exponential with three parameters: $$a$$, $$b$$ and $$c$$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
+I've chosen to go with Tobler's without too much rationale other than its simple form. Tobler's hiking function for speed, $\nu$, is a shifted exponential with three parameters: $a$, $b$ and $c$ which give the fastest speed, speed retardation due to gradient and shift from zero respectively.
 
 $$
 \nu = a\exp^{\left(-b.|slope~+~c|\right)}
 $$
 
-Note that $$slope$$ here is the dimensionless quantity: $$\frac{dh}{dx}$$ (or, rise / run). Tobler's function can also be written with slope in degrees ($$^{\circ}$$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
+Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
 Function | a | b | c
 --- | --- | --- | ---
+_Meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
+_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient | \nu_{max}$
 Tobler | 6 | 3.5 | 0.05
 Brunsdon | 3.557 | 2.03 | 0.133
 
