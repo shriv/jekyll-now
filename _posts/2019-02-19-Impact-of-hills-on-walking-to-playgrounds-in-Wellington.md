@@ -2,7 +2,7 @@
 mathjax: true
 ---
 
-In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time. Most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
+In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
 > _How prohibitive is Wellington’s topology on pedestrian accessibility to playgrounds?_
 
@@ -122,12 +122,15 @@ $$
 
 Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
+- | a | b | c
+--- | --- | --- | ---
+_Physical meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
+_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient|\nu_{max}$
+
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
 Function | a | b | c
 --- | --- | --- | ---
-_Meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
-_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient | \nu_{max}$
 Tobler | 6 | 3.5 | 0.05
 Brunsdon | 3.557 | 2.03 | 0.133
 
