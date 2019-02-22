@@ -95,19 +95,16 @@ For a travel time analysis, we need to split the components of the graph.
 
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_27_0.png)
 
-#### Undirected graph
+The caveat of this split is that we have to calculate _total travel time_ rather than one way. Accessibility analysis doesn't prescribe a starting point so we have to take both to _and_ from journeys for the complete impact of hills.
 
-|geometry|grade|grade_abs|length|maxspeed|name|u|v|
-|--- |--- |--- |--- |--- |--- |--- |--- |
-|LINESTRING (174.7934694 -41.2275193, 174.79300...|0.1319|0.1319|66.800|50|Truscott Avenue|1259077823|1259072929|
-|LINESTRING (174.7921165 -41.2280406, 174.79263...|-0.0475|0.0475|65.443|50|Truscott Avenue|1259077823|1259072943|
+The street network can be easily split to only give unique _(u,v)_ in one graph and the inverse, _(v,u)_, in another. Accessibility analysis is performed for _each_ network and then summed together to give the total accessibility.
 
-#### Inverse graph
-
-|geometry|grade|grade_abs|length|maxspeed|name|u|v|
-|--- |--- |--- |--- |--- |--- |--- |--- |
-|LINESTRING (174.7934694 -41.2275193, 174.79300...|-0.1319|0.1319|66.800|50|Truscott Avenue|1259072929|1259077823|
-|LINESTRING (174.7921165 -41.2280406, 174.79263...|0.0475|0.0475|65.443|50|Truscott Avenue|1259072943|1259077823|
+|graph|geometry|grade|grade_abs|length|maxspeed|name|u|v|
+|---|--- |--- |--- |--- |--- |--- |--- |--- |
+|Undirected (u,v)|LINESTRING (174.7934694 -41.2275193, 174.79300...|0.1319|0.1319|66.800|50|Truscott Avenue|1259077823|1259072929|
+|Undirected (u,v)|LINESTRING (174.7921165 -41.2280406, 174.79263...|-0.0475|0.0475|65.443|50|Truscott Avenue|1259077823|1259072943|
+|Undirected inverse (v,u)|LINESTRING (174.7934694 -41.2275193, 174.79300...|-0.1319|0.1319|66.800|50|Truscott Avenue|1259072929|1259077823|
+|Undirected inverse (v,u)|LINESTRING (174.7921165 -41.2280406, 174.79263...|0.0475|0.0475|65.443|50|Truscott Avenue|1259072943|1259077823|
 
 
 ### Converting incline distance to travel time
@@ -125,7 +122,7 @@ Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise 
 - | a | b | c
 --- | --- | --- | ---
 _Physical meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
-_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient|\nu_{max}$
+_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient\|\nu_{max}$
 
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
@@ -138,24 +135,35 @@ Brunsdon | 3.557 | 2.03 | 0.133
 
 
 ## Accessibility analysis for hilly Wellington
+With a street network of gradient values converted to travel time, we can now compare the impact of hills on accessibility. Note that we're looking at _total_ travel times here since we have to account for uphill and downhill journeys for an accurate impact of street gradients on travel time.
+
+The main accessibility heatmap for hilly Wellington doesn't look too different to the flat land assumption.
 
 | Flat land assumption | Accounting for Hills |
 |--- |--- |
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
 
+We can only start seeing changes due to the hill when we consider a differential heatmap. Anyone familiar with the topology of Wellington will immediately see that areas around the slopes of the Town Belt and the Western Hills are affected.  
 
-| Difference | Difference > 2.5 minutes |
+
+| Difference | Difference > 2 minutes |
 |--- |---|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)|
 
 
+It's worth noting that while accessibility to playgrounds is worse due to hills, the total travel time in hilly areas only increases by 11% on average. Note, here we are are considering a hilly area as one where the absolute average gradient is more 5%.
 
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_50_0.png)
+
+
+The impact of Wellington's topology is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
 | Nearest playground | Second nearest playground|
 |--- |---|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
 
-
 ## Validating the accessibility analysis
+We've see how Wellington's topology affects travel times to playgrounds. A quick validation of the approach can be done with Google Maps. A more complex validation can be done Graphhopper.  
+
 
 ### With Google Maps
 [110 John Sim's Drive](https://www.openstreetmap.org/node/6083853567) to Kipling St Play Area in Johnsonville.
@@ -170,26 +178,28 @@ We don't expect the OSM street data to differ much from Google (at least for a c
 
 
 ### With Graphhopper Routing API
+Graphhopper is a powerful engine with a fantastic routing API. It's easy to [register for a free licence](https://www.graphhopper.com/pricing/) and get an API key. Since I'm only using the API for validation, I can stay well within the free limit.
 
-Visualised [here](https://www.openstreetmap.org/directions?engine=graphhopper_foot&route=-41.28228%2C174.76145%3B-41.28352%2C174.76559#map=17/-41.28247/174.76603)
+Results from the API request can be visualised both on Graphhopper Maps and OpenStreetMap directions.
 
+- Downhill route visualised [here](https://www.openstreetmap.org/directions?engine=graphhopper_foot&route=-41.2292%2C174.7922%3B-41.2253%2C174.7976#map=17/-41.22708/174.79538) and [here](https://graphhopper.com/maps/?point=-41.2292%2C174.79216&point=-41.22527%2C174.79759&locale=en-us&vehicle=foot&weighting=fastest&elevation=true&use_miles=false&layer=Omniscale)
+
+- Uphill route visualised [here](https://www.openstreetmap.org/directions?engine=graphhopper_foot&route=-41.22527%2C174.79759%3B-41.22920%2C174.79216) and [here](https://graphhopper.com/maps/?point=-41.22527%2C174.79759&point=-41.2292%2C174.79216&locale=en-us&vehicle=foot&weighting=fastest&elevation=true&use_miles=false&layer=Omniscale)
+
+Crafting the API request is quite simple - the request parameters are detailed [here](https://github.com/graphhopper/graphhopper/blob/0.11/docs/web/api-doc.md). The resultant JSON can be parsed and used for further analysis.
+
+I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against Google maps. Perhaps even reverse engineer the gradient to speed conversion Google uses. 
 
 ```python
 graph_hopper_api_key = data_loaded['graph_hopper_api_key'][0]
-graph_hopper_query = "https://graphhopper.com/api/1/route?point=-41.28228,174.76145&point=-41.28352,174.76559&vehicle=foot&points_encoded=false&locale=nz&key=" + graph_hopper_api_key
+graph_hopper_query = "https://graphhopper.com/api/1/route?point=-41.2292,174.7922&point=-41.2253,174.7976&vehicle=foot&points_encoded=false&locale=nz&key=" + graph_hopper_api_key
 ```
-
 
 ```bash
 %%bash -s "$graph_hopper_query"
 curl $1
 ```
-
-    {"hints":{"visited_nodes.average":"44.0","visited_nodes.sum":"44"},"info":{"copyrights":["GraphHopper","OpenStreetMap contributors"],"took":11},"paths":[{"distance":714.815,"weight":423.840217,"time":514662,"transfers":0,"points_encoded":false,"bbox":[174.761453,-41.283523,174.765629,-41.282102],"points":{"type":"LineString","coordinates":[[174.761453,-41.282274],[174.761556,-41.28231],[174.761589,-41.282407],[174.761905,-41.282449],[174.761958,-41.282571],[174.761933,-41.282646],[174.761754,-41.282885],[174.761788,-41.283035],[174.761917,-41.28316],[174.76219,-41.283275],[174.762386,-41.283379],[174.762797,-41.28334],[174.76299,-41.283305],[174.763289,-41.283009],[174.763493,-41.282658],[174.763737,-41.282442],[174.764054,-41.282246],[174.764241,-41.282201],[174.764536,-41.282165],[174.764845,-41.282102],[174.764858,-41.282178],[174.764869,-41.282245],[174.765038,-41.282236],[174.765055,-41.282515],[174.765029,-41.282649],[174.764967,-41.282802],[174.765087,-41.282817],[174.765072,-41.282912],[174.765298,-41.282989],[174.765114,-41.283073],[174.765338,-41.283153],[174.765307,-41.28321],[174.765302,-41.283272],[174.765344,-41.283328],[174.765628,-41.283451],[174.765629,-41.283497],[174.765594,-41.283523]]},"instructions":[{"distance":204.951,"heading":109.37,"sign":0,"interval":[0,10],"text":"Continue onto Military Road","time":147563,"street_name":"Military Road"},{"distance":51.359,"sign":-1,"interval":[10,12],"text":"Turn slight left onto West Way","time":36978,"street_name":"West Way"},{"distance":218.789,"sign":-7,"interval":[12,19],"text":"Keep left onto West Way","time":157528,"street_name":"West Way"},{"distance":8.555,"sign":2,"interval":[19,20],"text":"Turn right onto Mamaku Way","time":6159,"street_name":"Mamaku Way"},{"distance":7.454,"sign":0,"interval":[20,21],"text":"Continue onto Mamaku Way","time":5366,"street_name":"Mamaku Way"},{"distance":18.685,"sign":-2,"interval":[21,22],"text":"Turn left","time":13453,"street_name":""},{"distance":65.017,"sign":2,"interval":[22,25],"text":"Turn right","time":46812,"street_name":""},{"distance":81.409,"sign":-2,"interval":[25,30],"text":"Turn left","time":58614,"street_name":""},{"distance":54.442,"sign":2,"interval":[30,35],"text":"Turn right","time":39198,"street_name":""},{"distance":4.155,"sign":1,"interval":[35,36],"text":"Turn slight right","time":2991,"street_name":""},{"distance":0.0,"sign":4,"last_heading":224.49059371020783,"interval":[36,36],"text":"Arrive at destination","time":0,"street_name":""}],"legs":[],"details":{},"ascend":18.532989501953125,"descend":90.9019889831543,"snapped_waypoints":{"type":"LineString","coordinates":[[174.761453,-41.282274],[174.765594,-41.283523]]}}]}
-
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100  2697  100  2697    0     0   1835      0  0:00:01  0:00:01 --:--:--  1837
+{"hints":{"visited_nodes.average":"28.0","visited_nodes.sum":"28"},"info":{"copyrights":["GraphHopper","OpenStreetMap contributors"],"took":4},"paths":[{"distance":1007.3,"weight":603.101372,"time":725253,"transfers":0,"points_encoded":false,"bbox":[174.792028,-41.229148,174.798734,-41.22499],"points":{"type":"LineString","coordinates":[[174.792028,-41.229148],[174.792089,-41.229032],[174.792403,-41.228742],[174.792854,-41.228362],[174.792949,-41.228113],[174.792882,-41.22792],[174.793009,-41.227871],[174.793469,-41.227519],[174.79382,-41.227449],[174.79396,-41.227773],[174.794037,-41.227829],[174.794583,-41.228031],[174.795135,-41.228387],[174.79614,-41.227492],[174.797424,-41.226418],[174.797595,-41.226301],[174.79831,-41.225888],[174.79852,-41.22564],[174.798734,-41.225427],[174.798559,-41.225274],[174.798037,-41.225018],[174.797925,-41.22499],[174.797878,-41.224999],[174.797832,-41.225054],[174.797679,-41.225337],[174.797637,-41.225354]]},"instructions":[{"distance":163.218,"heading":21.8,"sign":0,"interval":[0,5],"text":"Continue onto John Sims Drive","time":117517,"street_name":"John Sims Drive"},{"distance":68.299,"sign":2,"interval":[5,7],"text":"Turn right onto Truscott Avenue","time":49175,"street_name":"Truscott Avenue"},{"distance":31.971,"sign":1,"interval":[7,8],"text":"Turn slight right onto Truscott Avenue","time":23019,"street_name":"Truscott Avenue"},{"distance":161.515,"sign":2,"interval":[8,12],"text":"Turn right onto Elliott Street","time":116290,"street_name":"Elliott Street"},{"distance":448.627,"sign":-2,"interval":[12,18],"text":"Turn left onto Kipling Street","time":323010,"street_name":"Kipling Street"},{"distance":133.67,"sign":-2,"interval":[18,25],"text":"Turn left","time":96242,"street_name":""},{"distance":0.0,"sign":4,"last_heading":242.3439586064843,"interval":[25,25],"text":"Arrive at destination","time":0,"street_name":""}],"legs":[],"details":{},"ascend":12.986007690429688,"descend":66.6875,"snapped_waypoints":{"type":"LineString","coordinates":[[174.792028,-41.229148],[174.797637,-41.225354]]}}]}
 
 # Some extra fun stuff
 ## Park access isochrones
