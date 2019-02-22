@@ -157,6 +157,8 @@ It's worth noting that while accessibility to playgrounds is worse due to hills,
 
 
 The impact of Wellington's topology is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
+
+
 | Nearest playground | Second nearest playground|
 |--- |---|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
@@ -188,7 +190,7 @@ Results from the API request can be visualised both on Graphhopper Maps and Open
 
 Crafting the API request is quite simple - the request parameters are detailed [here](https://github.com/graphhopper/graphhopper/blob/0.11/docs/web/api-doc.md). The resultant JSON can be parsed and used for further analysis.
 
-I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against Google maps. Perhaps even reverse engineer the gradient to speed conversion Google uses. 
+I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against Google maps. Perhaps even reverse engineer the gradient to speed conversion Google uses.
 
 ```python
 graph_hopper_api_key = data_loaded['graph_hopper_api_key'][0]
