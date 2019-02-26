@@ -7,7 +7,7 @@ toc_label: "My Table of Contents"
 
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
-> _How prohibitive is Wellington’s topology on pedestrian accessibility to playgrounds?_
+> _How prohibitive is Wellington’s topography on pedestrian accessibility to playgrounds?_
 
 Playgrounds are key amenities that can impact the quality of life for young families. Since they are also frequently accessed on foot, it's important to consider how accessible they really are. Particularly for suburbs with a high residential fraction.   
 
@@ -55,16 +55,9 @@ The accessibility data can be extracted and plotted as a histogram. Here, we see
 ## Wellington street network: with elevation
 Elevation information can be retrieved with the Google Elevation API to enrich both the nodes and edges of the network. For the nodes, we can just get the elevation at a single location. Elevation at the connecting nodes of an edge can be used to derive the _inclination_.
 
-The above steps have been simplified to terse oneliners by the excellent Python package, _osmnx_. The steps to generate a _pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/).
-- [Signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
-- Storing the API key in an YAML file (to stop commits that contain keys! - something I've been guilty of many times over)
-- Creating an _osmnx_ graph
-- Retrieving elevation data from Google Elevation API
-- Adding elevation information to nodes
-- Adding inclination (grade) to edges
-- Converting edge weights to travel time
-- Creating a _pandana_ network from an _osmnx_ graph
+The above steps have been simplified to terse oneliners by the excellent Python package, _osmnx_. The steps to generate a _pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/). The first step involves [signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
 
+The following code block is mostly copied from the tutorial linked earlier. The key difference is that I've stored the API key in a YAML file. By the end of the code block, we have an osmnx graph with street gradients for every edge in the network.
 
 ```python
 # Open the API keys stored in a YAML file
@@ -74,7 +67,7 @@ with open("utils/api_keys.yaml", 'r') as stream:
 # Get Google Elevation API key
 google_elevation_api_key = data_loaded['google_elevation_api_key'][0]
 
-# Create an OSMNX walking street netwoek for the Wellington bounding box
+# Create an OSMNX walking street network for the Wellington bounding box
 G = ox.graph_from_bbox(north, south, east, west, network_type='walk')
 
 # Add elevation values for the nodes in the OSMNX graph
@@ -122,31 +115,33 @@ $$
 
 Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
-|Function | a | b | c
+| | a | b | c
 :---: | :---: | :---: | :---:
 _Physical meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
 _Mathematical representation_ | $\nu_{max}$ | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient\|\nu_{max}$
+Tobler | 6 | 3.5 | 0.05
+Brunsdon | 3.557 | 2.03 | 0.133
 
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
-Function | a | b | c
-:---: | :---: | :---: | :---:
-Tobler | 6 | 3.5 | 0.05
-Brunsdon | 3.557 | 2.03 | 0.133
 
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_24_0.png)
 
 
 # Accessibility analysis for hilly Wellington
-With a street network of gradient values converted to travel time, we can now compare the impact of hills on accessibility. Note that we're looking at _total_ travel times here since we have to account for uphill and downhill journeys for an accurate impact of street gradients on travel time.
+With a street network of gradient values converted to travel time, we can now compare the impact of hills on accessibility. In the Jupyter notebook, there are a couple of additional, technical steps:
+- Creating a _pandana_ network from an _osmnx_ graph
+- Creating an undirected graph with edge weights corresponding to _total_ travel times. As indicated in an earlier section, we have to account for both the uphill and downhill journeys for an accurate impact of street gradients on travel time.
 
-The main accessibility heatmap for hilly Wellington doesn't look too different to the flat land assumption.
+The second point impacts all of the subsequent plots and analyses. All accessibility analysis now considers _total_ travel time.
+
+The main accessibility heatmap for hilly Wellington, seen below, doesn't look too different to the flat land assumption.
 
 | Flat land assumption | Accounting for Hills |
 |:---: |:---: |
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
 
-We can only start seeing changes due to the hill when we consider a differential heatmap. Anyone familiar with the topology of Wellington will immediately see that areas around the slopes of the Town Belt and the Western Hills are affected.  
+We can only start seeing changes due to the hill when we consider a differential heatmap. Anyone familiar with the topography of Wellington will immediately see that areas around the slopes of the Town Belt and the Western Hills are affected.  
 
 
 | Difference | Difference > 2 minutes |
@@ -159,7 +154,7 @@ It's worth noting that while accessibility to playgrounds is worse due to hills,
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_50_0.png)
 
 
-The impact of Wellington's topology is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
+The impact of Wellington's topography is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
 
 
 | Nearest playground | Second nearest playground|
@@ -167,7 +162,7 @@ The impact of Wellington's topology is also seen in the availability of council 
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
 
 # Validating the accessibility analysis
-We've see how Wellington's topology affects travel times to playgrounds. A quick validation of the approach can be done with Google Maps. A more complex validation can be done Graphhopper.  
+We've see how Wellington's topography affects travel times to playgrounds. A quick validation of the approach can be done with Google Maps. A more complex validation can be done Graphhopper.  
 
 
 ## With Google Maps
