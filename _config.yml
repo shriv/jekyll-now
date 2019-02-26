@@ -78,7 +78,7 @@ gems:
   - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
   - jekyll-seo-tag
 
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: benbalter/retlab
 
 # Exclude these files from your production _site
 exclude:
