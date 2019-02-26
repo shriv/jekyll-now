@@ -122,7 +122,7 @@ $$
 
 Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
-| a | b | c
+|Function | a | b | c
 :---: | :---: | :---: | :---:
 _Physical meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
 _Mathematical representation_ | $\nu_{max}$ | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient\|\nu_{max}$
