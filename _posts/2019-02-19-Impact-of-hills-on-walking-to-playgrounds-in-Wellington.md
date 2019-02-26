@@ -2,7 +2,7 @@
 mathjax: true
 ---
 
-**Work in Progress**
+### _Work in Progress_
 
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
@@ -211,8 +211,15 @@ Our perspective so far has been the access _from_ any street location _to_ the n
 
 Like the accessibility analysis, we can choose the relevant units to visualise as isochrones. I've kept the _total_ travel time units in this example.
 
-The street networks below show the 5-25 minute isochrones in increments of 5 minutes. The isochrones can be visualised as convex hull polygons or filled skeletal isochrones. The latter visualisation has been adapted from [this excellent post](http://kuanbutts.com/2017/12/16/osmnx-isochrones/).
+The street networks below show the 0-25 minute isochrones in increments of 5 minutes. The isochrones can be visualised as convex hull polygons, or filled street skeleton isochrones. The latter visualisation has been adapted from [this excellent post](http://kuanbutts.com/2017/12/16/osmnx-isochrones/). The filled street skeletons offer a more realistic visualisation - especially in areas containing street networks with low connectivity like the following example.
 
-| Walking network (r = 1500m) | Catchment polygons | Street level catchment|
-|---|---|---|
-| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_51_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_52_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_53_0.png)|
+The points used in the validation section are repeated here. The blue and green points represent 110 John Sim's Drive and the Kipling St Play Area respectively.
+
+
+| Catchment polygons | Catchment along streets|
+|---|---|
+| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_52_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_53_0.png)|
+
+The isochrones are centered on the closest street node to the park. The address we're considering is in the 20-25 minute isochrone. This corresponds well to the total time of 25 minutes (11 minutes downhill and 14 minutes uphill; see earlier section).
+
+The isochrones visualisation seems useful but we're limited to
