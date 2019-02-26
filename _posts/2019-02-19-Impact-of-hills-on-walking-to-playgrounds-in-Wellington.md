@@ -1,9 +1,9 @@
----
+:---:
 mathjax: true
 toc: true
 toc_sticky: true
 toc_label: "My Table of Contents"
----
+:---:
 
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
@@ -43,13 +43,13 @@ Getting the Wellington street network in a form suitable for accessibility analy
 The _pandana_ network above has edge weights in the default units of metres, which means that the accessibility analyses will also be in metres. We can post-hoc convert the distance units to travel time with an average walking speed of 5 km/h or, 83 m/minute if we want travel time in minutes.
 
 |Accessibility as distance | Accessibility as travel time |
-|---|---|
+|:---:|:---:|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_48_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|
 
 The accessibility data can be extracted and plotted as a histogram. Here, we see that the average distance to a playground is 700 m, or an 8 minute walk.
 
 | Distance distribution | Time distribution |
-|---|---|
+|:---:|:---:|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_20_0.png)| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_49_0.png)|
 
 ## Wellington street network: with elevation
@@ -88,7 +88,7 @@ G = ox.add_edge_grades(G)
 Osmnx can download the Google street elevations and generate an edge weight based on the node elevation values. The graph with street elevations can be shows that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
 
 | All street inclines | "Flat" regions (within 5% gradient) |
-| --- | ---|
+| :---: | :---:|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_14_0.png)| ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_15_0.png) |
 
 
@@ -102,12 +102,12 @@ The caveat of this split is that we have to calculate _total travel time_ rather
 
 The street network can be easily split to only give unique _(u,v)_ in one graph and the inverse, _(v,u)_, in another. Accessibility analysis is performed for _each_ network and then summed together to give the total accessibility.
 
-|graph|geometry|grade|grade_abs|length|maxspeed|name|u|v|
-|---|--- |--- |--- |--- |--- |--- |--- |--- |
-|Undirected (u,v)|LINESTRING (174.7934694 -41.2275193, 174.79300...|0.1319|0.1319|66.800|50|Truscott Avenue|1259077823|1259072929|
-|Undirected (u,v)|LINESTRING (174.7921165 -41.2280406, 174.79263...|-0.0475|0.0475|65.443|50|Truscott Avenue|1259077823|1259072943|
-|Undirected inverse (v,u)|LINESTRING (174.7934694 -41.2275193, 174.79300...|-0.1319|0.1319|66.800|50|Truscott Avenue|1259072929|1259077823|
-|Undirected inverse (v,u)|LINESTRING (174.7921165 -41.2280406, 174.79263...|0.0475|0.0475|65.443|50|Truscott Avenue|1259072943|1259077823|
+|graph|geometry|grade|length|name|u|v|
+|:---:|:---: |:---: |:---: |:---: |:---: |:---: |
+|Undirected (u,v)|LINESTRING (174.7934694 -41.2275193, 174.79300...|0.1319|66.800|Truscott Avenue|1259077823|1259072929|
+|Undirected (u,v)|LINESTRING (174.7921165 -41.2280406, 174.79263...|-0.0475|65.443|Truscott Avenue|1259077823|1259072943|
+|Undirected inverse (v,u)|LINESTRING (174.7934694 -41.2275193, 174.79300...|-0.1319|66.800|Truscott Avenue|1259072929|1259077823|
+|Undirected inverse (v,u)|LINESTRING (174.7921165 -41.2280406, 174.79263...|0.0475|65.443|Truscott Avenue|1259072943|1259077823|
 
 
 ## Converting incline distance to travel time
@@ -122,15 +122,15 @@ $$
 
 Note that $slope$ here is the dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in degrees ($^{\circ}$). Speed in km/h can be converted to a travel time in minutes with the factor (60/1000).
 
-- | a | b | c
---- | --- | --- | ---
+| a | b | c
+:---: | :---: | :---: | :---:
 _Physical meaning_ | Fastest speed | Speed change due to gradient | Gradient of fastest speed |
-_Mathematical representation_ | $\nu_{max}$ (km/h) | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient\|\nu_{max}$
+_Mathematical representation_ | $\nu_{max}$ | ($\frac{\Delta\nu}{\Delta ~gradient}$) | $gradient\|\nu_{max}$
 
 While I haven't read Tobler's original paper, a [brief exposition of other equivalent functional forms to Tobler's](https://rpubs.com/chrisbrunsdon/hiking) has been written up by Chris Brunsdon. For a more rigorous analysis, we'll need to refit the form above (or similar) as Brunsdon does for different types of pedestrians. According to NZTA and various other studies, there is significant heterogeneity in walking speed; noth from the route (terrain, incline etc) and also the characteristics of the walker e.g. carrying things, footwear, and demographics. We can likely imagine that a commuter will walk at a very different speed to a father taking his children to the playground during the daytime. Brunsdon's analysis itself shows a very different relationship to Tobler's.
 
 Function | a | b | c
---- | --- | --- | ---
+:---: | :---: | :---: | :---:
 Tobler | 6 | 3.5 | 0.05
 Brunsdon | 3.557 | 2.03 | 0.133
 
@@ -143,14 +143,14 @@ With a street network of gradient values converted to travel time, we can now co
 The main accessibility heatmap for hilly Wellington doesn't look too different to the flat land assumption.
 
 | Flat land assumption | Accounting for Hills |
-|--- |--- |
+|:---: |:---: |
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_34_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|
 
 We can only start seeing changes due to the hill when we consider a differential heatmap. Anyone familiar with the topology of Wellington will immediately see that areas around the slopes of the Town Belt and the Western Hills are affected.  
 
 
 | Difference | Difference > 2 minutes |
-|--- |---|
+|:---: |:---:|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)|
 
 
@@ -163,7 +163,7 @@ The impact of Wellington's topology is also seen in the availability of council 
 
 
 | Nearest playground | Second nearest playground|
-|--- |---|
+|:---: |:---:|
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_35_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_36_0.png)|
 
 # Validating the accessibility analysis
@@ -218,7 +218,7 @@ The points used in the validation section are repeated here. The blue and green 
 
 
 | Catchment polygons | Catchment along streets|
-|---|---|
+|:---:|:---:|
 | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_52_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_53_0.png)|
 
 The isochrones are centered on the closest street node to the park. The address we're considering is in the 20-25 minute isochrone. This corresponds well to the total time of 25 minutes calculated in the previous section (11 minutes downhill and 14 minutes uphill).
