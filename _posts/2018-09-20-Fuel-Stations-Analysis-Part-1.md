@@ -146,87 +146,14 @@ The main primitives used in this report are ways, nodes and tags. The tags are u
 ## Getting data from Overpass
 Once the query is constructed and sent with a 'GET' request, the resulting JSON is reshaped as a Pandas dataframe that contains relevant metadata about each fuel station.
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>lat</th>
-      <th>lon</th>
-      <th>name</th>
-      <th>operator</th>
-      <th>brand</th>
-      <th>type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2845230323</td>
-      <td>-41.325288</td>
-      <td>174.810883</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2845230324</td>
-      <td>-41.325284</td>
-      <td>174.811057</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2845230322</td>
-      <td>-41.325275</td>
-      <td>174.810774</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2845230321</td>
-      <td>-41.325200</td>
-      <td>174.810729</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5821475056</td>
-      <td>-41.325128</td>
-      <td>174.810920</td>
-      <td>Z Broadway</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|id|lat|lon|name|operator|brand|type|
+|--- |--- |--- |--- |--- |--- |
+|2845230323|-41.325288|174.810883|NaN|NaN|NaN|node|
+|2845230324|-41.325284|174.811057|NaN|NaN|NaN|node|
+|2845230322|-41.325275|174.810774|NaN|NaN|NaN|node|
+|2845230321|-41.325200|174.810729|NaN|NaN|NaN|node|
+|5821475056|-41.325128|174.810920|Z Broadway|NaN|Z|node|
 
 
 ## Get specific fuel stations
@@ -250,177 +177,23 @@ Since the underlying problem is a data issue, we can add / edit the data ourselv
 # Fuel stations
 After editing the OSM, the corrected list of Z stations is now at parity with the Z website. With a similar brand / operator filter, we can create an equivalent dataframe for BP stations.
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>lat</th>
-      <th>lon</th>
-      <th>name</th>
-      <th>operator</th>
-      <th>brand</th>
-      <th>type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5821475056</td>
-      <td>-41.325128</td>
-      <td>174.810920</td>
-      <td>Z Broadway</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>3120151445</td>
-      <td>-41.320054</td>
-      <td>174.794407</td>
-      <td>Z Kilbirnie</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5821475059</td>
-      <td>-41.314924</td>
-      <td>174.813972</td>
-      <td>Z Miramar</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>5821475061</td>
-      <td>-41.313163</td>
-      <td>174.781812</td>
-      <td>Z Constable Street</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5821475058</td>
-      <td>-41.297146</td>
-      <td>174.776556</td>
-      <td>Z Taranaki Street</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5544110098</td>
-      <td>-41.294501</td>
-      <td>174.774397</td>
-      <td>Z Vivian St</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>5821475063</td>
-      <td>-41.281636</td>
-      <td>174.778417</td>
-      <td>Z Harbour City</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>5821475060</td>
-      <td>-41.256020</td>
-      <td>174.765535</td>
-      <td>Z Crofton Downs</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2206248455</td>
-      <td>-41.236226</td>
-      <td>174.906171</td>
-      <td>Z Seaview</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>331132009</td>
-      <td>-41.226300</td>
-      <td>174.806795</td>
-      <td>Z Johnsonville</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>5821475057</td>
-      <td>-41.222778</td>
-      <td>174.868833</td>
-      <td>Z Petone</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2118620317</td>
-      <td>-41.214312</td>
-      <td>174.887163</td>
-      <td>Z Hutt Road</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>5821475062</td>
-      <td>-41.204023</td>
-      <td>174.914085</td>
-      <td>Z VIC Corner</td>
-      <td>NaN</td>
-      <td>Z</td>
-      <td>node</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>319121061</td>
-      <td>-41.197885</td>
-      <td>174.937446</td>
-      <td>Z High Street</td>
-      <td>Z</td>
-      <td>NaN</td>
-      <td>node</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|id|lat|lon|name|operator|brand|type|
+|--- |--- |--- |--- |--- |--- |
+|5821475056|-41.325128|174.810920|Z Broadway|NaN|Z|node|
+|3120151445|-41.320054|174.794407|Z Kilbirnie|NaN|Z|node|
+|5821475059|-41.314924|174.813972|Z Miramar|NaN|Z|node|
+|5821475061|-41.313163|174.781812|Z Constable Street|NaN|Z|node|
+|5821475058|-41.297146|174.776556|Z Taranaki Street|NaN|Z|node|
+|5544110098|-41.294501|174.774397|Z Vivian St|NaN|Z|node|
+|5821475063|-41.281636|174.778417|Z Harbour City|NaN|Z|node|
+|5821475060|-41.256020|174.765535|Z Crofton Downs|NaN|Z|node|
+|2206248455|-41.236226|174.906171|Z Seaview|NaN|Z|node|
+|331132009|-41.226300|174.806795|Z Johnsonville|NaN|Z|node|
+|5821475057|-41.222778|174.868833|Z Petone|NaN|Z|node|
+|2118620317|-41.214312|174.887163|Z Hutt Road|NaN|Z|node|
+|5821475062|-41.204023|174.914085|Z VIC Corner|NaN|Z|node|
+|319121061|-41.197885|174.937446|Z High Street|Z|NaN|node|
 
 
 ## Visualsing fuel stations

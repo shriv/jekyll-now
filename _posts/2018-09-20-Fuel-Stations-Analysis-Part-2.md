@@ -88,7 +88,7 @@ We can visualise the network structure of the simpler, recast data. The weighted
 - The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z.
 
 
-| | |
+| Z network | BP network |
 |:---:|:---:|
 |![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png)|![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)|
 
