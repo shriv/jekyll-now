@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS=false; L_NO_TOUCH=false; L_DISABLE_3D=false;</script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.3.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>#map_1ffe70ae30784ff9b54b9a05c8c27728 {
+        position: relative;
+        width: 100.0%;
+        height: 100.0%;
+        left: 0.0%;
+        top: 0.0%;
+        }
+    </style>
+</head>
+<body>    
+    
+    <div class="folium-map" id="map_1ffe70ae30784ff9b54b9a05c8c27728" ></div>
+</body>
+<script>    
+    
+    
+        var bounds = null;
+    
+
+    var map_1ffe70ae30784ff9b54b9a05c8c27728 = L.map(
+        'map_1ffe70ae30784ff9b54b9a05c8c27728', {
+        center: [-41.29, 174.8],
+        zoom: 11,
+        maxBounds: bounds,
+        layers: [],
+        worldCopyJump: false,
+        crs: L.CRS.EPSG3857,
+        zoomControl: true,
+        });
+
+    
+    
+    var tile_layer_5cc7b592678c4e8b88008da9ec9d58cb = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+        "attribution": null,
+        "detectRetina": false,
+        "maxNativeZoom": 18,
+        "maxZoom": 18,
+        "minZoom": 0,
+        "noWrap": false,
+        "opacity": 1,
+        "subdomains": "abc",
+        "tms": false
+}).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+    
+        var marker_d66945e95a054cfd8c02577ef003921f = L.marker(
+            [-41.3196719, 174.7756469],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_e95691e12e7945cbbd4ffe0bdcd5013f = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_0bc3499688744b6fa4d347a6a5a8055a = $(`<div id="html_0bc3499688744b6fa4d347a6a5a8055a" style="width: 100.0%; height: 100.0%;">BP Berhampore</div>`)[0];
+                popup_e95691e12e7945cbbd4ffe0bdcd5013f.setContent(html_0bc3499688744b6fa4d347a6a5a8055a);
+            
+
+            marker_d66945e95a054cfd8c02577ef003921f.bindPopup(popup_e95691e12e7945cbbd4ffe0bdcd5013f)
+            ;
+
+            
+        
+    
+        var marker_e36278b3eea04804a484b66648163517 = L.marker(
+            [-41.3067311, 174.7633695],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_37a097f25c8648448a5c8b3b798a6514 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_22dbe97c5e544710913fcf9a8db07206 = $(`<div id="html_22dbe97c5e544710913fcf9a8db07206" style="width: 100.0%; height: 100.0%;">BP Brooklyn</div>`)[0];
+                popup_37a097f25c8648448a5c8b3b798a6514.setContent(html_22dbe97c5e544710913fcf9a8db07206);
+            
+
+            marker_e36278b3eea04804a484b66648163517.bindPopup(popup_37a097f25c8648448a5c8b3b798a6514)
+            ;
+
+            
+        
+    
+        var marker_b469e463c3a34abaa513d9fd305056d8 = L.marker(
+            [-41.3030361, 174.7796052],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_cedfd627ca22425d8abf2ac119cb39bf = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_583e31f8228d483284ff51cdde94b2f1 = $(`<div id="html_583e31f8228d483284ff51cdde94b2f1" style="width: 100.0%; height: 100.0%;">BP Adelaide Road</div>`)[0];
+                popup_cedfd627ca22425d8abf2ac119cb39bf.setContent(html_583e31f8228d483284ff51cdde94b2f1);
+            
+
+            marker_b469e463c3a34abaa513d9fd305056d8.bindPopup(popup_cedfd627ca22425d8abf2ac119cb39bf)
+            ;
+
+            
+        
+    
+        var marker_d458edd29be4457f9d1bd7e3ce974b07 = L.marker(
+            [-41.290951, 174.7802126],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_a016e37891b941398c0c9ecfae86941b = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_b06a0547714c4f82b26aa0c38ccc1922 = $(`<div id="html_b06a0547714c4f82b26aa0c38ccc1922" style="width: 100.0%; height: 100.0%;">BP Roadmaster</div>`)[0];
+                popup_a016e37891b941398c0c9ecfae86941b.setContent(html_b06a0547714c4f82b26aa0c38ccc1922);
+            
+
+            marker_d458edd29be4457f9d1bd7e3ce974b07.bindPopup(popup_a016e37891b941398c0c9ecfae86941b)
+            ;
+
+            
+        
+    
+        var marker_09a95b12ffb54d1899b59dff3d221109 = L.marker(
+            [-41.2848588, 174.7363965],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_8b52d77c4d764191a9b59a1cf3f73d31 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_7bdf0b98217c4de5afaea04956969f0e = $(`<div id="html_7bdf0b98217c4de5afaea04956969f0e" style="width: 100.0%; height: 100.0%;">BP Karori</div>`)[0];
+                popup_8b52d77c4d764191a9b59a1cf3f73d31.setContent(html_7bdf0b98217c4de5afaea04956969f0e);
+            
+
+            marker_09a95b12ffb54d1899b59dff3d221109.bindPopup(popup_8b52d77c4d764191a9b59a1cf3f73d31)
+            ;
+
+            
+        
+    
+        var marker_44312e657536417ca51df369811cc3d9 = L.marker(
+            [-41.2626728, 174.9461411],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_2b17a095e6254039bfa1a44e11dd5941 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_70eabb7b130f4e6fa8d8571d59a759bf = $(`<div id="html_70eabb7b130f4e6fa8d8571d59a759bf" style="width: 100.0%; height: 100.0%;">BP Wainuiomata</div>`)[0];
+                popup_2b17a095e6254039bfa1a44e11dd5941.setContent(html_70eabb7b130f4e6fa8d8571d59a759bf);
+            
+
+            marker_44312e657536417ca51df369811cc3d9.bindPopup(popup_2b17a095e6254039bfa1a44e11dd5941)
+            ;
+
+            
+        
+    
+        var marker_b1ac1ad5a1d44ecdb2bad36cafee25de = L.marker(
+            [-41.2412159, 174.9081789],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_fec98ecd46774270ad723cac32ad56ac = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_6b50d5d401394ab8b9502424536f7821 = $(`<div id="html_6b50d5d401394ab8b9502424536f7821" style="width: 100.0%; height: 100.0%;">BP Seaview Truckstop</div>`)[0];
+                popup_fec98ecd46774270ad723cac32ad56ac.setContent(html_6b50d5d401394ab8b9502424536f7821);
+            
+
+            marker_b1ac1ad5a1d44ecdb2bad36cafee25de.bindPopup(popup_fec98ecd46774270ad723cac32ad56ac)
+            ;
+
+            
+        
+    
+        var marker_69fdd877a20047f49858b04d11fa7fc7 = L.marker(
+            [-41.2320887, 174.8374062],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_b25076b3853d4c049339e68e94c7ee1a = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_f0bb7a429e7e4cb5b56c9da6e39be979 = $(`<div id="html_f0bb7a429e7e4cb5b56c9da6e39be979" style="width: 100.0%; height: 100.0%;">BP Hutt Road</div>`)[0];
+                popup_b25076b3853d4c049339e68e94c7ee1a.setContent(html_f0bb7a429e7e4cb5b56c9da6e39be979);
+            
+
+            marker_69fdd877a20047f49858b04d11fa7fc7.bindPopup(popup_b25076b3853d4c049339e68e94c7ee1a)
+            ;
+
+            
+        
+    
+        var marker_bbdf3446534049e0adaaba7171107310 = L.marker(
+            [-41.2297031, 174.8173353],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_bf84b522cb38462c8d451263e2b553ae = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_3e4fd9cad05544fa93a11df320903784 = $(`<div id="html_3e4fd9cad05544fa93a11df320903784" style="width: 100.0%; height: 100.0%;">BP Newlands</div>`)[0];
+                popup_bf84b522cb38462c8d451263e2b553ae.setContent(html_3e4fd9cad05544fa93a11df320903784);
+            
+
+            marker_bbdf3446534049e0adaaba7171107310.bindPopup(popup_bf84b522cb38462c8d451263e2b553ae)
+            ;
+
+            
+        
+    
+        var marker_4dc4e5a52a384e73ac57f386024cf0db = L.marker(
+            [-41.225857, 174.8074922],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_5c23beb8eaa04d0485489b0bbd668f77 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_d356bdf45b86404a90f726e2d9a391bb = $(`<div id="html_d356bdf45b86404a90f726e2d9a391bb" style="width: 100.0%; height: 100.0%;">BP Johnsonville</div>`)[0];
+                popup_5c23beb8eaa04d0485489b0bbd668f77.setContent(html_d356bdf45b86404a90f726e2d9a391bb);
+            
+
+            marker_4dc4e5a52a384e73ac57f386024cf0db.bindPopup(popup_5c23beb8eaa04d0485489b0bbd668f77)
+            ;
+
+            
+        
+    
+        var marker_b5c1c35d5e924713a07cbbc59192f4fc = L.marker(
+            [-41.2228285, 174.9119622],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_687792862be747e2828f096021405ef6 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_e53cc5904e3a4302892701b6139123d6 = $(`<div id="html_e53cc5904e3a4302892701b6139123d6" style="width: 100.0%; height: 100.0%;">BP Waiwhetu</div>`)[0];
+                popup_687792862be747e2828f096021405ef6.setContent(html_e53cc5904e3a4302892701b6139123d6);
+            
+
+            marker_b5c1c35d5e924713a07cbbc59192f4fc.bindPopup(popup_687792862be747e2828f096021405ef6)
+            ;
+
+            
+        
+    
+        var marker_8cd985ac1f86485290f00b75f57e767b = L.marker(
+            [-41.2126071, 174.8936548],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_592d48d3b15141b69a8d194818cd995c = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_f9d3dbbc3b994444aa69060635cdda68 = $(`<div id="html_f9d3dbbc3b994444aa69060635cdda68" style="width: 100.0%; height: 100.0%;">BP Railway</div>`)[0];
+                popup_592d48d3b15141b69a8d194818cd995c.setContent(html_f9d3dbbc3b994444aa69060635cdda68);
+            
+
+            marker_8cd985ac1f86485290f00b75f57e767b.bindPopup(popup_592d48d3b15141b69a8d194818cd995c)
+            ;
+
+            
+        
+    
+        var marker_3e136c16be51412ca6f24dbf46b2c11d = L.marker(
+            [-41.178926, 174.9611589],
+            {
+                icon: new L.Icon.Default()
+                }
+            ).addTo(map_1ffe70ae30784ff9b54b9a05c8c27728);
+        
+    
+            var popup_adbd31ba4d5f4e5c8fadae69695c2209 = L.popup({maxWidth: '300'
+            
+            });
+
+            
+                var html_1d19a07bd9d246ea920c50f984d13a2e = $(`<div id="html_1d19a07bd9d246ea920c50f984d13a2e" style="width: 100.0%; height: 100.0%;">BP Taita</div>`)[0];
+                popup_adbd31ba4d5f4e5c8fadae69695c2209.setContent(html_1d19a07bd9d246ea920c50f984d13a2e);
+            
+
+            marker_3e136c16be51412ca6f24dbf46b2c11d.bindPopup(popup_adbd31ba4d5f4e5c8fadae69695c2209)
+            ;
+
+            
+        
+</script>
