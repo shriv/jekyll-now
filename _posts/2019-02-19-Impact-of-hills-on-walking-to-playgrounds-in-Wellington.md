@@ -7,20 +7,29 @@ toc_label: "Table of Contents"
 
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
+As illustrated in the introductory post, playgrounds are key amenities that can act as a proxy for _walkability_. In this post, we'll be examining the following question in detail.
+
 > _How prohibitive is Wellington’s topography on pedestrian accessibility to playgrounds?_
 
-Playgrounds are key amenities that can impact the quality of life for young families. Since they are also frequently accessed on foot, it's important to consider how accessible they really are. Particularly for suburbs with a high residential fraction.   
 
 # Technical overview
-We need to overcome some technical issues to do this analysis.
+This post is quite heavy on technical detail. Accessibility analysis including the impact of street gradients on travel speed isn't an 'out of the box' analysis. So, essentially this post is much more of a 'methodology' post with some insights along the way.
+
+Key technical challenges overcome in the analysis are listed and referenced below.
 
 | Issue | Section |
 |:---:|:---|
-| Converting accessibility metric: from distance to travel time|[Section](#wellington-street-network-without-elevation)|
-|Getting elevation data for roads and walkways | [Section](#wellington-street-network-with-elevation)|
-|Converting road / walkway inclination to travel time | [Section](#converting-incline-distance-to-travel-time)|
+| Converting accessibility metric from distance to travel time|[Section](#wellington-street-network-without-elevation)|
+|Getting street gradients from elevation data | [Section](#wellington-street-network-with-elevation)|
+|Adjusting travel time according to street gradients | [Section](#converting-incline-distance-to-travel-time)|
 
-# Datasets
+Additional technical challenges are kept for the [companion Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb):
+
+- Adding colourbars to OSMnx isochrone plots  
+- Calculating route statistics with OSMnx and Pandana
+
+
+# Data munging
 
 Two key datasets are used in this analysis:
 - *WCC playground locations*: downloaded as a zip file
@@ -55,9 +64,9 @@ The accessibility data can be extracted and plotted as a histogram. Here, we see
 ## Wellington street network: with elevation
 Elevation information can be retrieved with the Google Elevation API to enrich both the nodes and edges of the network. For the nodes, we can just get the elevation at a single location. Elevation at the connecting nodes of an edge can be used to derive the _inclination_.
 
-The above steps have been simplified to terse oneliners by the excellent Python package, _osmnx_. The steps to generate a _pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/). The first step involves [signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
+The above steps have been simplified to terse oneliners by the excellent Python package, _OSMnx_. The steps to generate a _Pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/). The first step involves [signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
 
-The following code block is mostly copied from the tutorial linked earlier. The key difference is that I've stored the API key in a YAML file. By the end of the code block, we have an osmnx graph with street gradients for every edge in the network.
+The following code block is mostly copied from the tutorial linked earlier. The key difference is that I've stored the API key in a YAML file. By the end of the code block, we have an OSMnx graph with street gradients for every edge in the network.
 
 ```python
 # Open the API keys stored in a YAML file
@@ -86,7 +95,7 @@ Osmnx can download the Google street elevations and generate an edge weight base
 
 
 ### Dealing with MultiDiGraph
-Osmnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
+OSMnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
 For a travel time analysis, we need to split the components of the graph.
 
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_27_0.png)
@@ -164,17 +173,29 @@ The impact of Wellington's topography is also seen in the availability of counci
 # Validating the accessibility analysis
 We've see how Wellington's topography affects travel times to playgrounds. A quick validation of the approach can be done with Google Maps. A more complex validation can be done Graphhopper.  
 
+We'll be validating the route from 110 John Sim's Drive to Kipling Street Play Area. I chose this particular example because of the monotonicity in gradient for the to and from journeys. Going to the park is consistently downhill and coming back is consistently uphill. None of the classic Wellington roller-coaster routes here!
+
+The route used to calculate the accessibility in Pandana can be visualised by extracting the nearest graph nodes to the origin and destination and using the Networkx get_shortest_path method.
+
+With a little additional poking about the graph edges, we can extract the summary, in distance and time, for this route. The code for this is available in the Jupyter Notebook.
+
+> Route is  925 m long and takes 24.3 mins
+
+![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_54_0.png)
+
+A more detailed analysis of the route gives:
+
+> 110 John Sims Drive to Kipling Street Play Area: Street distance is  925 m. At 5km/hr, it takes 11.1 mins. Going to the park (downhill) takes 11.9 mins. Coming back from the park (uphill) takes 12.3 mins'
 
 ## With Google Maps
 [110 John Sim's Drive](https://www.openstreetmap.org/node/6083853567) to Kipling St Play Area in Johnsonville.
 - [Uphill from the park](https://www.google.co.nz/maps/dir/Kipling+Street+Play+Area,+Johnsonville,+Wellington/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/@-41.2287819,174.7921861,15.94z/data=!4m14!4m13!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!3e2): 14 minutes
 - [Downhill to the park](https://www.google.co.nz/maps/dir/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/Kipling+Street+Play+Area,+Johnsonville,+Wellington/@-41.2287819,174.7921861,15.94z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!3e2): 11 minutes
 
-The current analysis functions (using Google Elevation, OSM street network and Tobler's time conversion) gives the following result.
 
-> 110 John Sims Drive to Kipling Street Play Area: Street distance is  925 m. At 5km/hr, it takes 11.1 mins. Going to the park (downhill) takes 11.9 mins. Coming back from the park (uphill) takes 12.3 mins'
+We don't expect the OSM street data to differ much from Google (at least for a city!) and the elevation data should be identical. The key difference is likely the distance to time conversion. For this validation, we have over-estimated the downhill time and under-estimated the uphill time.
 
-We don't expect the OSM street data to differ much from Google (at least for a city!) and the elevation data should be identical. The key difference is likely the distance to time conversion. Tobler's time conversion is definitely an ambitious target - especially for families walking with young children. For a more accurate analysis, we'd need recommendations of a more sensible top speed and hill climbing speed retardation from Urban Planners.
+obler's time conversion is definitely an ambitious target - especially for families walking with young children. For a more accurate analysis, we'd need recommendations of a more sensible top speed and hill climbing speed retardation from Urban Planners.
 
 
 ## With Graphhopper Routing API
@@ -188,7 +209,7 @@ Results from the API request can be visualised both on Graphhopper Maps and Open
 
 Crafting the API request is quite simple - the request parameters are detailed [here](https://github.com/graphhopper/graphhopper/blob/0.11/docs/web/api-doc.md). The resultant JSON can be parsed and used for further analysis.
 
-I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against Google maps. Perhaps even reverse engineer the gradient to speed conversion Google uses.
+I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against the Pandana + OSMnx extract. Perhaps even reverse engineer the gradient to speed conversion.
 
 ```python
 graph_hopper_api_key = data_loaded['graph_hopper_api_key'][0]

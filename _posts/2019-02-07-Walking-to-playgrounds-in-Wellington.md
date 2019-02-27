@@ -1,5 +1,5 @@
 This post introduces a series of walkability analyses for Wellington - with a specific focus on walking to playgrounds. The analyses will allow us to examine the following questions:
-- _How prohibitive is Wellington's topology on pedestrian accessibility to playgrounds?_
+- _How prohibitive is Wellington's topography on pedestrian accessibility to playgrounds?_
 - _Can we interpret pedestrian accessibility to playgrounds with a 'family-friendly' angle?_
 - _Does the inclusion of school playgrounds to the analysis improve accessibility? If so, by how much?_
 - _What is the impact of the new Berhampore playground on accessibility in Berhampore and nearby suburbs?_
@@ -66,8 +66,8 @@ While we all consider itinerary-specific travel times, a general view of travel 
 This introductory post is followed by a series that will examine walkability to playgrounds in Wellington using accessibility analyses by travel time. Playgrounds are an important recreation resource and are typically accessed on foot. The posts will consider just how reasonable their pedestrian accessibility actually is.
 
 The topic is narrow, but intended for covering concepts in depth. The following posts will cover:
-- The impact of topology (hills) on travel times.
-  - _How prohibitive is Wellington's topology on pedestrian accessibility?_
+- The impact of topography (hills) on travel times.
+  - _How prohibitive is Wellington's topography on pedestrian accessibility?_
 - Modelling and visualising differences between suburbs.
   - _Can we interpret pedestrian accessibility to playgrounds with a 'family-friendly' angle?_
 - Accessibility to council playgrounds vs. school playgrounds
