@@ -40,7 +40,7 @@ The route between the nodes uses the edges (streets and roads) of the spatial ne
 ## Simple example: route between Z Kilbirnie and Z Vivian St
 The following example looks at the distance and route between two Z stations: Z Kilbernie and Z Vivian St. The red line in the figure is the shortest route that connects the two stations. From the street shapes, you can see that the route is wending it's way around Evans Bay and Basin Reserve, before entering the central city street grid. This route has a distance of 4.6 km - a value that corresponds quite closely to that given by [Google Maps](https://bit.ly/2Mvjr0L).
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_29_0.png)
+![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_29_0.png)
 
 *Shortest distance between Z Kilbirnie and Z Vivian St is 4577.443 m*
 
@@ -49,7 +49,7 @@ The following example looks at the distance and route between two Z stations: Z 
  In the toy example, I only downloaded the street network within a 5km radius of Z Kilbirnie. For the main analysis though, we want all the streets and roads within the defined bounding box. The updated figure now shows the route between Z Kilbirnie and Z Vivian St overlayed on all the roads in the Wellington + Lower Hutt bounding box.  
 
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_31_0.png)
+![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_31_0.png)
 
 *Shortest distance between Z Kilbirnie and Z Vivian St is 4268.96 m*
 
@@ -59,75 +59,13 @@ The following example looks at the distance and route between two Z stations: Z 
 To construct the abstract network, we first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from several Z stations to Z Broadway (in Strathmore).
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>distance</th>
-      <th>id_from</th>
-      <th>from</th>
-      <th>id_to</th>
-      <th>to</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>2822.644</td>
-      <td>3120151445</td>
-      <td>Z Kilbirnie</td>
-      <td>5821475056</td>
-      <td>Z Broadway</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1332.762</td>
-      <td>5821475059</td>
-      <td>Z Miramar</td>
-      <td>5821475056</td>
-      <td>Z Broadway</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4002.103</td>
-      <td>5821475061</td>
-      <td>Z Constable Street</td>
-      <td>5821475056</td>
-      <td>Z Broadway</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5644.063</td>
-      <td>5821475058</td>
-      <td>Z Taranaki Street</td>
-      <td>5821475056</td>
-      <td>Z Broadway</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>5744.885</td>
-      <td>5544110098</td>
-      <td>Z Vivian St</td>
-      <td>5821475056</td>
-      <td>Z Broadway</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|distance|id_from|from|id_to|to|1|2|3|4|5|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |--- |
+|2822.644|3120151445|Z Kilbirnie|5821475056|Z Broadway|
+|1332.762|5821475059|Z Miramar|5821475056|Z Broadway|
+|4002.103|5821475061|Z Constable Street|5821475056|Z Broadway|
+|5644.063|5821475058|Z Taranaki Street|5821475056|Z Broadway|
+|5744.885|5544110098|Z Vivian St|5821475056|Z Broadway|
 
 
 The table of pairwise distances can now be used to analyse the number of neighbours for a Z/BP station within a particular radius and recast into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package.
@@ -150,8 +88,9 @@ We can visualise the network structure of the simpler, recast data. The weighted
 - The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z.
 
 
------------------:|:------------------
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png) | ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)
+| | |
+|:---:|:---:|
+|![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_39_0.png)|![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_48_0.png)|
 
 All these points indicate that while Z and BP cover similar areas of Wellington, *Z is better represented in Wellington City while BP dominates in Lower Hutt*. It would be very interesting to see if revenue per station is signficantly different for a Z station in Wellington City vs. Lower Hutt.
 
@@ -161,103 +100,22 @@ Because the Z station network was a loosely connected network with two strongly 
 
 The explicit connectivity of each Z station is given by a metric called 'degree' in network analysis. The degree distribution is useful for understanding characteristics of structure in larger &/ complex networks. Here, it's simply useful to use the node degree to understand the highly connected / central Z stations. As expected, these stations are the ones in the city centre: Z Harboour City, Z Vivian St, Z Taranaki Street.
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>station</th>
-      <th>degree</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Z Harbour City</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Z Vivian St</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Z Taranaki Street</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Z Constable Street</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Z Miramar</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Z Broadway</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Z Kilbirnie</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Z Crofton Downs</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Z Petone</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Z Johnsonville</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Z Hutt Road</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Z High Street</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Z VIC Corner</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Z Seaview</td>
-      <td>4</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
+|station|degree|
+|--- |--- |
+|Z Harbour City|8|
+|Z Vivian St|8|
+|Z Taranaki Street|8|
+|Z Constable Street|7|
+|Z Miramar|6|
+|Z Broadway|6|
+|Z Kilbirnie|6|
+|Z Crofton Downs|5|
+|Z Petone|5|
+|Z Johnsonville|5|
+|Z Hutt Road|4|
+|Z High Street|4|
+|Z VIC Corner|4|
+|Z Seaview|4|
 
 The average degree / connectivity for the Wellington City Z stations is much higher than Lower Hutt. The typical Z station in Wellington City is connected to 2 more Z stations than a typicsl Z station in Lower Hutt.   
 
@@ -268,7 +126,7 @@ The average degree / connectivity for the Wellington City Z stations is much hig
 # Nearest neighbours: Inter-station separation
 We can further reduce the pairwise distance matrix to the closest neighbour per statiion to calculate the average distance between any two Z stations. A more academic name for this metric is: *average inter-station separation*.
 
-![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
+![png](../images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_51_0.png)
 
 The plots show that the physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric. There is also some indication of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference between the two modes seems to be larger for BP.
 
@@ -287,299 +145,46 @@ A key characteristic of good coverage is location in relation to other entities 
 
 For this analysis, we need to generate the shortest distances between all station pairs for *both* Z and BP stations together. Unfortunately, the computation is not fast and needs to better managed in the future for a larger dataset. Also, note that there is an implicit redundancy in the numbers cited below: some station pairs are each others nearest neighbours.
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>from</th>
-      <th>to</th>
-      <th>distance</th>
-      <th>from_brand</th>
-      <th>to_brand</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>19</th>
-      <td>BP Melling</td>
-      <td>Z VIC Corner</td>
-      <td>158.905</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>Z Johnsonville</td>
-      <td>BP Johnsonville</td>
-      <td>165.593</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>BP Johnsonville</td>
-      <td>Z Johnsonville</td>
-      <td>165.593</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>Z VIC Corner</td>
-      <td>BP Melling</td>
-      <td>185.207</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Z Vivian St</td>
-      <td>Z Taranaki Street</td>
-      <td>436.455</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|from|to|distance|from_brand|to_brand|
+|--- |--- |--- |--- |--- |
+|BP Melling|Z VIC Corner|158.905|BP|Z|
+|Z Johnsonville|BP Johnsonville|165.593|Z|BP|
+|BP Johnsonville|Z Johnsonville|165.593|BP|Z|
+|Z VIC Corner|BP Melling|185.207|Z|BP|
+|Z Vivian St|Z Taranaki Street|436.455|Z|Z|
 
 
 - Out of 28 Z and BP stations, 19 are closest to a competitor and 9 are next to one of their own
 - Of the 9 stations next to their own, 8 are from Z
 - Of the 19 stations next to a competitor, 10 are from Z
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>from</th>
-      <th>to</th>
-      <th>distance</th>
-      <th>from_brand</th>
-      <th>to_brand</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>4</th>
-      <td>Z Vivian St</td>
-      <td>Z Taranaki Street</td>
-      <td>436.455</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Z Taranaki Street</td>
-      <td>Z Vivian St</td>
-      <td>438.123</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Z Miramar</td>
-      <td>Z Broadway</td>
-      <td>1332.762</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Z Broadway</td>
-      <td>Z Miramar</td>
-      <td>1332.762</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Z Kilbirnie</td>
-      <td>Z Miramar</td>
-      <td>2111.346</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>Z Petone</td>
-      <td>Z Hutt Road</td>
-      <td>2227.071</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>Z High Street</td>
-      <td>Z VIC Corner</td>
-      <td>2356.524</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Z Crofton Downs</td>
-      <td>Z Harbour City</td>
-      <td>5270.263</td>
-      <td>Z</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>BP Wainuiomata</td>
-      <td>BP Waiwhetu</td>
-      <td>6335.055</td>
-      <td>BP</td>
-      <td>BP</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
+|from|to|distance|from_brand|to_brand|
+|--- |--- |--- |--- |--- |
+|Z Vivian St|Z Taranaki Street|436.455|Z|Z|
+|Z Taranaki Street|Z Vivian St|438.123|Z|Z|
+|Z Miramar|Z Broadway|1332.762|Z|Z|
+|Z Broadway|Z Miramar|1332.762|Z|Z|
+|Z Kilbirnie|Z Miramar|2111.346|Z|Z|
+|Z Petone|Z Hutt Road|2227.071|Z|Z|
+|Z High Street|Z VIC Corner|2356.524|Z|Z|
+|Z Crofton Downs|Z Harbour City|5270.263|Z|Z|
+|BP Wainuiomata|BP Waiwhetu|6335.055|BP|BP|
 
 Z stations with a BP station within the *average station-station separation distance* are at risk of having their users poached by the competitor. The list below shows that key poaching zones are: Johnsonville, Western / Central Hutt, Seaview, central Wellington and south-central Wellington (Newtown, Berhampore).  
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>from</th>
-      <th>to</th>
-      <th>distance</th>
-      <th>from_brand</th>
-      <th>to_brand</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>19</th>
-      <td>BP Melling</td>
-      <td>Z VIC Corner</td>
-      <td>158.905</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>Z Johnsonville</td>
-      <td>BP Johnsonville</td>
-      <td>165.593</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>BP Johnsonville</td>
-      <td>Z Johnsonville</td>
-      <td>165.593</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>Z VIC Corner</td>
-      <td>BP Melling</td>
-      <td>185.207</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>BP Roadmaster</td>
-      <td>Z Taranaki Street</td>
-      <td>729.384</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>BP Seaview Truckstop</td>
-      <td>Z Seaview</td>
-      <td>731.884</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>Z Seaview</td>
-      <td>BP Seaview Truckstop</td>
-      <td>748.029</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>BP Adelaide Road</td>
-      <td>Z Taranaki Street</td>
-      <td>1003.535</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>Z Harbour City</td>
-      <td>BP Roadmaster</td>
-      <td>1162.016</td>
-      <td>Z</td>
-      <td>BP</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>BP Berhampore</td>
-      <td>Z Constable Street</td>
-      <td>1351.750</td>
-      <td>BP</td>
-      <td>Z</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+|from|to|distance|from_brand|to_brand|
+|--- |--- |--- |--- |--- |
+|BP Melling|Z VIC Corner|158.905|BP|Z|
+|Z Johnsonville|BP Johnsonville|165.593|Z|BP|
+|BP Johnsonville|Z Johnsonville|165.593|BP|Z|
+|Z VIC Corner|BP Melling|185.207|Z|BP|
+|BP Roadmaster|Z Taranaki Street|729.384|BP|Z|
+|BP Seaview Truckstop|Z Seaview|731.884|BP|Z|
+|Z Seaview|BP Seaview Truckstop|748.029|Z|BP|
+|BP Adelaide Road|Z Taranaki Street|1003.535|BP|Z|
+|Z Harbour City|BP Roadmaster|1162.016|Z|BP|
+|BP Berhampore|Z Constable Street|1351.750|BP|Z|
 
 # What next?
 For the conclusion of which fuel station covers Wellington better, go to [final instalment of the series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) or you can revisit the [introductory post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/).
