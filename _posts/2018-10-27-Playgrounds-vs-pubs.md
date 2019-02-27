@@ -1,3 +1,11 @@
+---
+mathjax: true
+toc: true
+toc_sticky: true
+toc_label: "Table of Contents"
+sidebar:
+  nav: "acc_general"
+---
 This post applies accessibility analysis to compare two types of social amenities: council parks and alcohol vendors - a wider scope than the cheeky alliterative title would suggest. While the accessibility concept is unchanged from the [fuel station analysis](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/), the post shows how we can bring together different types (and sources) of spatial data for a richer, and ultimately more insightful analysis.
 
 The motivation for comparing alcohol vendors and parks are two-fold:
@@ -145,4 +153,4 @@ In addition to spatial visualisation, we can also summarise the accessibility va
 
 ![](../images/2018-10-27-Playgrounds-vs-pubs/Playgrounds%20vs%20Pubs_37_1.png)
 
-Once the POIs methodology is sorted, we have a key advantage of a reduced dataset: the ability to do statistical modelling. My current thoughts include modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - and a potential extension to the SA2 (loosely corresponding to suburb units). The aim of this analysis would be to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park. 
+Once the POIs methodology is sorted, we have a key advantage of a reduced dataset: the ability to do statistical modelling. My current thoughts include modelling accessibility to a park / alcohol vendor by meshblock with a Bayesian hierarchical model. With such a model, we can pull out differences in accessibility across meshblocks - and a potential extension to the SA2 (loosely corresponding to suburb units). The aim of this analysis would be to see if there are any meshblocks (or SA2s) with higher than average accessibility to a park.

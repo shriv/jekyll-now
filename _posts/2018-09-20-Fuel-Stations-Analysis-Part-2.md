@@ -1,11 +1,19 @@
-In the [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics. 
+---
+mathjax: true
+toc: true
+toc_sticky: true
+toc_label: "Table of Contents"
+sidebar:
+  nav: "z_series"
+---
+In the [previous post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/), we obtained and plotted locations of Z and BP stations in Wellington, New Zealand. We could see some differences in the coverage of Z vs. BP but there was no articulation of these differences. In this post, we'll use network analysis to generate a structural picture of the two fuel station networks. We'll also compare the two brands with commonly used network metrics.
 
 We build up the abstract network in 4 steps:
 - Get fuel stations in region
 -- Done in the previous post
 
 - Find nearest neighbours within radius, r
--- Calculate the best route / as the crow flies distance between every fuel station pair. 
+-- Calculate the best route / as the crow flies distance between every fuel station pair.
 -- Only consider fuel stations as nearest neighbout if within a certain radial distance (e.g. 10 km)
 
 - Connect nearest neighbours
@@ -23,14 +31,14 @@ We can think of the abstract network of a different data structure and this form
 These metrics quantify the interaction  between Z and BP fuel stations and they help build a picture of coverage.
 
 # Introduction to street network analysis
-To construct the abstract network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities. 
+To construct the abstract network, we first need to calculate the best route (and its distance) between every pair of fuel stations in the network. With the OSMnx (a portmanteau acronym of Open Street Maps, OSM, and NetworkX, nx) package, we can superimpose entities with geolocation on the spatial network. Once we've done this, we can find a path (route) connecting any two nodes. Because of the representation constraints, we don't find the route between the 2 specific entity coordinates (like Google Maps) - instead, we find the path between two nodes closest to the entities.
 
-The underlying representation used by OSMnx is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx. 
+The underlying representation used by OSMnx is a reduction of streets and roads to edges with intersectionsas the vertices (or, nodes). This representation is also known as a 'Primal Graph'. The position of the nodes and the trajectory of the edges are further described with geolocation coordinates. The technical aspects are presented in [this paper](https://arxiv.org/pdf/1611.01890.pdf) by Geoff Boening: the author of OSMnx.
 
-The route between the nodes uses the edges (streets and roads) of the spatial network. The route calculation algorithm is an analogue of the [typical shortest path analyses done in network science](https://en.wikipedia.org/wiki/Shortest_path_problem). In our spatial network, the path length can be equated to distance. The base unit of length is metres. 
+The route between the nodes uses the edges (streets and roads) of the spatial network. The route calculation algorithm is an analogue of the [typical shortest path analyses done in network science](https://en.wikipedia.org/wiki/Shortest_path_problem). In our spatial network, the path length can be equated to distance. The base unit of length is metres.
 
 ## Simple example: route between Z Kilbirnie and Z Vivian St
-The following example looks at the distance and route between two Z stations: Z Kilbernie and Z Vivian St. The red line in the figure is the shortest route that connects the two stations. From the street shapes, you can see that the route is wending it's way around Evans Bay and Basin Reserve, before entering the central city street grid. This route has a distance of 4.6 km - a value that corresponds quite closely to that given by [Google Maps](https://bit.ly/2Mvjr0L). 
+The following example looks at the distance and route between two Z stations: Z Kilbernie and Z Vivian St. The red line in the figure is the shortest route that connects the two stations. From the street shapes, you can see that the route is wending it's way around Evans Bay and Basin Reserve, before entering the central city street grid. This route has a distance of 4.6 km - a value that corresponds quite closely to that given by [Google Maps](https://bit.ly/2Mvjr0L).
 
 ![png]({{ site.baseurl }}/images/2018-09-20-Fuel-Stations-Analysis/Fuel Stations Analysis_29_0.png)
 
@@ -48,7 +56,7 @@ The following example looks at the distance and route between two Z stations: Z 
 
 
 # Abstract networks
-To construct the abstract network, we first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from several Z stations to Z Broadway (in Strathmore). 
+To construct the abstract network, we first calculate the route and distance between all possible pairs of the 13 Z stations in the region. The following table shows a subset of the results. We see distances from several Z stations to Z Broadway (in Strathmore).
 
 
 <div>
@@ -122,11 +130,11 @@ To construct the abstract network, we first calculate the route and distance bet
 </div>
 
 
-The table of pairwise distances can now be used to analyse the number of neighbours for a Z/BP station within a particular radius and recast into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package. 
+The table of pairwise distances can now be used to analyse the number of neighbours for a Z/BP station within a particular radius and recast into a network structure. The recasting is useful since we can use some standard network analysis tools available in the networkx package.
 
-The steps of the recasting are: 
+The steps of the recasting are:
 
-- Filter the pairiwse distance table to only include separations less than or equal to 10km. This step would remove the connection between Z Broadway and Z Petone for example. 
+- Filter the pairiwse distance table to only include separations less than or equal to 10km. This step would remove the connection between Z Broadway and Z Petone for example.
 - Store the filtered distance table as a network data structure. This means:
 -- Stations become nodes
 -- Any node within 10km becomes a connecting edge
@@ -134,12 +142,12 @@ The steps of the recasting are:
 - Remove the geolocation information for the nodes
 
 We can visualise the network structure of the simpler, recast data. The weighted edges come in useful since closer nodes have thicker edges and are closer together than nodes that are further away. Some interesting insights include:
-- 2 components are apparent in the Z station network for Wellington: Wellington City and Lower Hutt. 
-- The Z Wellington City component is very tightly connected for the central and southern suburbs. 
-- The connectivity of the Z Wellington City component reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt. 
-- BP stations in the northern suburbs are a little better connected. 
-- The BP Wellington component is not as well connected as the Z station Wellington City component. 
-- The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z. 
+- 2 components are apparent in the Z station network for Wellington: Wellington City and Lower Hutt.
+- The Z Wellington City component is very tightly connected for the central and southern suburbs.
+- The connectivity of the Z Wellington City component reduces for the northern stations. The table of connections shows that stations in the southern suburbs are connected to two more stations than the northern suburbs and Lower Hutt.
+- BP stations in the northern suburbs are a little better connected.
+- The BP Wellington component is not as well connected as the Z station Wellington City component.
+- The BP Lower Hutt component is much better connected than Z. BP also has 2 more stations in Lower Hutt compared to Z.
 
 
 -----------------:|:------------------
@@ -149,7 +157,7 @@ All these points indicate that while Z and BP cover similar areas of Wellington,
 
 
 ## Z Network analysis: degree
-Because the Z station network was a loosely connected network with two strongly connected components, we can calculate the average degree per component, without much loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network - so we can't analyse the BP components separately.. 
+Because the Z station network was a loosely connected network with two strongly connected components, we can calculate the average degree per component, without much loss of accuracy. The BP network doesn't have the same structure - BP stations are reasonably well connected throughout the Wellington region network - so we can't analyse the BP components separately..
 
 The explicit connectivity of each Z station is given by a metric called 'degree' in network analysis. The degree distribution is useful for understanding characteristics of structure in larger &/ complex networks. Here, it's simply useful to use the node degree to understand the highly connected / central Z stations. As expected, these stations are the ones in the city centre: Z Harboour City, Z Vivian St, Z Taranaki Street.
 
@@ -264,7 +272,7 @@ We can further reduce the pairwise distance matrix to the closest neighbour per 
 
 The plots show that the physical coverage of Z vs. BP stations using the inter-station separation distances is asymmetric. There is also some indication of a *bimodal* distribution: a cluster of stations that are very close together and another cluster that are further apart. The difference between the two modes seems to be larger for BP.
 
-From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message. 
+From this comparison, we can say that Z stations are better spread in the Wellington region compared to BP. We need to exercise some caution however; with only ~13 stations, we don't have much sample size. If we do a more complete analysis for Z, we can get robust statistics by running a hierarchical model for the average inter-station separation across the different types of regions. Until then, we just have to be mindful of how strongly we present this message.
 
 Average (mean) inter-station distances:
 - Z stations in Wellington are 2.412 km apart on average
@@ -275,9 +283,9 @@ Average (mean) inter-station distances:
 
 A key characteristic of good coverage is location in relation to other entities - especially competitors. A simplistic view of good coverage is that a franchise should ideally be placed close to one of its own rather than near a competitor. Some comparative analyses that explore the type of nearest neighbour include:
 - Seeing whether Z stations neighbour each other or a competitor
-- Which Z stations are in a zone of poaching risk - i.e. their customers might go to a nearby competitor. 
+- Which Z stations are in a zone of poaching risk - i.e. their customers might go to a nearby competitor.
 
-For this analysis, we need to generate the shortest distances between all station pairs for *both* Z and BP stations together. Unfortunately, the computation is not fast and needs to better managed in the future for a larger dataset. Also, note that there is an implicit redundancy in the numbers cited below: some station pairs are each others nearest neighbours. 
+For this analysis, we need to generate the shortest distances between all station pairs for *both* Z and BP stations together. Unfortunately, the computation is not fast and needs to better managed in the future for a larger dataset. Also, note that there is an implicit redundancy in the numbers cited below: some station pairs are each others nearest neighbours.
 
 
 <div>
@@ -574,4 +582,4 @@ Z stations with a BP station within the *average station-station separation dist
 </div>
 
 # What next?
-For the conclusion of which fuel station covers Wellington better, go to [final instalment of the series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) or you can revisit the [introductory post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/). 
+For the conclusion of which fuel station covers Wellington better, go to [final instalment of the series](https://shriv.github.io/Fuel-Stations-Analysis-Part-3/) or you can revisit the [introductory post](https://shriv.github.io/Fuel-Stations-Analysis-Part-1/).
