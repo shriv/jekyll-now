@@ -15,9 +15,9 @@ In a [previous post on playground accessibility](https://shriv.github.io/Playgro
 
 
 # Technical overview
-This post is quite heavy on technical detail - accessibility analysis that includes the impact of street gradients on travel speed isn't an _out of the box_ analysis. Hence, this post is much more of a 'methodology' post with some insights along the way.
+This post is quite heavy on technical detail - accessibility analysis that includes the impact of street gradients on travel speed isn't an _out of the box_ analysis. Hence, this post is much more of a _methodology_ post with some (hopefully, interesting and useful) insights along the way.
 
-Key technical challenges overcome in this analysis are listed and referenced below.
+Key technical challenges that needed to be overcome are listed and referenced below.
 
 | Issue | Section |
 |:---:|:---|
@@ -32,7 +32,6 @@ Additional technical challenges are kept for the [companion Jupyter Notebook](ht
 
 
 # Data munging
-
 Two key datasets are used in this analysis:
 - *WCC playground locations*: downloaded as a zip file
 - *Wellington street network*
@@ -165,15 +164,18 @@ It's worth noting that while accessibility to playgrounds is worse due to hills,
 ```python
 # Extract an undirected graph
 G_undir = G.to_undirected()
-nodes_gdfs, nodes_gdfs = ox.graph_to_gdfs(G_undir)
+nodes_gdfs, edges_gdfs = ox.graph_to_gdfs(G_undir)
+
 # Get local average gradient by node  
 u_grades = (edges_gdfs
            .groupby('u')
            .agg({'abs_grade': 'mean'})
            .reset_index()
            .rename({'u': 'id'}, axis=1))
+
 # Repeat for v
 ...
+
 # Join u_grades and v_grades and drop duplicates
 ...
 ```
