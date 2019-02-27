@@ -11,14 +11,14 @@ In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calcul
 
 Playgrounds are key amenities that can impact the quality of life for young families. Since they are also frequently accessed on foot, it's important to consider how accessible they really are. Particularly for suburbs with a high residential fraction.   
 
-# Technical details
-We need to overcome some technical issues to do this analysis:
-- Re-do accessibility metric: from distance to travel time
-- Get elevation data for roads and walkways
-- Convert elevation to road / walkway inclination
-- Incorporate inclination in the accessibility analysis
-    - Include road inclines in the pandana network
-    - Estimate the impact of inclination on travel time
+# Technical overview
+We need to overcome some technical issues to do this analysis.
+
+| Issue | Section |
+|:---:|:---|
+| Converting accessibility metric: from distance to travel time|[Section](#wellington-street-network-:-without-elevation)|
+|Getting elevation data for roads and walkways | [Section](#wellington-street-network-:-with-elevation)|
+|Converting road / walkway inclination to travel time | [Section](#converting-incline-distance-to-travel-time)|
 
 # Datasets
 
