@@ -7,17 +7,17 @@ sidebar:
   nav: "acc_series"
 ---
 
-In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
-
 As illustrated in the introductory post, playgrounds are key amenities that can act as a proxy for _walkability_. In this post, we'll be examining the following question in detail.
 
 > _How prohibitive is Wellington’s topography on pedestrian accessibility to playgrounds?_
 
+In a [previous post on playground accessibility](https://shriv.github.io/Playgrounds-vs-pubs/), accessibility was calculated in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
+
 
 # Technical overview
-This post is quite heavy on technical detail. Accessibility analysis including the impact of street gradients on travel speed isn't an 'out of the box' analysis. So, essentially this post is much more of a 'methodology' post with some insights along the way.
+This post is quite heavy on technical detail - accessibility analysis that includes the impact of street gradients on travel speed isn't an _out of the box_ analysis. Hence, this post is much more of a 'methodology' post with some insights along the way.
 
-Key technical challenges overcome in the analysis are listed and referenced below.
+Key technical challenges overcome in this analysis are listed and referenced below.
 
 | Issue | Section |
 |:---:|:---|
@@ -25,10 +25,10 @@ Key technical challenges overcome in the analysis are listed and referenced belo
 |Getting street gradients from elevation data | [Section](#wellington-street-network-with-elevation)|
 |Adjusting travel time according to street gradients | [Section](#converting-incline-distance-to-travel-time)|
 
-Additional technical challenges are kept for the [companion Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb):
 
-- Adding colourbars to OSMnx isochrone plots  
-- Calculating route statistics with OSMnx and Pandana
+Additional technical challenges are kept for the [companion Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb):
+- Adding colourbars to _osmnx_ isochrone plots  
+- Calculating route statistics with _osmnx_ and _pandana_
 
 
 # Data munging
@@ -66,9 +66,9 @@ The accessibility data can be extracted and plotted as a histogram. Here, we see
 ## Wellington street network: with elevation
 Elevation information can be retrieved with the Google Elevation API to enrich both the nodes and edges of the network. For the nodes, we can just get the elevation at a single location. Elevation at the connecting nodes of an edge can be used to derive the _inclination_.
 
-The above steps have been simplified to terse oneliners by the excellent Python package, _OSMnx_. The steps to generate a _Pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/). The first step involves [signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
+The above steps have been simplified to terse oneliners by the excellent Python package, _osmnx_. The steps to generate a _pandana_ network for accessibility analyses enriched with road inclinations are given below. They're mostly borrowed from [Geoff Boeing's tutorial](https://geoffboeing.com/2017/05/osmnx-street-network-elevation/). The first step involves [signing up to the Google Elevation API](https://developers.google.com/maps/documentation/elevation/start) and getting an API key.
 
-The following code block is mostly copied from the tutorial linked earlier. The key difference is that I've stored the API key in a YAML file. By the end of the code block, we have an OSMnx graph with street gradients for every edge in the network.
+The following code block is mostly copied from the tutorial linked earlier. The key difference is that I've stored the API key in a YAML file. By the end of the code block, we have an _osmnx_ graph with street gradients for every edge in the network.
 
 ```python
 # Open the API keys stored in a YAML file
@@ -89,7 +89,7 @@ G = ox.add_edge_grades(G)
 ```
 
 ### Wellington street elevation profile
-Osmnx can download the Google street elevations and generate an edge weight based on the node elevation values. The graph with street elevations can be shows that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
+_osmnx_ can download the Google street elevations and generate an edge weight based on the node elevation values. The graph with street elevations can be shows that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
 
 | All street inclines | "Flat" regions (within 5% gradient) |
 | :---: | :---:|
@@ -97,7 +97,7 @@ Osmnx can download the Google street elevations and generate an edge weight base
 
 
 ### Dealing with MultiDiGraph
-OSMnx generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
+_osmnx_ generates an elevation graph as a multidigraph. That is, the edge (u,v) is also present as (v,u) with the _opposite_ gradient. This is why the average elevation profile is 0!
 For a travel time analysis, we need to split the components of the graph.
 
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_27_0.png)
@@ -195,7 +195,7 @@ We've see how Wellington's topography affects travel times to playgrounds. A qui
 
 We'll be validating the route from 110 John Sim's Drive to Kipling Street Play Area. I chose this particular example because of the monotonicity in gradient for the to and from journeys. Going to the park is consistently downhill and coming back is consistently uphill. None of the classic Wellington roller-coaster routes here!
 
-The route used to calculate the accessibility in Pandana can be visualised by extracting the nearest graph nodes to the origin and destination and using the Networkx get_shortest_path method.
+The route used to calculate the accessibility in _pandana_ can be visualised by extracting the nearest graph nodes to the origin and destination and using the Networkx get_shortest_path method.
 
 With a little additional poking about the graph edges, we can extract the summary, in distance and time, for this route. The code for this is available in the Jupyter Notebook.
 
@@ -229,7 +229,7 @@ Results from the API request can be visualised both on Graphhopper Maps and Open
 
 Crafting the API request is quite simple - the request parameters are detailed [here](https://github.com/graphhopper/graphhopper/blob/0.11/docs/web/api-doc.md). The resultant JSON can be parsed and used for further analysis.
 
-I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against the Pandana + OSMnx extract. Perhaps even reverse engineer the gradient to speed conversion.
+I haven't quite figured out how to ingest this stream of rich data for further analysis. In theory, I'd like to be able to validate the speeds and times of segments in the route against the _pandana_ + _osmnx_ extract. Perhaps even reverse engineer the gradient to speed conversion.
 
 ```python
 graph_hopper_api_key = data_loaded['graph_hopper_api_key'][0]
