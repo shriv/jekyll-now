@@ -10,3 +10,8 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+acc_series:
+  - title: Playground Accessibility Series
+    children:
+      - title: "Introduction"
+        url: /Walking-to-playgrounds-in-Wellington/

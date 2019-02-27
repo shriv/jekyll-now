@@ -4,13 +4,7 @@ toc: true
 toc_sticky: true
 toc_label: "Table of Contents"
 sidebar:
-  title: "Sample Title"
-  nav: sidebar-sample
-sidebar-sample:
-  - title: "Other Posts in this series"
-    children:
-      - title: "Introduction"
-        url: /Walking-to-playgrounds-in-Wellington/
+  nav: "acc_series"
 ---
 
 In the [previous posts](https://shriv.github.io/Playgrounds-vs-pubs/), we calculated accessibility in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
@@ -166,9 +160,27 @@ We can only start seeing changes due to the hill when we consider a differential
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_37_0.png) | ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_38_0.png)|
 
 
-It's worth noting that while accessibility to playgrounds is worse due to hills, the total travel time in hilly areas only increases by 11% on average. Note, here we are are considering a hilly area as one where the absolute average gradient is more 5%.
+It's worth noting that while accessibility to playgrounds is worse due to hills, the total travel time in hilly areas only increases by 9% on average. Note, here we are are considering a hilly nodes as those where the absolute average nearby gradient is more 5%. Sample code below.
 
-![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_50_0.png)
+```python
+# Extract an undirected graph
+G_undir = G.to_undirected()
+nodes_gdfs, nodes_gdfs = ox.graph_to_gdfs(G_undir)
+# Get local average gradient by node  
+u_grades = (edges_gdfs
+           .groupby('u')
+           .agg({'abs_grade': 'mean'})
+           .reset_index()
+           .rename({'u': 'id'}, axis=1))
+# Repeat for v
+...
+# Join u_grades and v_grades and drop duplicates
+...
+```
+
+| Hilly Nodes | Flat Nodes |
+|:---: |:---:|
+|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_50_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_55_0.png)
 
 
 The impact of Wellington's topography is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
