@@ -12,7 +12,7 @@ Unlike cars, pedestrians are sensitive to their environment - from the weather t
 
 In Wellington, hills increase walking time to playgrounds by 9% on average. This post further shows how walkability can be analysed from two perspectives: (1) accessibility _from_ homes _to_ playgrounds or, (2) catchment areas of playgrounds. Depending on the goal of the analysis, the same underlying dataset can be used to produce either perspective.
 
-Hills don't seem to impact average travel time much but we've used a highly idealistic speed to a playground! Furthermore, the distribution of accessibility is highly skewed. The average is not a representative metric. Even under the 'flat land' assumption, total travel times can be higher than 40 minutes.
+Hills don't seem to impact average travel time much but we've used a highly idealistic walking speed to a playground! Furthermore, the distribution of accessibility is highly skewed. The average is not a representative metric. Even under the 'flat land' assumption, total travel times can be higher than 40 minutes.
 
 # Introduction
 Playgrounds are important local amenities that are designed with pedestrian access in mind. Hence, accessibility to playgrounds can act as a proxy for measuring _walkability_ of a city. Good design of local amenities should manage the various factors that might prohibit walking. For example, difficult terrain, population density induced crowding etc. In this post, we'll be examining the following question in detail.
@@ -127,7 +127,7 @@ $$
 \nu = a\exp^{\left(-b.|slope~+~c|\right)}
 $$
 
-Note that $slope$ in the equation is a dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Tobler's function can also be written with slope in _degrees_ ($^{\circ}$). Similarly, speed is given in in _km/h_ and can be converted to a travel time in minutes with a multiplicative factor, (60/1000). Both time and speed versions of Tobler's function are shown in the graph below.
+Note that $slope$ in the equation is a dimensionless quantity: $\frac{dh}{dx}$ (or, rise / run). Terminology-wise, $slope$, is equivalent to _gradient_ and _inclination_. Tobler's function can also be written with slope in _degrees_ ($^{\circ}$). Similarly, speed is given in in _km/h_ and can be converted to a travel time in minutes with a multiplicative factor, (60/1000). Both time and speed versions of Tobler's function are shown in the graph below.
 
 | | a | b | c
 :---: | :---: | :---: | :---:
@@ -268,6 +268,6 @@ The isochrones are centered on the closest street node to the park. The address 
 The isochrones visualisation is useful but we're limited to considering a small set of parks at a time. A more insightful analysis could be to look at residential areas that fall within the catchment zones of multiple playgrounds.
 
 # Conclusions
-The average impact of hilly terrain on playground accessibility seems to be low - only a 9% increase in total travel time. However, the average is a poor representation since the distribution of travel time is highly skewed. Even under the 'flat land' assumption, total travel times can be higher than 40 minutes.
+The average impact of hilly terrain on playground accessibility seems to be low - only a 9% increase in total travel time. However, the average is a poor representation since the distribution of travel time is highly skewed. Even under the _flat land_ assumption, total travel times can be higher than 40 minutes.
 
-In the following post, we will compare accessibility across different residential regions of Wellington, with the aim of identifying areas with poor access. 
+In the following post, we will compare accessibility across different residential regions of Wellington, with the aim of identifying areas with poor access.
