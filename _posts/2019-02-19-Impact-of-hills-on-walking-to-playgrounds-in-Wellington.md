@@ -24,7 +24,7 @@ Key technical challenges that needed to be overcome are listed and referenced be
 | [Converting accessibility metric from distance to travel time](#wellington-street-network-without-elevation)| Blog Post|
 |[Getting street gradients from elevation data](#wellington-street-network-with-elevation) | Blog Post|
 |[Adjusting travel time according to street gradients](#converting-incline-distance-to-travel-time) | Blog Post|
-|Filtering street elevation Networkx | [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb)|
+|Filtering street gradient networks | [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb)|
 |Creating _pandana_ network from _osmnx_ graph with street gradients| [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb)|
 |Adding colourbars to _osmnx_ isochrone plots | [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb)|
 |Calculating route statistics with _osmnx_ and _pandana_ | [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb)|
@@ -179,7 +179,7 @@ u_grades = (edges_gdfs
 |![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_50_0.png)|![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_55_0.png)
 
 
-## Options nearby?
+## Nearby options?
 The impact of Wellington's topography is also seen in the availability of council playground options. In a future post, it would be interesting to see the choices available per capita - since flatter suburbs are also more likely to have higher population density.
 
 
