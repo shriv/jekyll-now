@@ -10,7 +10,9 @@ sidebar:
 # Summary
 Unlike cars, pedestrians are sensitive to their environment - from the weather to the terrain. Changes to either can impact the walking experience or the decision to walk. In this post, we explore the impact of hilly terrain on walkability. Specifically, on walkability to playgrounds - an amenity that is designed to be locally accessible on foot.
 
-In Wellington, hills increase walking time to playgrounds by 9% on average. This post further shows how walkability can be analysed from two perspectives: (1) accessibility _from_ homes or, (2) catchment areas. Depending on the goal of the analysis, the same underlying datasets can be used to produce either perspective.
+In Wellington, hills increase walking time to playgrounds by 9% on average. This post further shows how walkability can be analysed from two perspectives: (1) accessibility _from_ homes _to_ playgrounds or, (2) catchment areas of playgrounds. Depending on the goal of the analysis, the same underlying dataset can be used to produce either perspective.
+
+Hills don't seem to impact average travel time much but we've used a highly idealistic speed to a playground! Furthermore, the distribution of accessibility is highly skewed. The average is not a representative metric. Even under the 'flat land' assumption, total travel times can be higher than 40 minutes.
 
 # Introduction
 Playgrounds are important local amenities that are designed with pedestrian access in mind. Hence, accessibility to playgrounds can act as a proxy for measuring _walkability_ of a city. Good design of local amenities should manage the various factors that might prohibit walking. For example, difficult terrain, population density induced crowding etc. In this post, we'll be examining the following question in detail.
@@ -142,7 +144,7 @@ While I haven't read Tobler's original paper, a [brief exposition of other equiv
 
 
 # Accessibility analysis for hilly Wellington
-With a network of street gradients converted to travel time, we can now compare the impact of hills on accessibility. In the [companion Jupyter notebook]https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb), there are a couple of additional, technical steps:
+With a network of street gradients converted to travel time, we can now compare the impact of hills on accessibility. In the [companion Jupyter notebook](https://github.com/shriv/accessibility-series/blob/master/Accounting%20for%20hills%20in%20accessibility%20analyses.ipynb), there are a couple of additional, technical steps:
 - Creating a _pandana_ network from an _osmnx_ graph with travel time calculated according to the street gradient.
 - Calculating overall accessibility as _total_ travel time. In the notebook this is done by calculating accessibility separately for _(u,v)_ and _(v,u)_ networks and summing the values.
 
@@ -195,7 +197,7 @@ The impact of Wellington's topography is also seen in the availability of counci
 # Validating the accessibility analysis
 We've see how Wellington's topography affects travel times to playgrounds. A quick validation of the approach can be done with Google Maps. A more complex validation can be done Graphhopper.  
 
-We'll be validating the route from 110 John Sim's Drive to Kipling Street Play Area. I chose this particular example because of the monotonicity in gradient for the to and from journeys. Going to the park is consistently downhill and coming back is consistently uphill. None of the classic Wellington roller-coaster routes here!
+We'll be validating the route from 110 John Sims Drive to Kipling Street Play Area. I chose this particular example because of the monotonicity in gradient for the to and from journeys. Going to the park is consistently downhill and coming back is consistently uphill. None of the classic Wellington roller-coaster routes here!
 
 The route used to calculate the accessibility in _pandana_ can be visualised by extracting the nearest graph nodes to the origin and destination and using the Networkx get_shortest_path method.
 
@@ -210,7 +212,7 @@ A more detailed analysis of the route gives:
 > 110 John Sims Drive to Kipling Street Play Area: Street distance is  925 m. At 5km/hr, it takes 11.1 mins. Going to the park (downhill) takes 11.9 mins. Coming back from the park (uphill) takes 12.3 mins'
 
 ## With Google Maps
-[110 John Sim's Drive](https://www.openstreetmap.org/node/6083853567) to Kipling St Play Area in Johnsonville.
+[110 John Sims Drive](https://www.openstreetmap.org/node/6083853567) to Kipling St Play Area in Johnsonville.
 - [Uphill from the park](https://www.google.co.nz/maps/dir/Kipling+Street+Play+Area,+Johnsonville,+Wellington/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/@-41.2287819,174.7921861,15.94z/data=!4m14!4m13!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!3e2): 14 minutes
 - [Downhill to the park](https://www.google.co.nz/maps/dir/110+John+Sims+Dr,+Johnsonville,+Wellington+6037/Kipling+Street+Play+Area,+Johnsonville,+Wellington/@-41.2287819,174.7921861,15.94z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x6d38ade99a925aa1:0x68fba1d12c2d8b01!2m2!1d174.7921832!2d-41.229301!1m5!1m1!1s0x6d38adc0eacfab81:0xb46b5857955895d8!2m2!1d174.797878!2d-41.2251416!3e2): 11 minutes
 
@@ -254,7 +256,7 @@ Like the accessibility analysis, we can choose the relevant units to visualise a
 
 The street networks below show the 0-25 minute isochrones in increments of 5 minutes. The isochrones can be visualised as convex hull polygons, or filled street skeleton isochrones. The latter visualisation has been adapted from [this excellent post](http://kuanbutts.com/2017/12/16/osmnx-isochrones/). The filled street skeletons offer a more realistic visualisation - especially in areas containing street networks with low connectivity like the following example.
 
-The points used in the validation section are repeated here. The blue and green points represent 110 John Sim's Drive and the Kipling St Play Area respectively.
+The points used in the validation section are repeated here. The blue and green points represent 110 John Sims Drive and the Kipling St Play Area respectively.
 
 
 | Catchment polygons | Catchment along streets|
@@ -264,3 +266,8 @@ The points used in the validation section are repeated here. The blue and green 
 The isochrones are centered on the closest street node to the park. The address we're considering is in the 20-25 minute isochrone. This corresponds well to the total time of 25 minutes calculated in the previous section (11 minutes downhill and 14 minutes uphill).
 
 The isochrones visualisation is useful but we're limited to considering a small set of parks at a time. A more insightful analysis could be to look at residential areas that fall within the catchment zones of multiple playgrounds.
+
+# Conclusions
+The average impact of hilly terrain on playground accessibility seems to be low - only a 9% increase in total travel time. However, the average is a poor representation since the distribution of travel time is highly skewed. Even under the 'flat land' assumption, total travel times can be higher than 40 minutes.
+
+In the following post, we will compare accessibility across different residential regions of Wellington, with the aim of identifying areas with poor access. 
