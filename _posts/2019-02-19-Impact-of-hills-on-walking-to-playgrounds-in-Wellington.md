@@ -7,12 +7,17 @@ sidebar:
   nav: "acc_series"
 ---
 
-As illustrated in the introductory post, playgrounds are key amenities that can act as a proxy for _walkability_. In this post, we'll be examining the following question in detail.
+# Summary
+Unlike cars, pedestrians are sensitive to their environment - from the weather to the terrain. Changes to either can impact the walking experience or the decision to walk. In this post, we explore the impact of hilly terrain on walkability. Specifically, on walkability to playgrounds - an amenity that is designed to be locally accessible on foot.
+
+In Wellington, hills increase walking time to playgrounds by 9% on average. This post further shows how walkability can be analysed from two perspectives: (1) accessibility _from_ homes or, (2) catchment areas. Depending on the goal of the analysis, the same underlying datasets can be used to produce either perspective.
+
+# Introduction
+Playgrounds are important local amenities that are designed with pedestrian access in mind. Hence, accessibility to playgrounds can act as a proxy for measuring _walkability_ of a city. Good design of local amenities should manage the various factors that might prohibit walking. For example, difficult terrain, population density induced crowding etc. In this post, we'll be examining the following question in detail.
 
 > _How prohibitive is Wellington’s topography on pedestrian accessibility to playgrounds?_
 
-In a [previous post on playground accessibility](https://shriv.github.io/Playgrounds-vs-pubs/), accessibility was calculated in terms of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand) or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
-
+In a [previous post](https://shriv.github.io/Playgrounds-vs-pubs/), accessibility was calculated in units of distance. Distance is an excellent metric for driving or walking on flat land. For short travels by car or walking on flat land, distance can be directly converted to travel time - since most people have an intuitive understanding of their average driving speeds (50 km/h for residential roads in New Zealand), or their approximate walking speed on flat land (usually around 5 km / h for a fit adult as given in [Section 3.4 in NZTA pedestrian planning and design guide](https://www.nzta.govt.nz/assets/resources/pedestrian-planning-guide/docs/pedestrian-planning-guide.pdf)). Hills are not an issue for drivers provided road quality and safety are no different to flat land. But hills do impact travel time for pedestrians; which in turn impacts accessibility.
 
 # Technical overview
 This post is quite heavy on technical detail - accessibility analysis that includes the impact of street gradients on travel speed isn't an _out of the box_ analysis. So, this post is much more of a _methodology_ post with some (hopefully, interesting and useful) insights along the way.
@@ -94,11 +99,11 @@ _osmnx_ generates an edge weight based on connecting node elevation values. We c
 The graphs show that Wellington is largely flat around the coastline but is surrounded by hills. Larger suburbs like Karori and Johnsonville have been built on elevated plateaus.
 
 ### Dealing with MultiDiGraph
-_osmnx_ generates enriches street network with elevation and gradients using Networkx's _Multidigraph_ structure. That is, the edge _(u,v)_ is also present as _(v,u)_ with the _opposite_ gradient. This is why the average elevation profile is 0!
+_Osmnx_ enriches the street network with elevation and gradients using Networkx's _Multidigraph_ structure. In this structure, the edge _(u,v)_ is also present as _(v,u)_ with the _opposite_ gradient. The duplication is why the average elevation profile is 0 and symmetric!
 
 ![png](../images/2019-02-19-Impact-of-hills-on-walking-to-playgrounds-in-Wellington/output_27_0.png)
 
-Since accessibility analysis doesn't prescribe a starting point so we have to take both to _and_ from journeys for the complete impact of hills. To do this correctly, we need to (1) split the components of the graph, (2) calculate accessibility for each component and, (3) sum the components as _total travel time_.
+Since accessibility analysis doesn't prescribe a starting point, we have to take both _to_ and _from_ journeys to fully quantify the impact of hills on travel time. To do this, we need to (1) split the components of the graph, (2) calculate accessibility for each component and, (3) sum the components as _total travel time_.
 
 The street network can be easily split to only give unique _(u,v)_ in one graph and the inverse, _(v,u)_, in another. Accessibility analysis is performed for _each_ network and the values summed together to give the _total accessibility_.
 
