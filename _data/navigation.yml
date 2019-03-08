@@ -31,13 +31,11 @@
   acc_general:
     - title: "Other Accessibility Posts"
       children:
-        - title: "Introduction to playground accessibility"
-          url: /Walking-to-playgrounds-in-Wellington/
         - title: "Impact of hills on accessibility"
           url: /Impact-of-hills-on-walking-to-playgrounds-in-Wellington/
-        - title: "Fuel stations accessibility: Part 1"
+        - title: "Fuel stations Part 1"
           url: /Fuel-Stations-Analysis-Part-1/
-        - title: "Fuel stations accessibility: Part 2"
+        - title: "Fuel stations Part 2"
           url: /Fuel-Stations-Analysis-Part-2/
-        - title: "Fuel stations accessibility: Part 3"
+        - title: "Fuel stations Part 3"
           url: /Fuel-Stations-Analysis-Part-3/
