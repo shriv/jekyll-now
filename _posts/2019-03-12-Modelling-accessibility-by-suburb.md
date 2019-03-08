@@ -47,8 +47,6 @@ To do this analysis, we need to overcome some technical aspects:
 This section is all about writing Bayesian models with Stan.
 
 
-## Normal Model
-
 ```python
 uni_norm_model = su.load_or_generate_stan_model('stan', 'univariate_normal')
 lower_trunc_norm_model = su.load_or_generate_stan_model('stan', 'lower_truncated_univariate_normal')
@@ -56,6 +54,8 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 
 ```
 
+
+## Normal Model
 
     Inference for Stan model: anon_model_cc3fc1beb21cbbe7b94ad66105c98210.
     4 chains, each with iter=2000; warmup=1000; thin=1;
@@ -87,14 +87,17 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 
 
 ### Checking model performance with posterior predictive
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
+- Good fit
 
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png)
+ - Reasonable fit
+ - Doesn't capture modes - likely due to the fact that Karori is a very large suburb
 
-| Model vs. Data | Fit summary |
-|:---: | ----- |
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png) |<ul><li>Good fit</li></ul>|
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png) | <ul><li>Reasonable fit</li><li>Doesn't capture modes - likely due to the fact that Karori is a very large suburb</li><ul>|
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png) | <ul><li>Poor fit</li><li>Model is overwhelmed by the large spike at 60 minutes</li><li>Makara is basically semi-rural and shouldn't be modelled the same as urban suburbs</ul>|
-
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png)
+- Poor fit
+- Model is overwhelmed by the large spike at 60 minutes
+- Makara is basically semi-rural and shouldn't be modelled the same as urban suburbs
 
 
 ## Hierarchical modelling
