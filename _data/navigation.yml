@@ -17,7 +17,9 @@
           url: /Walking-to-playgrounds-in-Wellington/
         - title: "Impact of hills on accessibility"
           url: /Impact-of-hills-on-walking-to-playgrounds-in-Wellington/
-
+        - title: "Modelling accessibility across suburbs"
+          url: /Modelling-accessibility-by-suburb/
+          
   z_series:
     - title: "Fuel Stations Series"
       children:

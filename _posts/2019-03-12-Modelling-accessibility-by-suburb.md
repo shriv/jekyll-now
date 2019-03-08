@@ -1,3 +1,11 @@
+---
+mathjax: true
+toc: true
+toc_sticky: true
+toc_label: "Table of Contents"
+sidebar:
+  nav: "acc_series"
+---
 
 # Introduction
 *__WORK IN PROGRESS__*
@@ -81,15 +89,11 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 ### Checking model performance with posterior predictive
 
 
-```python
-karori_fit = su.run_plot_suburb_stan(playground_df, lower_trunc_norm_model)
-```
-
-| Suburb | Model vs. Data | Fit summary |
-| :----: | :---: | :-----: |
-| Te Aro| ![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png) |Good|
-| Karori | ![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png) | Reasonable but doesn't capture modes |
-| Makara | ![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png) | Poor |
+| Model vs. Data | Fit summary |
+|:---: | ----- |
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png) |<ul><li>Good fit</li></ul>|
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png) | <ul><li>Reasonable fit</li><li>Doesn't capture modes - likely due to the fact that Karori is a very large suburb</li><ul>|
+![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png) | <ul><li>Poor fit</li><li>Model is overwhelmed by the large spike at 60 minutes</li><li>Makara is basically semi-rural and shouldn't be modelled the same as urban suburbs</ul>|
 
 
 
