@@ -21,10 +21,10 @@ To do this analysis, we need to overcome some technical aspects:
 
 | Dataset | Description | Format | Link |
 | :-----: | :---------: | :----: | :--: |
-| WCC playground locations | jsdh | .zip| |
-| WCC suburb boundaries | ;lf | .gdb | |
-| StatsNZ 2019 meshblock boundaries | ;lf | .gdb | |
-| Wellington street network without elevation | ksfj| kjfd | lkd|
+| WCC playground locations | jsdh | .zip| [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)|
+| WCC suburb boundaries | ;lf | .gdb | [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/f534738cf3e648f7b1524a9697376764_0) |
+| StatsNZ 2019 meshblock boundaries | ;lf | .gdb | [Stats NZ](https://datafinder.stats.govt.nz/layer/98971-meshblock-higher-geographies-2019-generalised/data/) |
+| Wellington street network without elevation | ksfj| kjfd | Open Street Map |
 | Wellington street network with elevation | ksfj| kjfd | lkd|
 
 
