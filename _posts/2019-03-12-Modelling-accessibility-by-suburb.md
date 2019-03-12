@@ -31,16 +31,16 @@ To do this analysis, we need to overcome some technical aspects:
 
 # Accessibility by Wellington suburb
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
 
 
 ## Visualising accessibility within suburb boundaries
 
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_20_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_20_0.png)
 
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_21_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_21_0.png)
 
 
 # Bayesian Modelling of accessibility
@@ -76,25 +76,25 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 ### Checking model performance with posterior predictive
 
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_25_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_25_0.png)
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_26_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_26_0.png)
 
 
 ## Truncated Normal Model
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_31_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_31_0.png)
 
 
 ### Checking model performance with posterior predictive
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
 - Good fit
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png)
  - Reasonable fit
  - Doesn't capture modes - likely due to the fact that Karori is a very large suburb
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png)
 - Poor fit
 - Model is overwhelmed by the large spike at 60 minutes
 - Makara is basically semi-rural and shouldn't be modelled the same as urban suburbs
@@ -102,4 +102,4 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 
 ## Hierarchical modelling
 
-![png](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png)
