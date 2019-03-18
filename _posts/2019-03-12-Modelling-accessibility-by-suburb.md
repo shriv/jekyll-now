@@ -13,19 +13,19 @@ sidebar:
 ## Technical details
 To do this analysis, we need to overcome some technical aspects:
 - Test a Bayesian model at the suburban level
-- Model accessibility at the meshblock level
-- Gather modeled meshblock accessibilities at the suburban level
 - Compare suburban averages in Wellington
+- Compare suburban heterogeneity in Wellington
+
 
 # Datasets
 
-| Dataset | Description | Format | Link |
-| :-----: | :---------: | :----: | :--: |
-| WCC playground locations | jsdh | .zip| [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)|
-| WCC suburb boundaries | ;lf | .gdb | [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/f534738cf3e648f7b1524a9697376764_0) |
-| StatsNZ 2019 meshblock boundaries | ;lf | .gdb | [Stats NZ](https://datafinder.stats.govt.nz/layer/98971-meshblock-higher-geographies-2019-generalised/data/) |
-| Wellington street network without elevation | ksfj| kjfd | Open Street Map |
-| Wellington street network with elevation | ksfj| kjfd | lkd|
+| Dataset | Format | Link |
+| :-----: | :----: | :--: |
+| WCC playground locations  | .zip| [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)|
+| WCC suburb boundaries  | .gdb | [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/f534738cf3e648f7b1524a9697376764_0) |
+| StatsNZ 2019 meshblock boundaries | .gdb | [Stats NZ](https://datafinder.stats.govt.nz/layer/98971-meshblock-higher-geographies-2019-generalised/data/) |
+| Wellington street network without elevation | - | OpenStreetMap via osmnx |
+| Wellington street network with elevation | - | OpenStreetMap + Google Elevation API via osmnx|
 
 
 
@@ -51,7 +51,6 @@ This section is all about writing Bayesian models with Stan.
 uni_norm_model = su.load_or_generate_stan_model('stan', 'univariate_normal')
 lower_trunc_norm_model = su.load_or_generate_stan_model('stan', 'lower_truncated_univariate_normal')
 trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_normal')
-
 ```
 
 
@@ -88,13 +87,16 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 
 ### Checking model performance with posterior predictive
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
+
 - Good fit
 
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_33_0.png)
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
+
  - Reasonable fit
- - Doesn't capture modes - likely due to the fact that Karori is a very large suburb
+ - Doesn't capture modes - likely due to the fact that Rongotai has both a residential and an industrial area.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_35_0.png)
+
 - Poor fit
 - Model is overwhelmed by the large spike at 60 minutes
 - Makara is basically semi-rural and shouldn't be modelled the same as urban suburbs
@@ -102,4 +104,25 @@ trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_
 
 ## Hierarchical modelling
 
+## Results for $\mu$
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png)
+
+
+## Results for $\sigma$
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png)
+
+## Quadrant visualisation of $\sigma$ and $\mu$
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_45_0.png)
+
+| suburb | quadrant | $\mu$ | $\sigma$ |
+|--- |--- |--- |--- |
+|Khandallah|High $\sigma$ and $\mu$|8.685588|4.641167|
+|Karori|High $\sigma$ and $\mu$|7.424094|8.664240|
+|Tawa|High $\sigma$; Low $\mu$|-6.406689|2.839867|
+|Brooklyn|High $\sigma$; Low $\mu$|-7.285322|15.768424|
+|Pipitea|Low $\sigma$; High $\mu$|16.522374|-2.964546|
+|Hataitai|Low $\sigma$; High $\mu$|7.069155|-3.707169|
+|Wellington Central|Low $\sigma$; High $\mu$|4.671688|-2.408587|
+|Kelburn|Low $\sigma$; High $\mu$|5.273022|-2.693675|
+|Miramar|Low $\sigma$; High $\mu$|3.321520|-2.618647|
+|Mount Cook|Low $\sigma$; High $\mu$|2.831357|-4.369413|
