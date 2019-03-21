@@ -10,13 +10,13 @@ sidebar:
 *__WORK IN PROGRESS__*
 
 # Introduction
-Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models, allows us to dredge some deep insights - from the accessibility characteristics of a suburb to reasons why some suburbs don't fit our approximations.
+Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models, allows us to dredge up some deep and useful insights: (1) the accessibility characteristics of a suburb and, (2) reasons why some certain suburban characteristics don't fit our approximations.
 
 
 ## The goal of statistical modelling
-The best reason for trying our hand at statistical modelling comes from entertaining and brilliant pedagogue: Ben Lambert. His _particular_ views are in favour of the Bayesian approach to statistical inference. While this analysis doesn't necessarily gain _more_ insight / easy explanations from a Bayesian approach, I've chosen to use it anayway because I've now completely avowed to _The Bayesian Way_ (_Bayes-Do_?). 
+The best reason for trying our hand at statistical modelling comes from the entertaining and brilliant pedagogue: [Ben Lambert](https://ben-lambert.com/about/).
 
-> In life, noise obfuscates signal. What we seen often appears as an incoherent mess that lacks any appearance of logic.
+> In life, noise obfuscates signal. What we see often appears as an incoherent mess that lacks any appearance of logic.
 
 > Statistical inference is the logical framework we can use to trial our beliefs about the noisy world against _data_. We formalise our beliefs in models of _probability_.
 
@@ -25,24 +25,43 @@ The best reason for trying our hand at statistical modelling comes from entertai
 </p>
 <br>
 
+In his book, Lambert goes on to elaborate the gains acheived from employing a Bayesian approach to statistical inference. Our analysis into accessibility by suburb does benefit from a Bayesian approach but I've chosen to use it anayway since I'm now completely avowed to _The Bayesian Way_ (_Bayes-Do_?).
+
+
 ## Models as an approximation of reality
-Models are a key tool of data science.
+The core component of statistical inference is a _statistical model_ - often shortened to just _model_. Common models formalise the data generation process  by quantifying the relationhip between inputs and outcomes. For example, linear regression models quanitfy the relationship between a set of user-defined inputs and the possible outcomes given those inputs.
 
-## A case against modelling?
+The model we're using in this post are much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll see later on, we choose a particular mathematical form to represent the probability space of accessibilities within a suburb. The specific parameters of the model, $\mu$ and $\sigma$, are calculated using the observed accessibility data.
 
-| Data science cycle | Data analysis cycle |
+## Model with care
+It's worth noting that not all data-driven questions benefit from statistical modelling. Models can be complicated and difficult to explain to others - even technically-oriented peers. In view of this, some data evangelists advocate a simpler analysis process. Kat Greenbrook highlights how the [modelling aspect can be left out for many business analytics questions](https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/).
+
+| Data Science cycle | Data Analysis cycle |
 | :----------------: | :-----------------: |
 | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle.png)  | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle_no_modelling.png)  |
 | Actions from model output / insights  | Actions directly from exploratory analysis |
 
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
-  - Images &copy; [Kat Greenbrook](https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/)
+  - Images &copy; <a href="https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/">Kat Greenbrook</a>
+</p>
+<br>
+
+As people who work with data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding utility and significant insight.
+
+> Modelling should never be undertaken if there is not a clear use case for the output.
+
+<p style='font-size: 90%; text-align: right; font-style:italic;'>
+  - <a href="https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/">Kat Greenbrook</a>
 </p>
 <br>
 
 
+## Model for a reason
+Now that we have been cautioned to think before we model, we can identify why models would be useful to understand playground accessibility in Wellington.
 
-## Technical details
+
+
+# Technical details
 To do this analysis, we need to overcome some technical aspects:
 
 - Test a Bayesian model at the suburban level
@@ -50,7 +69,7 @@ To do this analysis, we need to overcome some technical aspects:
 - Compare suburban heterogeneity in Wellington
 - Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb.
 
-# Datasets
+## Datasets
 
 | Dataset | Format | Link |
 | :-----: | :----: | :--: |
@@ -64,8 +83,6 @@ To do this analysis, we need to overcome some technical aspects:
 
 # Accessibility by Wellington suburb
 
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
-
 
 ## Visualising accessibility within suburb boundaries
 
@@ -74,6 +91,11 @@ To do this analysis, we need to overcome some technical aspects:
 
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_21_0.png)
+
+## Extracting accessibility distributions by suburb
+
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
+
 
 
 # Bayesian Modelling of accessibility
@@ -108,7 +130,7 @@ convergence, Rhat=1).
 
 ## Truncated Normal model for better fit
 
-| Normal Model | Truncated Normal Model |
+| Normal model | Truncated Normal model |
 | :----------: | :--------------------: |
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_26_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_50_0.png) |
 
