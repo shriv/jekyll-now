@@ -71,18 +71,12 @@ Adding a model for comparing suburbs has further utility:
 # Technical details
 To do this analysis, we need to overcome some technical aspects:
 
-- Subset accessibility by suburb
-- Build a Bayesian model for an individual suburb
-- Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs
-- Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb.
-
-
 | Technical challenge | Covered in |
 | :-----------------: | :--------: |
-| [Subset accessibility by suburb](#visualising accessibility-within-suburb-boundaries)| Blog Post |
-| [Build a Bayesian model for an individual suburb](#bayesian-model-of-accessibility) | |
-| [Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs](#hierarchical- modelling) | Blog Post |
-| (Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb)[#quadrant-visualisation] | Blog Post |
+| [Subset accessibility by suburb](#visualising-accessibility-within-suburb-boundaries)| Blog Post |
+| [Build a Bayesian model for an individual suburb](#bayesian-modelling-of-accessibility) | |
+| [Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs](#hierarchical-modelling) | Blog Post |
+| [Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb](#quadrant-visualisation) | Blog Post |
 
 
 ## Datasets
