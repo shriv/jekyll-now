@@ -46,7 +46,7 @@ It's worth noting that not all data-driven questions benefit from statistical mo
 </p>
 <br>
 
-As people who work with data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding utility and significant insight.
+Data anlysis alone can be very powerful. Exploratory analyses can unearth many useful insights that can be followed through with business actions. As people who harness data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding utility and significant insight.
 
 > Modelling should never be undertaken if there is not a clear use case for the output.
 
@@ -57,17 +57,33 @@ As people who work with data for a purpose, we must constantly evaluate whether 
 
 
 ## Model for a reason
-Now that we have been cautioned to think before we model, we can identify why models would be useful to understand playground accessibility in Wellington.
+Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
 
+In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-playgrounds-in-Wellington/), we ended with a heatmaps of accessibility in terms of total travel times. These plots conveyed a holistic picture of areas with worse accessibility due to the hilly topography. However, we can't pick out many relevant details from an overview. For example, we might care about how our specific neighbourhood compares to another, or even our neighbourhood vs. the average for the city.
+
+Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In the following section, we will see how we can robustly compare suburbs using a statistical model.
+
+Adding a model for comparing suburbs has further utility:
+- We can characterise suburbs by the difference to the average for the city.
+- We can delve deeper into why some suburbs don't follow the approximation set by the model. Poor fits to the model can illuminate how we might need to adjust the model or, perhaps even exclude some data since it doesn't fit into the scope of the initial question.
 
 
 # Technical details
 To do this analysis, we need to overcome some technical aspects:
 
-- Test a Bayesian model at the suburban level
-- Compare suburban averages in Wellington
-- Compare suburban heterogeneity in Wellington
+- Subset accessibility by suburb
+- Build a Bayesian model for an individual suburb
+- Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs
 - Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb.
+
+
+| Technical challenge | Covered in |
+| :-----------------: | :--------: |
+| [Subset accessibility by suburb](#visualising accessibility-within-suburb-boundaries)| Blog Post |
+| [Build a Bayesian model for an individual suburb](#bayesian-model-of-accessibility) | |
+| [Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs](#hierarchical- modelling) | Blog Post |
+| (Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb)[#quadrant-visualisation] | Blog Post |
+
 
 ## Datasets
 
@@ -158,14 +174,16 @@ convergence, Rhat=1).
 ## Results for $\sigma$
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png)
 
-## Quadrant visualisation of $\sigma$ and $\mu$
+## Quadrant visualisation
 We can visualise both the $\mu$ and $\sigma$ values on a single graph to identify suburbs that are outside the average along both parameters. The best way to look at suburbs outside the average is with a classic "quadrant" plot.
 
 Quadrant plots show points along an intuitive
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_45_0.png)
 
+
 ### High $\sigma$
+
 | suburb | quadrant | $\sigma$ | $\mu$ |
 |--- |--- |--- |--- |
 |Khandallah|High $\sigma$ and $\mu$|4.641167|8.685588|
@@ -175,6 +193,7 @@ Quadrant plots show points along an intuitive
 
 
 ### Low $\sigma$
+
 | suburb | quadrant | $\sigma$ | $\mu$ |
 |--- |--- |--- |--- |
 |Pipitea|Low $\sigma$; High $\mu$|-2.964546|16.522374|
