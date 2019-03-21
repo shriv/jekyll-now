@@ -63,9 +63,13 @@ In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-pla
 
 Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In the following section, we will see how we can robustly compare suburbs using a statistical model.
 
-Adding a model for comparing suburbs has further utility:
-- We can characterise suburbs by the difference to the average for the city.
-- We can delve deeper into why some suburbs don't follow the approximation set by the model. Poor fits to the model can illuminate how we might need to adjust the model or, perhaps even exclude some data since it doesn't fit into the scope of the initial question.
+Adding a model for comparing suburbs has further utility that can answer some important questions:
+
+> Can we summarise the playground accessibility characteristic for a given suburb?
+
+> Which suburbs don't follow the approximation set by the model? Can we use our domain knowledge to understand why?
+
+The first question in particular can help understand how "family-friendly" a particular suburb is. Young families can compare the suburb accessibility characteristics to help make the decision for a move.
 
 
 # Technical details
@@ -73,10 +77,12 @@ To do this analysis, we need to overcome some technical aspects:
 
 | Technical challenge | Covered in |
 | :-----------------: | :--------: |
-| [Subset accessibility by suburb](#visualising-accessibility-within-suburb-boundaries)| Blog Post |
-| [Build a Bayesian model for an individual suburb](#bayesian-modelling-of-accessibility) | |
-| [Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs](#hierarchical-modelling) | Blog Post |
-| [Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb](#quadrant-visualisation) | Blog Post |
+| Geoprocessing accessibility by suburb| [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Visualising%20accessibility%20by%20suburb.ipynb) |
+| Extracting accessibility distributions by suburb| [Blog Post](#visualising-accessibility-within-suburb-boundaries) |
+| Build a Bayesian model for an individual suburb | [Blog Post](#bayesian-modelling-of-accessibility) |
+| Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs | [Blog Post](#hierarchical-modelling) |
+| Stan models for Bayesian analysis| [Code files](https://github.com/shriv/accessibility-series/tree/master/stan) |
+| Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb | [Blog Post](#quadrant-visualisation) |
 
 
 ## Datasets
