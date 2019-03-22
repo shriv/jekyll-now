@@ -148,18 +148,20 @@ The same filters used to plot the accessibility heatmap within a suburb can be u
 
 
 
-# Bayesian Modelling of accessibility
-This section is all about writing Bayesian models with Stan.
-
+# Modelling of accessibility in a single suburb
+Once we have the accessibility values by suburb, we can start thinking of how we might model them. From the previous figure, the suburban accessibility distributions have some distinctive features:
+- Values are all positive
+- Some are heaviliy skewed
+- Most have single mode
+- Some look like a normal distribution
 
 ```python
 uni_norm_model = su.load_or_generate_stan_model('stan', 'univariate_normal')
 lower_trunc_norm_model = su.load_or_generate_stan_model('stan', 'lower_truncated_univariate_normal')
-trunc_norm_model = su.load_or_generate_stan_model('stan', 'truncated_univariate_normal')
 ```
 
-
 ## Normal Model
+Given the unimodel nature of the majority of the accessibility distributions, a normal model is a trivial starting point. We won't go into the details here but we can easily write a Stan model to compute the $\mu$ and $\sigma$ values of a univariate normal distribution. Results from a Stan fit are given below. I've also computed the posterior predictive - the 'y_pred' variable.
 
 ```
 Inference for Stan model: anon_model_cc3fc1beb21cbbe7b94ad66105c98210.
@@ -179,26 +181,23 @@ convergence, Rhat=1).
 ```
 
 ## Truncated Normal model for better fit
+The posterior predictive is a useful diagnostic as it 'reverse engineers' data based on the specified model. Checking this generated data against our original dataset is a very useful tool to assess the suitablity of a model.
+
+The normal model approximation for the Karori is seen in the LHS figure below. The RHS shows the raw accessibility values for Karori. It's quite clear that the Normal approximation fails because it generates negative accessibilities.
+
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_51_0.png)
+
+A truncated Normal distribution can easily address this issue. Implementing this variation in Stan is easy - we just need to specify the appropriate bounds for the Normal distribution: lower, upper or both. The only aspect that needed some research was generating posterior predictive samples. But helpfully others have encountered this before and there was a [useful discourse in the Stan forums](https://discourse.mc-stan.org/t/rng-for-truncated-distributions/3122/9).
+
+The figure below shows the posterior predictive samples generated from a Normal and truncated Normal distribution respectively. The truncated Normal can be judged a good fit as it matches the distinctive features of the accessibility data.
 
 | Normal model | Truncated Normal model |
 | :----------: | :--------------------: |
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_26_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_50_0.png) |
 
 
-## Checking model performance with posterior predictive
+# Building a collective Bayesian model
 
-
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
-
-
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
-
- - Doesn't capture modes - likely due to the fact that Rongotai has both a residential and an industrial area.
-
-### Other issues
-
-
-## Hierarchical modelling
 
 ## Results for $\mu$
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png)
@@ -238,3 +237,16 @@ Quadrant plots show points along an intuitive
 |--- |--- |--- |--- |
 |Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167|
 |Karori|High $\sigma$ and $\mu$|3.475087|8.664240|
+
+
+
+
+## Suburbs that don't fit the model
+
+
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
+
+
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
+
+ - Doesn't capture modes - likely due to the fact that Rongotai has both a residential and an industrial area.
