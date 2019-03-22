@@ -27,13 +27,13 @@ The best reason for trying our hand at statistical modelling comes from the ente
 </p>
 <br>
 
-In his book, Lambert goes on to elaborate the gains acheived from employing a Bayesian approach to statistical inference. Our analysis into accessibility by suburb does benefit from a Bayesian approach but I've chosen to use it anayway since I'm now completely avowed to _The Bayesian Way_ (_Bayes-Do_?).
+In his book, Lambert goes on to elaborate the gains acheived from employing a Bayesian approach to statistical inference. Our analysis into accessibility by suburb doesn't explicitly benefit from a Bayesian approach but I've chosen to use it anayway since I'm now completely avowed to _The Bayesian Way_ (_Bayes-do_?).
 
 
 ## Models as an approximation of reality
 The core component of statistical inference is a _statistical model_ - often shortened to just _model_. Common models formalise the data generation process  by quantifying the relationhip between inputs and outcomes. For example, linear regression models quanitfy the relationship between a set of user-defined inputs and the possible outcomes given those inputs.
 
-The model we're using in this post are much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll see later on, we choose a particular mathematical form to represent the probability space of accessibilities within a suburb. The specific parameters of the model, $\mu$ and $\sigma$, are calculated using the observed accessibility data.
+The model we're using in this post are much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll [see later on](#truncated-normal-model-for-better-fit), we choose a particular mathematical form to represent the probability space of accessibilities within a suburb. The specific parameters of the model, $\mu$ and $\sigma$, are calculated using the observed accessibility data.
 
 ## Model with care
 It's worth noting that not all data-driven questions benefit from statistical modelling. Models can be complicated and difficult to explain to others - even technically-oriented peers. In view of this, some data evangelists advocate a simpler analysis process. Kat Greenbrook highlights how the [modelling aspect can be left out for many business analytics questions](https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/).
@@ -48,7 +48,7 @@ It's worth noting that not all data-driven questions benefit from statistical mo
 </p>
 <br>
 
-Data anlysis alone can be very powerful. Exploratory analyses can unearth many useful insights that can be followed through with business actions. As people who harness data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding utility and significant insight.
+Data anlysis alone is powerful; exploratory analyses can unearth useful insights that can be followed through with business actions. As people who harness data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding significant utility and insight.
 
 > Modelling should never be undertaken if there is not a clear use case for the output.
 
@@ -56,7 +56,6 @@ Data anlysis alone can be very powerful. Exploratory analyses can unearth many u
   - <a href="https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/">Kat Greenbrook</a>
 </p>
 <br>
-
 
 ## Model for a reason
 Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
@@ -67,7 +66,7 @@ Comparisons can be done with single point values alone. But, robust comparisons 
 
 
 ## Models for decision making
-Adding a model for comparing suburbs has further utility - they can be used for explicit or qualitative decision making. Exolicit decisions are appropriate in a business context since executives want to know the best option. This series is more focused on exploration and building a qualitative picture guided by metrics and analyses.
+Adding a model for comparing suburbs has further utility - they can be used for explicit or qualitative decision making. Explicit decisions are appropriate in a business context since executives want to know the best option. This series is more focused on exploration and building a qualitative picture guided by metrics and analyses.
 
 > Can we summarise the playground accessibility characteristic for a given suburb?
 
@@ -147,7 +146,6 @@ The same filters used to plot the accessibility heatmap within a suburb can be u
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
 
 
-
 # Modelling of accessibility in a single suburb
 Once we have the accessibility values by suburb, we can start thinking of how we might model them. From the previous figure, the suburban accessibility distributions have some distinctive features:
 - Values are all positive
@@ -197,14 +195,20 @@ The figure below shows the posterior predictive samples generated from a Normal 
 
 
 # Building a collective Bayesian model
+Modelling every suburb on it's own is doable but more useful is a model that does this, and models the average across all suburbs. This type of model is commonly known as a _hierarchcal model_. Hierarchy comes from the intuitive ordering of the models. Here, we have an overall _city_ level model and many _suburban_ level models.
 
+Going through the details of a hierarchical model is beyond the scope of this post but there is a [great introduction with Python and Pystan by Chris Fonnesbeck](https://mc-stan.org/users/documentation/case-studies/radon.html). Note that a _multi-level model_ is synonymous with a _hierarchical model_.
 
-## Results for $\mu$
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png)
+We get two types of posterior distributions from the hierarchical model:
+- $\mu_{s}$ and $\sigma_{s}$ for each suburb.
+- A single $\mu_{c}$ and $\sigma{c}$ for all suburbs (i.e. city level)
 
+It is worth noting that only the top 80% of suburbs (in terms of node count) have been included in the model. This was mainly to get the model to run reasonably quickly.
 
-## Results for $\sigma$
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png)
+## Results for $\mu$ and $\sigma$
+| $\mu$  | $\sigma$ |
+| :----------: | :--------------------: |
+|![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png) |
 
 
 ## Quadrant visualisation
