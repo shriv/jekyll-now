@@ -9,8 +9,10 @@ sidebar:
 
 *__WORK IN PROGRESS__*
 
+# Summary
+
 # Introduction
-Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models, allows us to dredge up some deep and useful insights: (1) the accessibility characteristics of a suburb and, (2) reasons why some certain suburban characteristics don't fit our approximations.
+Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. All the blog posts in ther series  I hope to make the case that approximating reality with models, allows us to dredge up some deep and useful insights: (1) the accessibility characteristics of a suburb and, (2) reasons why some suburban characteristics don't fit our approximations.
 
 
 ## The goal of statistical modelling
@@ -63,13 +65,19 @@ In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-pla
 
 Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In the following section, we will see how we can robustly compare suburbs using a statistical model.
 
-Adding a model for comparing suburbs has further utility that can answer some important questions:
+
+## Models for decision making
+Adding a model for comparing suburbs has further utility - they can be used for explicit or qualitative decision making. Exolicit decisions are appropriate in a business context since executives want to know the best option. This series is more focused on exploration and building a qualitative picture guided by metrics and analyses.
 
 > Can we summarise the playground accessibility characteristic for a given suburb?
 
-> Which suburbs don't follow the approximation set by the model? Can we use our domain knowledge to understand why?
+This question can help understand how "family-friendly" a particular suburb is. Young families can compare the suburb accessibility characteristics to help make the decision for a move.
 
-The first question in particular can help understand how "family-friendly" a particular suburb is. Young families can compare the suburb accessibility characteristics to help make the decision for a move.
+The main model is specifically designed for an intuitive comparative analysis, allowing for two levels of qualitiative comparison: (1) comparing a single suburb to the city average or, (2) comparing two suburbs together.
+
+## Models to support domain understanding
+
+> Which suburbs don't follow the approximation set by the model? Can we use our domain knowledge to understand why?
 
 
 # Technical details
@@ -96,19 +104,45 @@ To do this analysis, we need to overcome some technical aspects:
 | Wellington street network with elevation | - | OpenStreetMap + Google Elevation API via osmnx|
 
 
-
 # Accessibility by Wellington suburb
+In all the previous posts (and series), we've only looked at accessibility for all of Wellington. Here, we show that the accessibility data can be filtered by the spatial boundary of choice. This is done by some clever geoprocessing enabled by _geopandas_.
 
+The steps are pretty simple:
+- Extract node coordinates and accessibility from pandana network
+- Convert node coordinates to geoseries
+- Tag nodes within a suburb boundary using the _contain_ operation.
+
+```{python}
+# Extract node coordinates and accessibility from pandana network
+orig_nodes = network_hills.nodes_df
+df_joined = pd.merge(orig_nodes.reset_index(),
+                     total_hills_1.reset_index(),
+                     how='inner')
+df_joined.columns = ['node_id', 'lon', 'lat', 'accessibility']
+
+# Convert lat and lon to geoseries
+df_joined_coords = dp.coords_df_to_geopandas_points(df_joined,
+                                                    crs={'init': 'epsg:4167'})
+
+# Get suburb values for accessibility data
+playground_df = geopandas.sjoin(wcc_suburbs,
+                                df_joined_coords,
+                                op='contains').drop('index_right', axis=1)
+```
 
 ## Visualising accessibility within suburb boundaries
+With a dataframe containing both the accessibility information and the suburb, we can filter and plot the accessibility for specific suburbs. We just need the accessibility data for the suburb and the boundary information to overlay the two datasets.
 
+```{python}
+karori_accessibility = playground_df[playground_df['suburb'] == 'Karori']
+karori_boundary = wcc_suburbs[wcc_suburbs['suburb'] == 'Karori']
+```
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_20_0.png)
 
 
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_21_0.png)
-
 ## Extracting accessibility distributions by suburb
+The same filters used to plot the accessibility heatmap within a suburb can be used to extract the accessibility values alone without any spatial information. This raw accessibility data is the basis for our statistical model. 
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
 
@@ -153,11 +187,10 @@ convergence, Rhat=1).
 
 ## Checking model performance with posterior predictive
 
-### Good fit
+
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
 
 
-### Poor fit
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
 
  - Doesn't capture modes - likely due to the fact that Rongotai has both a residential and an industrial area.
@@ -174,6 +207,7 @@ convergence, Rhat=1).
 ## Results for $\sigma$
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png)
 
+
 ## Quadrant visualisation
 We can visualise both the $\mu$ and $\sigma$ values on a single graph to identify suburbs that are outside the average along both parameters. The best way to look at suburbs outside the average is with a classic "quadrant" plot.
 
@@ -182,23 +216,25 @@ Quadrant plots show points along an intuitive
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_45_0.png)
 
 
-### High $\sigma$
+###  Suburbs with consistent accessibility
 
 | suburb | quadrant | $\sigma$ | $\mu$ |
 |--- |--- |--- |--- |
-|Khandallah|High $\sigma$ and $\mu$|4.641167|8.685588|
-|Karori|High $\sigma$ and $\mu$|8.664240|7.424094|
-|Tawa|High $\sigma$; Low $\mu$|2.839867|-6.406689|
-|Brooklyn|High $\sigma$; Low $\mu$|15.768424|-7.285322|
+|Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039|
+|Newtown|Low $\sigma$ and $\mu$|-5.269459|-3.736698|
+|Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546|
+|Hataitai|Low $\sigma$; High$\mu$|3.120148|-3.707169|
 
-
-### Low $\sigma$
+### Suburbs with inconsistent accessibility
 
 | suburb | quadrant | $\sigma$ | $\mu$ |
 |--- |--- |--- |--- |
-|Pipitea|Low $\sigma$; High $\mu$|-2.964546|16.522374|
-|Hataitai|Low $\sigma$; High $\mu$|-3.707169|7.069155|
-|Wellington Central|Low $\sigma$; High $\mu$|-2.408587|4.671688|
-|Kelburn|Low $\sigma$; High $\mu$|-2.693675|5.273022|
-|Miramar|Low $\sigma$; High $\mu$|-2.618647|3.321520|
-|Mount Cook|Low $\sigma$; High $\mu$|-4.369413|2.831357|
+|Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033|
+|Tawa|High $\sigma$; Low$\mu$|-10.355696|2.839867|
+|Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424|
+
+
+| suburb | quadrant | $\sigma$ | $\mu$ |
+|--- |--- |--- |--- |
+|Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167|
+|Karori|High $\sigma$ and $\mu$|3.475087|8.664240|
