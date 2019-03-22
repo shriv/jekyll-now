@@ -201,9 +201,9 @@ Going through the details of a hierarchical model is beyond the scope of this po
 
 We get two types of posterior distributions from the hierarchical model:
 - $\mu_{s}$ and $\sigma_{s}$ for each suburb.
-- A single $\mu_{c}$ and $\sigma{c}$ for all suburbs (i.e. city level)
+- A single $\mu_{c}$ and $\sigma_{c}$ for all suburbs (i.e. city level)
 
-It is worth noting that only the top 80% of suburbs (in terms of node count) have been included in the model. This was mainly to get the model to run reasonably quickly.
+It is worth noting that only the top 80% of suburbs (by node count) have been included in the model. This was mainly to get the model to run reasonably quickly.
 
 ## Results for $\mu$ and $\sigma$
 The posterior distributions output from the hierarchical model can be visualised in a convenient plot known as a [Forest Plot](https://en.wikipedia.org/wiki/Forest_plot). The mean values of the suburban level posterior distribution are plotted as circles. The relative value is used to order and colour code the circles. The 95% [credible interval](https://en.wikipedia.org/wiki/Credible_interval) of each suburban $\mu$ or $\sigma$ is also plotted as horizontal bars - but these are usually smaller than the circle. The grey band represents the 95% credible interval for the city level average.
@@ -232,6 +232,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 
 ###  Suburbs with consistently good accessibility
+
 | suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039|
@@ -239,6 +240,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 
 ### Suburbs with consistent but poor accessibility
+
 | suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546|
@@ -246,6 +248,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 
 ### Suburbs with good accessibility for some areas
+
 | suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033|
@@ -253,6 +256,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 |Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424|
 
 ### Suburbs with poor accessibility for most areas
+
 | suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167|
