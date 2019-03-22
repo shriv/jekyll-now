@@ -112,7 +112,7 @@ The steps are pretty simple:
 - Convert node coordinates to geoseries
 - Tag nodes within a suburb boundary using the _contain_ operation.
 
-```{python}
+```python
 # Extract node coordinates and accessibility from pandana network
 orig_nodes = network_hills.nodes_df
 df_joined = pd.merge(orig_nodes.reset_index(),
@@ -133,7 +133,7 @@ playground_df = geopandas.sjoin(wcc_suburbs,
 ## Visualising accessibility within suburb boundaries
 With a dataframe containing both the accessibility information and the suburb, we can filter and plot the accessibility for specific suburbs. We just need the accessibility data for the suburb and the boundary information to overlay the two datasets.
 
-```{python}
+```python
 karori_accessibility = playground_df[playground_df['suburb'] == 'Karori']
 karori_boundary = wcc_suburbs[wcc_suburbs['suburb'] == 'Karori']
 ```
@@ -142,7 +142,7 @@ karori_boundary = wcc_suburbs[wcc_suburbs['suburb'] == 'Karori']
 
 
 ## Extracting accessibility distributions by suburb
-The same filters used to plot the accessibility heatmap within a suburb can be used to extract the accessibility values alone without any spatial information. This raw accessibility data is the basis for our statistical model. 
+The same filters used to plot the accessibility heatmap within a suburb can be used to extract the accessibility values alone without any spatial information. This raw accessibility data is the basis for our statistical model.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_18_0.png)
 
