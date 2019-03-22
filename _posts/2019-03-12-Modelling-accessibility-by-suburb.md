@@ -206,6 +206,8 @@ We get two types of posterior distributions from the hierarchical model:
 It is worth noting that only the top 80% of suburbs (in terms of node count) have been included in the model. This was mainly to get the model to run reasonably quickly.
 
 ## Results for $\mu$ and $\sigma$
+The hierarchical model outputs can be visualised in a convenient plot known as a Forest Plot. The values are ordered colour coded from blue to red according to their relative position. The 95% credible interval is also plotted as horizontal bars - but the bars are usually quite small. The grey band represents the 95% credible interval for the city level average. 
+
 | $\mu$  | $\sigma$ |
 | :----------: | :--------------------: |
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png) |
