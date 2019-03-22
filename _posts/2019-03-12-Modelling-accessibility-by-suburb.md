@@ -206,40 +206,54 @@ We get two types of posterior distributions from the hierarchical model:
 It is worth noting that only the top 80% of suburbs (in terms of node count) have been included in the model. This was mainly to get the model to run reasonably quickly.
 
 ## Results for $\mu$ and $\sigma$
-The hierarchical model outputs can be visualised in a convenient plot known as a Forest Plot. The values are ordered colour coded from blue to red according to their relative position. The 95% credible interval is also plotted as horizontal bars - but the bars are usually quite small. The grey band represents the 95% credible interval for the city level average. 
+The posterior distributions output from the hierarchical model can be visualised in a convenient plot known as a [Forest Plot](https://en.wikipedia.org/wiki/Forest_plot). The mean values of the suburban level posterior distribution are plotted as circles. The relative value is used to order and colour code the circles. The 95% [credible interval](https://en.wikipedia.org/wiki/Credible_interval) of each suburban $\mu$ or $\sigma$ is also plotted as horizontal bars - but these are usually smaller than the circle. The grey band represents the 95% credible interval for the city level average.
 
 | $\mu$  | $\sigma$ |
 | :----------: | :--------------------: |
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png) |
 
+A couple of general points stand out clearly:
+- Wellington city averages 12 - 16 minutes total travel time to a playground.
+- However, the variability in accessibility within suburbs is quite high.
 
 ## Quadrant visualisation
-We can visualise both the $\mu$ and $\sigma$ values on a single graph to identify suburbs that are outside the average along both parameters. The best way to look at suburbs outside the average is with a classic "quadrant" plot.
+To pick out suburban character (in terms of playground accessibility), we need a visualisation that (1) focuses on the suburbs that fall outside the 'average band' and, (2) can consider $\mu$ and $\sigma$ at the same time. A simple 2D plot that can satisfy these criteria is the [quadrant matrix](http://www.criticaltosuccess.com/excels-four-quadrant-matrix-model-chart/).
 
-Quadrant plots show points along an intuitive
+We can modify the standard layout slightly to get both the quadrants and the average bands by: (1) normalising the suburban means with the city mean value and, (2) plotting the city level credible intervals as a cental cross. The resulting quadrants now represent combinations of suburban $\mu$ and $\sigma$ relative to the city.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_45_0.png)
 
+The quadrants represent _accessibility character_ which have a simplistic interpretation.
 
-###  Suburbs with consistent accessibility
+|                      | **High $\mu_{norm}$** | **Low $\mu_{norm}$** |
+| :------------------: | :------------: | :-----------: |
+| **Low $\sigma_{norm}$**   | Consistent good accessibility  |  Consistent but poor accessibility |
+| **High $\sigma_{norm}$**   | Poor accessibility for most areas |  Good accessibility for some areas |
 
-| suburb | quadrant | $\sigma$ | $\mu$ |
+
+###  Suburbs with consistently good accessibility
+| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039|
 |Newtown|Low $\sigma$ and $\mu$|-5.269459|-3.736698|
+
+
+### Suburbs with consistent but poor accessibility
+| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
+|--- |--- |--- |--- |
 |Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546|
 |Hataitai|Low $\sigma$; High$\mu$|3.120148|-3.707169|
 
-### Suburbs with inconsistent accessibility
 
-| suburb | quadrant | $\sigma$ | $\mu$ |
+### Suburbs with good accessibility for some areas
+| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033|
 |Tawa|High $\sigma$; Low$\mu$|-10.355696|2.839867|
 |Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424|
 
-
-| suburb | quadrant | $\sigma$ | $\mu$ |
+### Suburbs with poor accessibility for most areas
+| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |
 |Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167|
 |Karori|High $\sigma$ and $\mu$|3.475087|8.664240|
