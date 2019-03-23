@@ -231,38 +231,18 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 | **High $\sigma_{norm}$**   | Poor accessibility for most areas |  Good accessibility for some areas |
 
 
-###  Suburbs with consistently good accessibility
-
-| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
-|--- |--- |--- |--- |
-|Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039|
-|Newtown|Low $\sigma$ and $\mu$|-5.269459|-3.736698|
-
-
-### Suburbs with consistent but poor accessibility
-
-| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
-|--- |--- |--- |--- |
-|Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546|
-|Hataitai|Low $\sigma$; High$\mu$|3.120148|-3.707169|
-
-
-### Suburbs with good accessibility for some areas
-
-| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
-|--- |--- |--- |--- |
-|Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033|
-|Tawa|High $\sigma$; Low$\mu$|-10.355696|2.839867|
-|Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424|
-
-### Suburbs with poor accessibility for most areas
-
-| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ |
-|--- |--- |--- |--- |
-|Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167|
-|Karori|High $\sigma$ and $\mu$|3.475087|8.664240|
-
-
+### Suburb characteristics
+| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ | characteristic |
+|--- |--- |--- |--- |---|
+|Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039| consistently good accessibility|
+|Newtown|Low $\sigma$ and $\mu$|-5.269459|-3.736698| consistently good accessibility |
+|Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546| consistent but poor accessibility |
+|Hataitai|Low $\sigma$; High$\mu$|3.120148|-3.707169| consistent but poor accessibility|
+|Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033| good accessibility for some areas |
+|Tawa|High $\sigma$; Low$\mu$|-10.355696|2.839867| good accessibility for some areas |
+|Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424| good accessibility for some areas |
+|Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167| poor accessibility for most areas|
+|Karori|High $\sigma$ and $\mu$|3.475087|8.664240| poor accessibility for most areas|
 
 
 ## Suburbs that don't fit the model
