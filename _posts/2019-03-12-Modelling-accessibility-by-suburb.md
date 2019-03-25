@@ -14,7 +14,7 @@ In this post, we look at how a simplistic statistical model can provide specific
 
 
 # Introduction
-Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. All the blog posts in ther series  I hope to make the case that approximating reality with models, allows us to dredge up some deep and useful insights: (1) the accessibility characteristics of a suburb and, (2) reasons why some suburban characteristics don't fit our approximations.
+Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models allows us to dredge up some deep and useful insights. In this post, we'll see: (1) the accessibility characteristics of a suburb and, (2) reasons why some suburban characteristics don't fit our approximations.
 
 
 ## The goal of statistical modelling
@@ -33,24 +33,24 @@ In his book, Lambert goes on to elaborate the gains acheived from employing a Ba
 
 
 ## Models as an approximation of reality
-The core component of statistical inference is a _statistical model_ - often shortened to just _model_. Common models formalise the data generation process  by quantifying the relationhip between inputs and outcomes. For example, linear regression models quanitfy the relationship between a set of user-defined inputs and the possible outcomes given those inputs.
+The core component of statistical inference is a _statistical model_ - often shortened to just _model_. Common models formalise the data generation process by quantifying the relationhip between inputs and outcomes. For example, linear regression models quanitfy the relationship between a set of user-defined inputs and the possible outcomes given those inputs.
 
-The model we're using in this post are much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll [see later on](#truncated-normal-model-for-better-fit), we choose a particular mathematical form to represent the probability space of accessibilities within a suburb. The specific parameters of the model, $\mu$ and $\sigma$, are calculated using the observed accessibility data.
+The model we're using in this post is much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll [see later on](#truncated-normal-model-for-better-fit), we choose a particular mathematical form to represent the probability space of average ($\mu$) and heterogeneity ($\sigma$) in accessibility within a suburb.
 
 ## Model with care
 It's worth noting that not all data-driven questions benefit from statistical modelling. Models can be complicated and difficult to explain to others - even technically-oriented peers. In view of this, some data evangelists advocate a simpler analysis process. Kat Greenbrook highlights how the [modelling aspect can be left out for many business analytics questions](https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/).
 
-| Data Science cycle | Data Analysis cycle |
-| :----------------: | :-----------------: |
-| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle.png)  | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle_no_modelling.png)  |
-| Actions from model output / insights  | Actions directly from exploratory analysis |
+| Data Science cycle | Data Analysis cycle | "Modelling Silo" |
+| :----------------: | :-----------------: | :-------------: |
+| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle.png)  | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle_no_modelling.png)  |![](../images/2019-03-12-Modelling-accessibility-by-suburb/analytics_cycle_modelling_silo.png)
+| Actions from model output / insights  | Actions directly from exploratory analysis | Pointless modelling. No pertinent question and no actions |
 
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
   - Images &copy; <a href="https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/">Kat Greenbrook</a>
 </p>
 <br>
 
-Data anlysis alone is powerful; exploratory analyses can unearth useful insights that can be followed through with business actions. As people who harness data for a purpose, we must constantly evaluate whether the added complexity of the model layer is adding significant utility and insight.
+Data anlysis alone is powerful; exploratory analyses unearth useful insights that can be followed through with business actions. As people who harness data for a purpose, we must constantly evaluate whether the extra complexity of the model layer is adding significant utility and insight.
 
 > Modelling should never be undertaken if there is not a clear use case for the output.
 
@@ -58,6 +58,8 @@ Data anlysis alone is powerful; exploratory analyses can unearth useful insights
   - <a href="https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/">Kat Greenbrook</a>
 </p>
 <br>
+
+As someone who has frequently lunged into modelling without a cause, I can attest to the pervasive culture of the 'Modelling Silo' in Data Science. This 'cycle' is wholly disconnected to pertinent questions and, any useful actionable output. T
 
 ## Model for a reason
 Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
@@ -262,11 +264,11 @@ Once again, heterogeneity in suburban characteristic is the reason for the model
 ## Making the model better
 One way to better model Karori is to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
-An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than the SA2 units. 
+An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than the SA2 units.
 
-| SA2 filter | LINZ residential filter |
-| :----: | :------: |
-|![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)  |
-| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_59_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
+| Suburb | SA2 filter | LINZ residential filter |
+| :----: | :--------: | :---------------------: |
+| Karori |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)  |
+| Rongotai | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_59_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
 
 The next post will redo the accessibility model with this new spatial filter.
