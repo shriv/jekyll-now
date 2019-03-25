@@ -10,6 +10,8 @@ sidebar:
 *__WORK IN PROGRESS__*
 
 # Summary
+In this post, we look at how a simplistic statistical model can provide specific insights about accessibility. By combining intuition and quantitative results, we see that some suburbs, like Karori, have poor and inconsistent accessibility to playgrounds, while suburbs like Newtown and Te Aro have consistently good accessibility. The model is further able to show that while Karori _seems_ bad, a significant reason is that the suburb is too large and heterogeneous compared to inner city suburbs like Te Aro and Newtown.
+
 
 # Introduction
 Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. All the blog posts in ther series  I hope to make the case that approximating reality with models, allows us to dredge up some deep and useful insights: (1) the accessibility characteristics of a suburb and, (2) reasons why some suburban characteristics don't fit our approximations.
@@ -99,6 +101,7 @@ To do this analysis, we need to overcome some technical aspects:
 | WCC playground locations  | .zip| [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)|
 | WCC suburb boundaries  | .gdb | [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/f534738cf3e648f7b1524a9697376764_0) |
 | StatsNZ 2019 meshblock boundaries | .gdb | [Stats NZ](https://datafinder.stats.govt.nz/layer/98971-meshblock-higher-geographies-2019-generalised/data/) |
+|LINZ residential polygons   | .gdb  | [LINZ](https://data.linz.govt.nz/layer/50325-nz-residential-area-polygons-topo-150k/)  |
 | Wellington street network without elevation | - | OpenStreetMap via osmnx |
 | Wellington street network with elevation | - | OpenStreetMap + Google Elevation API via osmnx|
 
@@ -232,6 +235,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 
 ### Suburb characteristics
+
 | suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ | characteristic |
 |--- |--- |--- |--- |---|
 |Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039| consistently good accessibility|
@@ -246,11 +250,21 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 
 ## Suburbs that don't fit the model
+Part of the reason that Karori performs so poorly is because our model is a _poor fit_ to the accessibility data. In the figure below, we see that the raw values of accessibility appear to have 3 modes - a feature that is reduced to a single average mode in our model. This reduction causes both the $\mu$ and $\sigma$ values to inflate.
 
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_53_0.png)
 
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_34_0.png)
+A better way to model Karori would be to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)
+
+Again, heterogeneity in suburban characteristic is the reason for the model being a poor fit for Rongotai. Rongotai is a suburb with both residential and industrial areas: the residential areas bordering Kilbirnie and, industrial areas containing Wellington Airport and the large shopping area near Lyall Bay. The dual nature of the suburb is reflected in two distinct modes in the raw accessibility values.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
 
- - Doesn't capture modes - likely due to the fact that Rongotai has both a residential and an industrial area.
+
+
+
+| Karori | Rongotai |
+| :----: | :------: |
+| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
