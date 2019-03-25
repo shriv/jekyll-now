@@ -262,10 +262,11 @@ Once again, heterogeneity in suburban characteristic is the reason for the model
 ## Making the model better
 One way to better model Karori is to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)
+An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than the SA2 units. 
 
-An even better spatial filter is using the LINZ residential polygons to only model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. The next post will redo the accessibility model with this new spatial filter. 
-
-| Karori | Rongotai |
+| SA2 filter | LINZ residential filter |
 | :----: | :------: |
-| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
+|![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)  |
+| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_59_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
+
+The next post will redo the accessibility model with this new spatial filter.
