@@ -254,16 +254,17 @@ Part of the reason that Karori performs so poorly is because our model is a _poo
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_53_0.png)
 
-A better way to model Karori would be to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
-
-![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)
-
-Again, heterogeneity in suburban characteristic is the reason for the model being a poor fit for Rongotai. Rongotai is a suburb with both residential and industrial areas: the residential areas bordering Kilbirnie and, industrial areas containing Wellington Airport and the large shopping area near Lyall Bay. The dual nature of the suburb is reflected in two distinct modes in the raw accessibility values.
+Once again, heterogeneity in suburban characteristic is the reason for the model being a poor fit for Rongotai. Rongotai is a suburb with both residential and industrial areas: the residential areas bordering Kilbirnie and, industrial areas containing Wellington Airport and the large shopping area near Lyall Bay. The dual nature of the suburb is reflected in two distinct modes in the raw accessibility values.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_49_0.png)
 
 
+## Making the model better
+One way to better model Karori is to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
+![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)
+
+An even better spatial filter is using the LINZ residential polygons to only model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. The next post will redo the accessibility model with this new spatial filter. 
 
 | Karori | Rongotai |
 | :----: | :------: |
