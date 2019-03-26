@@ -59,7 +59,7 @@ Data anlysis alone is powerful; exploratory analyses unearth useful insights tha
 </p>
 <br>
 
-As someone who has frequently lunged into modelling without a cause, I can attest to the pervasive culture of the 'Modelling Silo' in Data Science. This 'cycle' is wholly disconnected to pertinent questions and, any useful actionable output. T
+As someone who has frequently lunged into modelling without a cause, I can attest to the pervasive culture of the 'Modelling Silo' in Data Science. This 'cycle' is wholly disconnected to pertinent questions and, any useful actionable output.
 
 ## Model for a reason
 Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
@@ -74,24 +74,25 @@ Adding a model for comparing suburbs has further utility - they can be used for 
 
 > Can we summarise the playground accessibility characteristic for a given suburb?
 
-This question can help understand how "family-friendly" a particular suburb is. Young families can compare the suburb accessibility characteristics to help make the decision for a move.
+This question can help understand how "family-friendly" a particular suburb is. Young families could compare the suburb accessibility characteristics to help make the decision for a move or, evaluate whether the suburb is right for their lifestyle.
 
-The main model is specifically designed for an intuitive comparative analysis, allowing for two levels of qualitiative comparison: (1) comparing a single suburb to the city average or, (2) comparing two suburbs together.
+From this question and potential use, we can desgin the model and outputs for an intuitive comparative analysis. The particulars described below allow for two levels of qualitiative comparison: (1) comparing a single suburb to the city average or, (2) comparing two suburbs together.
 
 ## Models to support domain understanding
+Since models approximate reality, the difference between the model and reality can add valuable insight.
 
 > Which suburbs don't follow the approximation set by the model? Can we use our domain knowledge to understand why?
 
+In this scenario, mismatch between the data ('reality') and the model can help us understand the nature of suburbs better and use this to update our model for a better representation of reality.
 
 # Technical details
-To do this analysis, we need to overcome some technical aspects:
 
 | Technical challenge | Covered in |
 | :-----------------: | :--------: |
-| Geoprocessing accessibility by suburb| [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Visualising%20accessibility%20by%20suburb.ipynb) |
+| Geoprocessing to get accessibility within a suburb| [Jupyter Notebook](https://github.com/shriv/accessibility-series/blob/master/Visualising%20accessibility%20by%20suburb.ipynb) |
 | Extracting accessibility distributions by suburb| [Blog Post](#visualising-accessibility-within-suburb-boundaries) |
 | Build a Bayesian model for an individual suburb | [Blog Post](#bayesian-modelling-of-accessibility) |
-| Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) each suburb and, (2) across all suburbs | [Blog Post](#hierarchical-modelling) |
+| Model average ($\mu$) and heterogeneity ($\sigma$) on two levels: (1) per suburb and, (2) across all suburbs | [Blog Post](#hierarchical-modelling) |
 | Stan models for Bayesian analysis| [Code files](https://github.com/shriv/accessibility-series/tree/master/stan) |
 | Use average and heterogeneity, relative to Wellington average, to classify accessibility characteristic for a given suburb | [Blog Post](#quadrant-visualisation) |
 
@@ -102,6 +103,7 @@ To do this analysis, we need to overcome some technical aspects:
 | :-----: | :----: | :--: |
 | WCC playground locations  | .zip| [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/c3b0ae6ee9d44a7786b0990e6ea39e5d_0)|
 | WCC suburb boundaries  | .gdb | [Wellington City Council](https://data-wcc.opendata.arcgis.com/datasets/f534738cf3e648f7b1524a9697376764_0) |
+|StatsNZ Area Unit boundaries   | .gdb  | [StatsNZ](https://datafinder.stats.govt.nz/layer/25743-area-unit-2013/)  |
 | StatsNZ 2019 meshblock boundaries | .gdb | [Stats NZ](https://datafinder.stats.govt.nz/layer/98971-meshblock-higher-geographies-2019-generalised/data/) |
 |LINZ residential polygons   | .gdb  | [LINZ](https://data.linz.govt.nz/layer/50325-nz-residential-area-polygons-topo-150k/)  |
 | Wellington street network without elevation | - | OpenStreetMap via osmnx |
@@ -262,13 +264,14 @@ Once again, heterogeneity in suburban characteristic is the reason for the model
 
 
 ## Making the model better
-One way to better model Karori is to reduce the suburb into smaller units: perhaps Statistical Area 2 (SA2). SA2 unit boundaries are available from Stats NZ. Unfortunately, the SA2 units aren't engineerd to fit perfectly within suburb since they're primariliy designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
+One way to better model Karori is to reduce the suburb into smaller units: perhaps Area Units (now called Statistical Area 2, SA2). SA2 / area unit boundaries are available from Stats NZ. Unfortunately, these units aren't engineerd to fit perfectly within suburb since they're primarily designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
 An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than the SA2 units.
 
-| Suburb | SA2 filter | LINZ residential filter |
-| :----: | :--------: | :---------------------: |
+| Suburb | Area Unit filter | LINZ residential filter |
+| :----: | :--------------: | :---------------------: |
 | Karori |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_56_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_57_0.png)  |
 | Rongotai | ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_59_0.png)| ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_58_0.png)|
 
-The next post will redo the accessibility model with this new spatial filter.
+# Conclusions
+We've done the hard yards in extracting some relevant insights about suburban walkability. The insights have a human-understandable frame and can be used to evaluate suburbs from a citizen's point of view. However, there are some obvious improvements that can be made; the main one being the removal of accessibility for non-residential areas. This is quite an important update so we'll cover it in detail in the next post.
