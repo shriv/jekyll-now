@@ -7,14 +7,17 @@ sidebar:
   nav: "acc_series"
 ---
 
-*__WORK IN PROGRESS__*
-
 # Summary
-In this post, we look at how a simplistic statistical model can provide specific insights about accessibility. By combining intuition and quantitative results, we see that some suburbs, like Karori, have poor and inconsistent accessibility to playgrounds, while suburbs like Newtown and Te Aro have consistently good accessibility. The model is further able to show that while Karori _seems_ bad, a significant reason is that the suburb is too large and heterogeneous compared to inner city suburbs like Te Aro and Newtown.
+In this post, we look at how a statistical model can provide specific insights about accessibility. By combining intuition and quantitative results, we see that some suburbs, like Karori, have poor and inconsistent accessibility to playgrounds, while suburbs like Newtown and Te Aro have consistently good accessibility.
 
+The model is further able to show that while Karori _seems_ bad, a significant reason is that the suburb is too large and heterogeneous compared to inner city suburbs like Te Aro and Newtown. The solution to this issue is using sensible spatial filters. We'll see that the LINZ spatial filter can be used for an updated, and more appropriate, model of accessibility.
 
 # Introduction
-Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models allows us to dredge up some deep and useful insights. In this post, we'll see: (1) the accessibility characteristics of a suburb and, (2) reasons why some suburban characteristics don't fit our approximations.
+Before diving into the nitty gritty of modelling accessibility across the different suburbs, it's worth taking a high-level persepective into _why_ modelling is useful. I hope to make the case that approximating reality with models allows us to dredge up some useful insights.
+
+In this post, we will look at:
+- The accessibility characteristics of a suburb
+- Suburban characteristics don't fit our model approximations. And how we can update our model to better reflect reality.
 
 
 ## The goal of statistical modelling
@@ -35,7 +38,7 @@ In his book, Lambert goes on to elaborate the gains acheived from employing a Ba
 ## Models as an approximation of reality
 The core component of statistical inference is a _statistical model_ - often shortened to just _model_. Common models formalise the data generation process by quantifying the relationhip between inputs and outcomes. For example, linear regression models quanitfy the relationship between a set of user-defined inputs and the possible outcomes given those inputs.
 
-The model we're using in this post is much simpler: we're considering the probability space of the outcomes - with a particular interest in the summary statistics: mean, $\mu$, and standard deviation, $\sigma$. As we'll [see later on](#truncated-normal-model-for-better-fit), we choose a particular mathematical form to represent the probability space of average ($\mu$) and heterogeneity ($\sigma$) in accessibility within a suburb.
+The model we're using in this post is much simpler: we're considering the probability space of the outcomes - with a particular interest in summary statistics like the mean, $\mu$, and standard deviation, $\sigma$. As we'll [see later on](#truncated-normal-model-for-better-fit), we choose a particular mathematical form to represent the probability space of average ($\mu$) and heterogeneity ($\sigma$) of accessibility within a suburb.
 
 ## Model with care
 It's worth noting that not all data-driven questions benefit from statistical modelling. Models can be complicated and difficult to explain to others - even technically-oriented peers. In view of this, some data evangelists advocate a simpler analysis process. Kat Greenbrook highlights how the [modelling aspect can be left out for many business analytics questions](https://www.linkedin.com/pulse/data-stories-glue-analytics-cycle-kat-greenbrook/).
@@ -62,9 +65,9 @@ Data anlysis alone is powerful; exploratory analyses unearth useful insights tha
 As someone who has frequently lunged into modelling without a cause, I can attest to the pervasive culture of the 'Modelling Silo' in Data Science. This 'cycle' is wholly disconnected to pertinent questions and, any useful actionable output.
 
 ## Model for a reason
-Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
+Now that we have been cautioned to think before we model, we can identify how models can help better understand playground accessibility in Wellington.
 
-In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-playgrounds-in-Wellington/), we ended with heatmaps of accessibility - defined as total travel time. The heatmaps conveyed a holistic picture of areas with worse accessibility due to the hilly topography. However, we can't pick out many relevant details from an overview. For example, we might care about how our specific neighbourhood compares to another, or even our neighbourhood vs. the average for the city.
+In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-playgrounds-in-Wellington/), we ended with heatmaps of accessibility - defined as total travel time. The heatmaps conveyed a holistic picture of areas with worse accessibility due to the hilly topography. However, we couldn't pick out any details from the overview. For example, we might care about how our specific neighbourhood compares to another, or our neighbourhood vs. the average for the city.
 
 Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In a [following section](#results-for-mu-and-sigma), we will see how we can robustly compare suburbs using a _Bayesian_ statistical model.
 
@@ -76,14 +79,14 @@ Adding a model for comparing suburbs has further utility - it can be used for ex
 
 This question can help understand how "family-friendly" a particular suburb is. Young families could compare the suburb accessibility characteristics to help make the decision for a move or, evaluate whether the suburb is right for their lifestyle.
 
-From this question and potential use, we can desgin the model and outputs for an intuitive comparative analysis. The particulars described below allow for two levels of qualitiative comparison: (1) comparing a single suburb to the city average or, (2) comparing two suburbs together.
+From this question and potential use, we can desgin the model and outputs for an intuitive comparative analysis. The final model allows for two levels of qualitiative comparison: (1) comparing a single suburb to the city average or, (2) comparing any two suburbs together.
 
 ## Models to support domain understanding
-Since models approximate reality, the difference between the model and reality can add valuable insight.
+Since models approximate reality, the difference between the model and reality can also add valuable insight.
 
 > Which suburbs don't follow the approximation set by the model? Can we use our domain knowledge to understand why?
 
-In this scenario, mismatch between the data ('reality') and the model can help us understand the nature of suburbs better and use this to update our model for a better representation of reality.
+In this scenario, mismatch between the data ('reality') and the model can help us understand the nature of suburbs better; and use this understanding to update our model for a better representation of reality.
 
 # Technical details
 
@@ -115,7 +118,7 @@ In all the previous posts (and series), we've only looked at accessibility for a
 
 The steps are pretty simple:
 - Extract node coordinates and accessibility from pandana network
-- Convert node coordinates to geoseries
+- Convert node coordinates to a geoseries
 - Tag nodes within a suburb boundary using the _contain_ operation.
 
 ```python
@@ -137,7 +140,7 @@ playground_df = geopandas.sjoin(wcc_suburbs,
 ```
 
 ## Visualising accessibility within suburb boundaries
-With a dataframe containing both the accessibility information and the suburb, we can filter and plot the accessibility for specific suburbs. We just need the accessibility data for the suburb and the boundary information to overlay the two datasets.
+With a dataframe containing both the accessibility information and the suburb, we can filter and plot the accessibility for specific suburbs. We only need the accessibility data for the suburb and the boundary information to overlay the two datasets.
 
 ```python
 karori_accessibility = playground_df[playground_df['suburb'] == 'Karori']
@@ -186,13 +189,13 @@ convergence, Rhat=1).
 ```
 
 ## Truncated Normal model for better fit
-The posterior predictive is a useful diagnostic as it 'reverse engineers' data based on the specified model. Checking this generated data against our original dataset is a very useful tool to assess the suitablity of a model.
+The posterior predictive is a useful diagnostic as it _reverse-engineers_ data from the specified model. Checking this generated data against our original data is a very useful tool to assess the suitablity of a model.
 
 The normal model approximation for the Karori is seen in the LHS figure below. The RHS shows the raw accessibility values for Karori. It's quite clear that the Normal approximation fails because it generates negative accessibilities.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_51_0.png)
 
-A truncated Normal distribution can easily address this issue. Implementing this variation in Stan is easy - we just need to specify the appropriate bounds for the Normal distribution: lower, upper or both. The only aspect that needed some research was generating posterior predictive samples. But helpfully others have encountered this before and there was a [useful discourse in the Stan forums](https://discourse.mc-stan.org/t/rng-for-truncated-distributions/3122/9).
+A truncated Normal distribution can easily address this issue. Implementing the truncated Normal model variation in Stan is easy - we just need to specify the appropriate bounds for the Normal distribution: lower, upper or both. The only aspect that needed some research was generating posterior predictive samples. But helpfully others have encountered this before and there was a [useful discourse in the Stan forums](https://discourse.mc-stan.org/t/rng-for-truncated-distributions/3122/9).
 
 The figure below shows the posterior predictive samples generated from a Normal and truncated Normal distribution respectively. The truncated Normal can be judged a good fit as it matches the distinctive features of the accessibility data.
 
@@ -202,7 +205,7 @@ The figure below shows the posterior predictive samples generated from a Normal 
 
 
 # A collective Bayesian model
-Modelling every suburb on it's own is doable but more useful is a model that does this, and models the average across all suburbs. This type of model is commonly known as a _hierarchcal model_. Hierarchy comes from the intuitive ordering of the models. Here, we have an overall _city_ level model and many _suburban_ level models.
+Modelling every suburb on its own is doable but more useful is a succinct model that does this while also modeling summary statistics across all suburbs. This type of model is commonly known as a _hierarchcal model_. Hierarchy comes from the intuitive ordering of the models. Here, we have an overall _city_ level model and many _suburban_ level models.
 
 Going through the details of a hierarchical model is beyond the scope of this post but there is a [great introduction with Python and Pystan by Chris Fonnesbeck](https://mc-stan.org/users/documentation/case-studies/radon.html). Note that a _multi-level model_ is synonymous with a _hierarchical model_.
 
@@ -227,7 +230,7 @@ A couple of general points stand out clearly:
 ## Quadrant visualisation
 To pick out suburban character (in terms of playground accessibility), we need a visualisation that (1) focuses on the suburbs that fall outside the 'average band' and, (2) can consider $\mu$ and $\sigma$ at the same time. A simple 2D plot that can satisfy these criteria is the [quadrant matrix](http://www.criticaltosuccess.com/excels-four-quadrant-matrix-model-chart/).
 
-We can modify the standard layout slightly to get both the quadrants and the average bands by: (1) normalising the suburban means with the city mean value and, (2) plotting the city level credible intervals as a cental cross. The resulting quadrants now represent combinations of suburban $\mu$ and $\sigma$ relative to the city.
+We can modify the standard layout slightly to get both the quadrants and the average bands by: (1) normalising the suburban means (for both $\mu$ and $\sigma$) with the city means and, (2) plotting the city level credible intervals as a cental cross. The resulting quadrants now represent combinations of suburban $\mu$ and $\sigma$ relative to the city.
 
 ![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_45_0.png)
 
