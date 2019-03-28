@@ -64,13 +64,13 @@ As someone who has frequently lunged into modelling without a cause, I can attes
 ## Model for a reason
 Now that we have been cautioned to think before we model, we can identify how models would be useful to understand playground accessibility in Wellington.
 
-In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-playgrounds-in-Wellington/), we ended with a heatmaps of accessibility in terms of total travel times. These plots conveyed a holistic picture of areas with worse accessibility due to the hilly topography. However, we can't pick out many relevant details from an overview. For example, we might care about how our specific neighbourhood compares to another, or even our neighbourhood vs. the average for the city.
+In the [previous post](https://shriv.github.io/Impact-of-hills-on-walking-to-playgrounds-in-Wellington/), we ended with heatmaps of accessibility - defined as total travel time. The heatmaps conveyed a holistic picture of areas with worse accessibility due to the hilly topography. However, we can't pick out many relevant details from an overview. For example, we might care about how our specific neighbourhood compares to another, or even our neighbourhood vs. the average for the city.
 
-Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In the following section, we will see how we can robustly compare suburbs using a statistical model.
+Comparisons can be done with single point values alone. But, robust comparisons rely on statistical inference - the most classic being the [_t-test for comparing two means_](https://en.wikipedia.org/wiki/Student%27s_t-test). In a [following section](#results-for-mu-and-sigma), we will see how we can robustly compare suburbs using a _Bayesian_ statistical model.
 
 
 ## Models for decision making
-Adding a model for comparing suburbs has further utility - they can be used for explicit or qualitative decision making. Explicit decisions are appropriate in a business context since executives want to know the best option. This series is more focused on exploration and building a qualitative picture guided by metrics and analyses.
+Adding a model for comparing suburbs has further utility - it can be used for explicit or qualitative decision making. Explicit decisions are appropriate in a business context since executives want to [tl;dr](https://www.urbandictionary.com/define.php?term=TLDR) the best option. Since this series is more focused on exploration, we'll be building a qualitative picture guided by metrics and analyses.
 
 > Can we summarise the playground accessibility characteristic for a given suburb?
 
@@ -220,8 +220,13 @@ The posterior distributions output from the hierarchical model can be visualised
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_43_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_44_0.png) |
 
 A couple of general points stand out clearly:
+
 - Wellington city averages 12 - 16 minutes total travel time to a playground.
 - However, the variability in accessibility within suburbs is quite high.
+
+
+# Presenting results in human-understandable form
+While the Forest Plots offer a comparative visualisation,
 
 ## Quadrant visualisation
 To pick out suburban character (in terms of playground accessibility), we need a visualisation that (1) focuses on the suburbs that fall outside the 'average band' and, (2) can consider $\mu$ and $\sigma$ at the same time. A simple 2D plot that can satisfy these criteria is the [quadrant matrix](http://www.criticaltosuccess.com/excels-four-quadrant-matrix-model-chart/).
@@ -234,23 +239,24 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 
 |                      | **High $\mu_{norm}$** | **Low $\mu_{norm}$** |
 | :------------------: | :------------: | :-----------: |
-| **Low $\sigma_{norm}$**   | Consistent good accessibility  |  Consistent but poor accessibility |
+| **Low $\sigma_{norm}$**   | Consistently good accessibility  |  Consistent but poor accessibility |
 | **High $\sigma_{norm}$**   | Poor accessibility for most areas |  Good accessibility for some areas |
 
 
-### Suburb characteristics
+We can get the suburbs that lie in the 4 quadrants listed above with some simple data filters. The list goes from the best suburbs to the worst in terms of consistent accessibility to playgrounds. 
 
-| suburb | quadrant | $\sigma_{norm}$ | $\mu_{norm}$ | characteristic |
+
+| suburb | quadrant  |characteristic | $\sigma_{norm}$ | $\mu_{norm}$ |
 |--- |--- |--- |--- |---|
-|Te Aro|Low $\sigma$ and $\mu$|-4.714889|-5.776039| consistently good accessibility|
-|Newtown|Low $\sigma$ and $\mu$|-5.269459|-3.736698| consistently good accessibility |
-|Pipitea|Low $\sigma$; High$\mu$|12.573367|-2.964546| consistent but poor accessibility |
-|Hataitai|Low $\sigma$; High$\mu$|3.120148|-3.707169| consistent but poor accessibility|
-|Newlands|High $\sigma$; Low$\mu$|-4.628588|2.523033| good accessibility for some areas |
-|Tawa|High $\sigma$; Low$\mu$|-10.355696|2.839867| good accessibility for some areas |
-|Brooklyn|High $\sigma$; Low$\mu$|-11.234330|15.768424| good accessibility for some areas |
-|Khandallah|High $\sigma$ and $\mu$|4.736581|4.641167| poor accessibility for most areas|
-|Karori|High $\sigma$ and $\mu$|3.475087|8.664240| poor accessibility for most areas|
+|Te Aro|Low $\sigma$ and $\mu$| Consistently good accessibility|-4.714889|-5.776039|
+|Newtown|Low $\sigma$ and $\mu$| Consistently good accessibility |-5.269459|-3.736698|
+|Pipitea|Low $\sigma$; High $\mu$| Consistent but poor accessibility |12.573367|-2.964546|
+|Hataitai|Low $\sigma$; High $\mu$|Consistent but poor accessibility|3.120148|-3.707169|
+|Newlands|High $\sigma$; Low $\mu$|Good accessibility for some areas |-4.628588|2.523033|
+|Tawa|High $\sigma$; Low $\mu$| Good accessibility for some areas |-10.355696|2.839867|
+|Brooklyn|High $\sigma$; Low $\mu$| Good accessibility for some areas |-11.234330|15.768424|
+|Khandallah|High $\sigma$ and $\mu$| Poor accessibility for most areas|4.736581|4.641167|
+|Karori|High $\sigma$ and $\mu$| Poor accessibility for most areas|3.475087|8.664240|
 
 
 ## Suburbs that don't fit the model
@@ -266,7 +272,7 @@ Once again, heterogeneity in suburban characteristic is the reason for the model
 ## Making the model better
 One way to better model Karori is to reduce the suburb into smaller units: perhaps Area Units (now called Statistical Area 2, SA2). SA2 / area unit boundaries are available from Stats NZ. Unfortunately, these units aren't engineerd to fit perfectly within suburb since they're primarily designed as statistical units for the census. We see below that SA2 units for Karori don't extend as far as the suburban boundaries. However, this can be managed by a convenient overlay of SA2 units _within_ the suburban boundaries. And this new overlay geometry could be used to subset the accessibility data.
 
-An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than the SA2 units.
+An even better spatial filter is using the LINZ residential polygons to _only_ model accessibilities that fall within the residential areas of the suburb. This _should_ mitigate some of the high $\sigma$ issues we've seen. In the table below, we see that blue regions are the residential polygons overlaid on the accessibility data for Karori and Rongotai. The regions cover the highest density regions of the suburb and make for a much more intuitive filter than area units.
 
 | Suburb | Area Unit filter | LINZ residential filter |
 | :----: | :--------------: | :---------------------: |
