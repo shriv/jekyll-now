@@ -201,7 +201,7 @@ The figure below shows the posterior predictive samples generated from a Normal 
 |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_26_0.png) |![](../images/2019-03-12-Modelling-accessibility-by-suburb/output_50_0.png) |
 
 
-# Building a collective Bayesian model
+# A collective Bayesian model
 Modelling every suburb on it's own is doable but more useful is a model that does this, and models the average across all suburbs. This type of model is commonly known as a _hierarchcal model_. Hierarchy comes from the intuitive ordering of the models. Here, we have an overall _city_ level model and many _suburban_ level models.
 
 Going through the details of a hierarchical model is beyond the scope of this post but there is a [great introduction with Python and Pystan by Chris Fonnesbeck](https://mc-stan.org/users/documentation/case-studies/radon.html). Note that a _multi-level model_ is synonymous with a _hierarchical model_.
@@ -224,10 +224,6 @@ A couple of general points stand out clearly:
 - Wellington city averages 12 - 16 minutes total travel time to a playground.
 - However, the variability in accessibility within suburbs is quite high.
 
-
-# Presenting results in human-understandable form
-While the Forest Plots offer a comparative visualisation,
-
 ## Quadrant visualisation
 To pick out suburban character (in terms of playground accessibility), we need a visualisation that (1) focuses on the suburbs that fall outside the 'average band' and, (2) can consider $\mu$ and $\sigma$ at the same time. A simple 2D plot that can satisfy these criteria is the [quadrant matrix](http://www.criticaltosuccess.com/excels-four-quadrant-matrix-model-chart/).
 
@@ -243,7 +239,7 @@ The quadrants represent _accessibility character_ which have a simplistic interp
 | **High $\sigma_{norm}$**   | Poor accessibility for most areas |  Good accessibility for some areas |
 
 
-We can get the suburbs that lie in the 4 quadrants listed above with some simple data filters. The list goes from the best suburbs to the worst in terms of consistent accessibility to playgrounds. 
+We can get the suburbs that lie in the 4 quadrants listed above with some simple data filters. The list goes from the best suburbs to the worst in terms of consistent accessibility to playgrounds.
 
 
 | suburb | quadrant  |characteristic | $\sigma_{norm}$ | $\mu_{norm}$ |
