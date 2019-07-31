@@ -33,9 +33,10 @@ Singling Robin Lovelace out is not meant to downplay the contributions of countl
 
 The R geospatial movement that Robin is part of looks very familiar to the explosion of concerted activity that accompanied **ggplot2** and **dplyr**. Now, these pioneering packages form a core suite of R packages for Data Science known as the [tidyverse](https://www.tidyverse.org/).
 
-| <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">|
+| Modular packages of the tidyverse|
 |:--:|
-| Modular packages of the tidyverse. _Image from the tidyverse website_|
+| <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">|
+| _Image from the tidyverse website_|
 
 
 
@@ -76,31 +77,34 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 ### Transport planning
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
-| <img src="/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg" style="width:70%">|
+| Four Stage transportation model|
 |:--:|
-| Four Stage transportation model. _Original figure reference hard to trace._|
-
+| <img src="/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg" style="width:70%">|
+| _Original figure reference hard to trace_ |
 
 - Stage 1: Trips are estimated with available data including demographics and availability of jobs.
 - Stage 2: Trips are then distributed according to a mathematical decay function - where closer trips are more probable than ones further away.
 - Stage 3: Trips are split by mode type - at a trivial level, deciding what fraction will be done by car vs. other modes like public transport, walking etc. (stage 3).
 - Stage 4: Origin-Destination flows are assigned to the street network.
 
-| <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">|
+
+| LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself |
 |:--:|
-| LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_|
+| <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">|
+| _Image from the stplanr paper in The R Journal_ |
 
 
 ### Catchment areas
 
-| <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" style="width:70%">|
+| Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue)|
 |:--:|
-| Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue). _Image from the stplanr paper in The R Journal_|
+| <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" style="width:70%">|
+| _Image from the stplanr paper in The R Journal_|
 
 
 
 ## dodgr
-An acronym for _Distances On Directed Fraphs in R_. [**dodgr**](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html) can perform graph analysis with street networks and extends graph data aggregation to spatial flow data. A [recent publication by the package author](https://transportfindings.org/article/6945-dodgr-an-r-package-for-network-flow-aggregation), Mark Padgham, states the core functionality to be extensive, customisable and efficient flow aggregation.
+An acronym for _Distances On Directed Graphs in R_. [**dodgr**](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html) can perform graph analysis with street networks and extends graph data aggregation to spatial flow data. A [recent publication by the package author](https://transportfindings.org/article/6945-dodgr-an-r-package-for-network-flow-aggregation), Mark Padgham, states the core functionality to be extensive, customisable and efficient flow aggregation.
 
 > The dodgr package has been intentionally developed to be adaptable to any type of network, with a particular focus on flow aggregation through street networks.
 
@@ -113,18 +117,18 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 - Highly realistic and fully-customisable profiles for routing through street networks with various modes of transport, and using either distance- or time-based routing
 
 
-| <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
+| A dual directed graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network|
 |:--:|
-| **dodgr** graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network. _Image from the dodgr CRAN vignette page._|
-
+| <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
+| _Image from the dodgr CRAN vignette page._|
 
 ## tidytransit
 Use **tidytransit** to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes.
 
-
-| <img src="/images/2019-08-02-R-for-geospatial/tidy-transit-agg.png" style="width:70%">|
+| Different aggregations of public transport data|
 |:--:|
-| Different aggregations of public transport data. _Image from tidytransit main vignette_|
+| <img src="/images/2019-08-02-R-for-geospatial/tidy-transit-agg.png" style="width:70%">|
+| _Image from tidytransit main vignette_|
 
 # Other packages worth considering
 
