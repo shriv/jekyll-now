@@ -77,11 +77,10 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
 <figure>
- <img src=/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg
-  width=70%>
+ <img src="/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg"
+  style="width:70%">
  <figcaption>Four Stage transportation model. _Original figure reference hard to trace._</figcaption>
 </figure>
-
 
 - Stage 1: Trips are estimated with available data including demographics and availability of jobs.
 - Stage 2: Trips are then distributed according to a mathematical decay function - where closer trips are more probable than ones further away.
@@ -89,15 +88,15 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 - Stage 4: Origin-Destination flows are assigned to the street network.
 
 <figure>
- <img src=/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png width=70%>
- <figcaption>**stplanr** example: Origin-Destination flows overlaid on street network followed by aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_</figcaption>
+ <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">
+ <figcaption>**stplanr** can assign flows to street network. LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_</figcaption>
 </figure>
 
 
 ### Catchment areas
 <figure>
- <img src=/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png
-  width=70%>
+ <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png"
+  style="width:70%">
  <figcaption>**stplanr** example: Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue). _Image from the stplanr paper in The R Journal_</figcaption>
 </figure>
 
@@ -117,7 +116,7 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 - Highly realistic and fully-customisable profiles for routing through street networks with various modes of transport, and using either distance- or time-based routing
 
 <figure>
- <img src=/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png width=70%>
+ <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">
  <figcaption>**dodgr** graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network. _Image from the dodgr CRAN vignette page._</figcaption>
 </figure>
 
