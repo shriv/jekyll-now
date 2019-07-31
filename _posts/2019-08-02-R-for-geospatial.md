@@ -60,10 +60,10 @@ Or perhaps _Caveat Lector_ (Reader Beware) - a dramatic way of noting that this 
 In the last section of this review, I try to highlight other packages that are interesting or useful though they're not described in any detail.
 
 
-## stplanr
+# stplanr
 An acronynm for Sustainable Transport PLANning in R, **stplanr** is a transport planning utility developed by Robin Lovelace. The package has several unique value propositions which can be split into core data, functions and analyses.
 
-### Data
+## Data
 The package’s core functions are structured around 3 common types of spatial transport data:
 
 - Origin-destination (OD) data, which report the number of people travelling between origin-destination pairs. This type of data is not explicitly spatial (OD datasets are usually represented as data frames) but represents movement over space between points in geographical space. An example is provided in the flow dataset.
@@ -71,7 +71,7 @@ The package’s core functions are structured around 3 common types of spatial t
 - Route data are special types of lines which have been allocated to the transport network. Routes typically result from the allocation of a straight ‘desire line’ allocated to the route network with a route_ function. Route network represent many overlapping routes. All are typically stored as SpatialLinesDataFrame.
 
 
-### Functions
+## Functions
 
 - Downloading and cleaning transport datasets
 - Creating geographic 'desire lines' OD data
@@ -84,7 +84,7 @@ The package’s core functions are structured around 3 common types of spatial t
 Since **stplanr** holds itself as a transport planning package, evaluating routing options for different transport modes is another core feature. The package provides oneliner functions to get routing information from several APIs. In addition, there is a handy batch processing function that can manage many routing API calls.
 
 
-### Analyses: Transport modelling
+## Analyses: Transport modelling
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
 | Four Stage transportation model|
@@ -105,7 +105,7 @@ Since **stplanr** holds itself as a transport planning package, evaluating routi
 | _Image from the stplanr paper in The R Journal_ |
 
 
-### Analyses: Transport mode sharing in spatial flows
+## Analyses: Transport mode sharing in spatial flows
 Transport is a complex beast with multi-modal travel being quite common. **stplanr** enables modal analyses by separating flow contributions.
 
 | Small multiples view of spatial flow for different transport modes|
@@ -114,8 +114,8 @@ Transport is a complex beast with multi-modal travel being quite common. **stpla
 | _Image from the stplanr paper in The R Journal_|
 
 
-### Analyses: Catchment areas
-While 'travel watersheds' are not a highlighted feature of the package, they are an important part of transport planning - from accessibility of bus stops to cycleways. **stplanr** can aggregate catchments to complex entities like disconnected cycleways. 
+## Analyses: Catchment areas
+While 'travel watersheds' are not a highlighted feature of the package, they are an important part of transport planning - from accessibility of bus stops to cycleways. **stplanr** can aggregate catchments to complex entities like disconnected cycleways.
 
 | Catchment areas of cycleway stretches (green lines) specified by Euclidean distance (red) vs. traversing the street network (blue)|
 |:--:|
@@ -123,7 +123,7 @@ While 'travel watersheds' are not a highlighted feature of the package, they are
 | _Image from the stplanr paper in The R Journal_|
 
 
-## dodgr
+# dodgr
 An acronym for _Distances On Directed Graphs in R_. [**dodgr**](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html) can perform graph analysis with street networks and extends graph data aggregation to spatial flow data. A [recent publication by the package author](https://transportfindings.org/article/6945-dodgr-an-r-package-for-network-flow-aggregation), Mark Padgham, states the core functionality to be extensive, customisable and efficient flow aggregation.
 
 > The dodgr package has been intentionally developed to be adaptable to any type of network, with a particular focus on flow aggregation through street networks.
@@ -142,7 +142,7 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 | <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
 | _Image from the dodgr CRAN vignette page._|
 
-## tidytransit
+# tidytransit
 Use **tidytransit** to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes.
 
 | Different aggregations of public transport data|
