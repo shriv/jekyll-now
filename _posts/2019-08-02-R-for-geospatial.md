@@ -34,7 +34,10 @@ Singling Robin Lovelace out is not meant to downplay the contributions of countl
 The R geospatial movement that Robin is part of looks very familiar to the explosion of concerted activity that accompanied **ggplot2** and **dplyr**. Now, these pioneering packages form a core suite of R packages for Data Science known as the [tidyverse](https://www.tidyverse.org/).
 
 
-![Modular packages of the tidyverse. _Image from the tidyverse website_](../images/2019-08-02-R-for-geospatial/tidyverse.png)
+<figure>
+ <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" width=70%>
+ <figcaption>Modular packages of the tidyverse. _Image from the tidyverse website_</figcaption>
+</figure>
 
 
 A similar vision appears to be in place for geospatial analyses with core packages like **stplanr**, **dodgr** and **tidytransit** (described in the next section) slotting together nicely.
@@ -73,21 +76,28 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 ### Transport planning
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
+<figure>
+ <img src="../images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg" width=70%>
+ <figcaption>Four Stage transportation model. _Original figure reference hard to trace._</figcaption>
+</figure>
 
-![Four Stage transportation model. _Original figure reference hard to trace._ ](../images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg)
 
 - Stage 1: Trips are estimated with available data including demographics and availability of jobs.
 - Stage 2: Trips are then distributed according to a mathematical decay function - where closer trips are more probable than ones further away.
 - Stage 3: Trips are split by mode type - at a trivial level, deciding what fraction will be done by car vs. other modes like public transport, walking etc. (stage 3).
 - Stage 4: Origin-Destination flows are assigned to the street network.
 
-
-
-![**stplanr** example: Origin-Destination flows overlaid on street network followed by aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_](../images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png)
+<figure>
+ <img src="../images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" width=70%>
+ <figcaption>**stplanr** example: Origin-Destination flows overlaid on street network followed by aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_</figcaption>
+</figure>
 
 
 ### Catchment areas
-![**stplanr** example: Catchement areas specified by Euclidean distance (red) vs. traversing the street network (blue).  _Image from the stplanr paper in The R Journal_ ](../images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png)
+<figure>
+ <img src="../images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" width=70%>
+ <figcaption>**stplanr** example: Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue). _Image from the stplanr paper in The R Journal_</figcaption>
+</figure>
 
 
 
