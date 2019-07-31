@@ -10,6 +10,12 @@
     #   url: /collection-archive/
     # - title: "Sitemap"
     #   url: /sitemap/
+  spatial_review_series:
+    - title: "Geospatial Tools Review Series"
+      children:
+        - title: "R for geospatial analysis"
+          url: /R-for-geospatial/
+      
   acc_series:
     - title: "Playground Accessibility Series"
       children:
@@ -19,7 +25,7 @@
           url: /Impact-of-hills-on-walking-to-playgrounds-in-Wellington/
         - title: "Modelling accessibility across suburbs"
           url: /Modelling-accessibility-by-suburb/
-          
+
   z_series:
     - title: "Fuel Stations Series"
       children:

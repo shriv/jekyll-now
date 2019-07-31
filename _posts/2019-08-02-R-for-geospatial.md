@@ -4,7 +4,7 @@ toc: true
 toc_sticky: true
 toc_label: "Table of Contents"
 sidebar:
-  nav: "acc_series"
+  nav: spatial_review_series"
 ---
 
 # Summary
@@ -33,9 +33,11 @@ Singling Robin Lovelace out is not meant to downplay the contributions of countl
 
 The R geospatial movement that Robin is part of looks very familiar to the explosion of concerted activity that accompanied **ggplot2** and **dplyr**. Now, these pioneering packages form a core suite of R packages for Data Science known as the [tidyverse](https://www.tidyverse.org/).
 
+| <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">|
+|:--:|
+| Modular packages of the tidyverse. _Image from the tidyverse website_|
 
- <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">
- Modular packages of the tidyverse. _Image from the tidyverse website_
+
 
 
 A similar vision appears to be in place for geospatial analyses with core packages like **stplanr**, **dodgr** and **tidytransit** (described in the next section) slotting together nicely.
@@ -74,29 +76,26 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 ### Transport planning
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
-<figure>
- <img src="/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg"
-  style="width:70%">
- <figcaption>Four Stage transportation model. _Original figure reference hard to trace._</figcaption>
-</figure>
+| <img src="/images/2019-08-02-R-for-geospatial/four-stage-transport-model.jpeg" style="width:70%">|
+|:--:|
+| Four Stage transportation model. _Original figure reference hard to trace._|
+
 
 - Stage 1: Trips are estimated with available data including demographics and availability of jobs.
 - Stage 2: Trips are then distributed according to a mathematical decay function - where closer trips are more probable than ones further away.
 - Stage 3: Trips are split by mode type - at a trivial level, deciding what fraction will be done by car vs. other modes like public transport, walking etc. (stage 3).
 - Stage 4: Origin-Destination flows are assigned to the street network.
 
-<figure>
- <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">
- <figcaption>**stplanr** can assign flows to street network. LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_</figcaption>
-</figure>
+| <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">|
+|:--:|
+| LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself. _Image from the stplanr paper in The R Journal_|
 
 
 ### Catchment areas
-<figure>
- <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png"
-  style="width:70%">
- <figcaption>**stplanr** example: Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue). _Image from the stplanr paper in The R Journal_</figcaption>
-</figure>
+
+| <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" style="width:70%">|
+|:--:|
+| Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue). _Image from the stplanr paper in The R Journal_|
 
 
 
@@ -113,17 +112,19 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 - Routines to aggregate flows throughout a network
 - Highly realistic and fully-customisable profiles for routing through street networks with various modes of transport, and using either distance- or time-based routing
 
-<figure>
- <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">
- <figcaption>**dodgr** graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network. _Image from the dodgr CRAN vignette page._</figcaption>
-</figure>
+
+| <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
+|:--:|
+| **dodgr** graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network. _Image from the dodgr CRAN vignette page._|
 
 
 ## tidytransit
 Use **tidytransit** to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes.
 
-![](../images/2019-08-02-R-for-geospatial/tidy-transit-agg.png)
-Different aggregations of public transport data. _Image from tidytransit main vignette_
+
+| <img src="/images/2019-08-02-R-for-geospatial/tidy-transit-agg.png" style="width:70%">|
+|:--:|
+| Different aggregations of public transport data. _Image from tidytransit main vignette_|
 
 # Other packages worth considering
 
