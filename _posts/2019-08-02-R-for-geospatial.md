@@ -39,15 +39,13 @@ The R geospatial movement that Robin is part of looks very familiar to the explo
 | _Image from the tidyverse website_|
 
 
-
-
 A similar vision appears to be in place for geospatial analyses with core packages like **stplanr**, **dodgr** and **tidytransit** (described in the next section) slotting together nicely.
 
 [FIGURE I've drawn of dodgr, stplanr, tidytransit]
 
 
 # The limited package tour
-Or perhaps _Caveat Lector_ (Reader Beware) - a dramatic way of noting that this review is not intended to be a comprehensive one. Following Robin's presentation, the following core packages are described in some detail: **dodgr**, **tidytransit** and **stplanr**. While this set of packages is not comprehensive, they conver considerable ground in terms of possible geospatial analyses:
+Or perhaps _Caveat Lector_ (Reader Beware) - a dramatic way of noting that this review is not intended to be a comprehensive one. Following Robin's presentation, the following core packages are described in some detail: **dodgr**, **tidytransit** and **stplanr**. While this set of packages is not comprehensive, they cover considerable ground in terms of geospatial analyses:
 
 - Wrangling geospatial data formats
   - spatial primitives
@@ -59,22 +57,34 @@ Or perhaps _Caveat Lector_ (Reader Beware) - a dramatic way of noting that this 
   - Routing along the street network with graph algorithms or API calls
   - Aggregating geospatial street network metadata including spatial flows
 
+In the last section of this review, I try to highlight other packages that are interesting or useful though they're not described in any detail.
 
 
 ## stplanr
-A transport planning utility developed by Robin Lovelace. According to the vignette, **stplanr** facilitates common transport planning tasks including:
+An acronynm for Sustainable Transport PLANning in R, **stplanr** is a transport planning utility developed by Robin Lovelace. The package has several unique value propositions which can be split into core data, functions and analyses.
 
-- downloading and cleaning transport datasets
-- creating geographic ‘desire lines from origin-destination (OD) data
-- route assignment, via the SpatialLinesNetwork class
-- interfacing to routing services such as CycleStreets.net
-- calculation of route segment attributes such as bearing and aggregate flow
-- `travel watershed’ (catchment area) analysis
+### Data
+The package’s core functions are structured around 3 common types of spatial transport data:
 
-### Routing
+- Origin-destination (OD) data, which report the number of people travelling between origin-destination pairs. This type of data is not explicitly spatial (OD datasets are usually represented as data frames) but represents movement over space between points in geographical space. An example is provided in the flow dataset.
+- Line data, one dimensional linear features on the surface of the Earth. These are typically stored as a SpatialLinesDataFrame.
+- Route data are special types of lines which have been allocated to the transport network. Routes typically result from the allocation of a straight ‘desire line’ allocated to the route network with a route_ function. Route network represent many overlapping routes. All are typically stored as SpatialLinesDataFrame.
 
 
-### Transport planning
+### Functions
+
+- Downloading and cleaning transport datasets
+- Creating geographic 'desire lines' OD data
+- Routing: via the SpatialLinesNetwork class or API calls to services such as CycleStreets.net
+- Calculating route segment attributes such as bearing and aggregate flow
+
+
+**stplanr** supports a large number of spatial datasets including Origin-Destination data. The package contains a lot of functionality to wrangle spatial objects, street networks and spatial flows. Spatial flows between origins and destinations are a particular niche of this package since flow analysis is the central element of transport modelling.
+
+Since **stplanr** holds itself as a transport planning package, evaluating routing options for different transport modes is another core feature. The package provides oneliner functions to get routing information from several APIs. In addition, there is a handy batch processing function that can manage many routing API calls.
+
+
+### Analyses: Transport modelling
 **stplanr** is intended as a complementary tool to the more intensive transport modelling packages like **SUMO**. At a basic level, transport modelling starts with the Four Stage Transport Model.
 
 | Four Stage transportation model|
@@ -84,23 +94,33 @@ A transport planning utility developed by Robin Lovelace. According to the vigne
 
 - Stage 1: Trips are estimated with available data including demographics and availability of jobs.
 - Stage 2: Trips are then distributed according to a mathematical decay function - where closer trips are more probable than ones further away.
-- Stage 3: Trips are split by mode type - at a trivial level, deciding what fraction will be done by car vs. other modes like public transport, walking etc. (stage 3).
+- Stage 3: Trips are split by mode type - at a trivial level, deciding what fraction will be done by car vs. other modes like public transport, walking etc.
 - Stage 4: Origin-Destination flows are assigned to the street network.
 
+**stplanr** enables most of the 4 stages though it's still filling out some features especially when it comes to distributing trips. However, with OD data from surveys, the transport model can be analysed to the final stage since the Trip Distribution is replaced by explicit information of flow.
 
-| LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself |
+| LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself (Stage 4 of transport model)|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">|
 | _Image from the stplanr paper in The R Journal_ |
 
 
-### Catchment areas
+### Analyses: Transport mode sharing in spatial flows
+Transport is a complex beast with multi-modal travel being quite common. **stplanr** enables modal analyses by separating flow contributions.
 
-| Catchment areas specified by Euclidean distance (red) vs. traversing the street network (blue)|
+| Small multiples view of spatial flow for different transport modes|
+|:--:|
+| <img src="/images/2019-08-02-R-for-geospatial/stplanr-mode-sharing.png" style="width:70%">|
+| _Image from the stplanr paper in The R Journal_|
+
+
+### Analyses: Catchment areas
+While 'travel watersheds' are not a highlighted feature of the package, they are an important part of transport planning - from accessibility of bus stops to cycleways. **stplanr** can aggregate catchments to complex entities like disconnected cycleways. 
+
+| Catchment areas of cycleway stretches (green lines) specified by Euclidean distance (red) vs. traversing the street network (blue)|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" style="width:70%">|
 | _Image from the stplanr paper in The R Journal_|
-
 
 
 ## dodgr
