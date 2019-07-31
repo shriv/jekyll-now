@@ -34,10 +34,8 @@ Singling Robin Lovelace out is not meant to downplay the contributions of countl
 The R geospatial movement that Robin is part of looks very familiar to the explosion of concerted activity that accompanied **ggplot2** and **dplyr**. Now, these pioneering packages form a core suite of R packages for Data Science known as the [tidyverse](https://www.tidyverse.org/).
 
 
-<figure>
- <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" width=70%>
- <figcaption>Modular packages of the tidyverse. _Image from the tidyverse website_</figcaption>
-</figure>
+ <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">
+ Modular packages of the tidyverse. _Image from the tidyverse website_
 
 
 A similar vision appears to be in place for geospatial analyses with core packages like **stplanr**, **dodgr** and **tidytransit** (described in the next section) slotting together nicely.
@@ -124,7 +122,8 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 ## tidytransit
 Use **tidytransit** to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes.
 
-![Different aggregations of public transport data. _Image from tidytransit main vignette_](../images/2019-08-02-R-for-geospatial/tidy-transit-agg.png)
+![](../images/2019-08-02-R-for-geospatial/tidy-transit-agg.png)
+Different aggregations of public transport data. _Image from tidytransit main vignette_
 
 # Other packages worth considering
 
