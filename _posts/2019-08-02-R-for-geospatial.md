@@ -33,10 +33,10 @@ Singling Robin Lovelace out is not meant to downplay the contributions of countl
 
 The R geospatial movement that Robin is part of looks very familiar to the explosion of concerted activity that accompanied **ggplot2** and **dplyr**. Now, these pioneering packages form a core suite of R packages for Data Science known as the [tidyverse](https://www.tidyverse.org/).
 
-| Modular packages of the tidyverse|
+| Modular packages of the **tidyverse**|
 |:--:|
 | <img src="../images/2019-08-02-R-for-geospatial/tidyverse.png" style="width:70%">|
-| _Image from the tidyverse website_|
+| [_Image from the **tidyverse** website_](https://www.tidyverse.org/)|
 
 
 A similar vision appears to be in place for geospatial analyses with core packages like **stplanr**, **dodgr** and **tidytransit** (described in the next section) slotting together nicely.
@@ -48,9 +48,9 @@ A similar vision appears to be in place for geospatial analyses with core packag
 Or perhaps _Caveat Lector_ (Reader Beware) - a dramatic way of noting that this review is not intended to be a comprehensive one. Following Robin's presentation, the following core packages are described in some detail: **dodgr**, **tidytransit** and **stplanr**. While this set of packages is not comprehensive, they cover considerable ground in terms of geospatial analyses:
 
 - Wrangling geospatial data formats
-  - spatial primitives
+  - Spatial primitives
   - Origin-Destination data
-  - street networks
+  - Street networks
   - GTFS
 - Calculations and aggregations on spatial objects
   - Network analysis algorithms applied to street networks
@@ -64,7 +64,7 @@ In the last section of this review, I try to highlight other packages that are i
 An acronynm for Sustainable Transport PLANning in R, **stplanr** is a transport planning utility developed by Robin Lovelace. The package has several unique value propositions which can be split into core data, functions and analyses.
 
 ## Data
-The package’s core functions are structured around 3 common types of spatial transport data:
+According to the **stplanr** paper the package’s core functions are structured around 3 common types of spatial transport data:
 
 - Origin-destination (OD) data, which report the number of people travelling between origin-destination pairs. This type of data is not explicitly spatial (OD datasets are usually represented as data frames) but represents movement over space between points in geographical space. An example is provided in the flow dataset.
 - Line data, one dimensional linear features on the surface of the Earth. These are typically stored as a SpatialLinesDataFrame.
@@ -78,10 +78,9 @@ The package’s core functions are structured around 3 common types of spatial t
 - Routing: via the SpatialLinesNetwork class or API calls to services such as CycleStreets.net
 - Calculating route segment attributes such as bearing and aggregate flow
 
+Since **stplanr** supports many types of spatial data, it contains a lot of functionality to wrangle spatial objects, street networks and spatial flows. Spatial flows between origins and destinations are a particular niche of this package since flow analysis is the central element of transport modelling.
 
-**stplanr** supports a large number of spatial datasets including Origin-Destination data. The package contains a lot of functionality to wrangle spatial objects, street networks and spatial flows. Spatial flows between origins and destinations are a particular niche of this package since flow analysis is the central element of transport modelling.
-
-Since **stplanr** holds itself as a transport planning package, evaluating routing options for different transport modes is another core feature. The package provides oneliner functions to get routing information from several APIs. In addition, there is a handy batch processing function that can manage many routing API calls.
+Evaluating routing options for different transport modes is another core feature. The package provides oneliner functions to get routing information from several APIs. In addition, there is a handy batch processing function that can manage many routing API calls.
 
 
 ## Analyses: Transport modelling
@@ -102,7 +101,7 @@ Since **stplanr** holds itself as a transport planning package, evaluating routi
 | LHS: Origin-Destination flows overlaid on street network. RHS: aggregation of flows onto the street network itself (Stage 4 of transport model)|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/desire-lines-to-network-flow.png" style="width:70%">|
-| _Image from the stplanr paper in The R Journal_ |
+| [_Image from the **stplanr** paper in The R Journal_](https://cran.rstudio.com/web/packages/stplanr/vignettes/stplanr-paper.html) |
 
 
 ## Analyses: Transport mode sharing in spatial flows
@@ -111,7 +110,7 @@ Transport is a complex beast with multi-modal travel being quite common. **stpla
 | Small multiples view of spatial flow for different transport modes|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/stplanr-mode-sharing.png" style="width:70%">|
-| _Image from the stplanr paper in The R Journal_|
+| [_Image from the **stplanr** paper in The R Journal_](https://cran.rstudio.com/web/packages/stplanr/vignettes/stplanr-paper.html)|
 
 
 ## Analyses: Catchment areas
@@ -120,7 +119,7 @@ While 'travel watersheds' are not a highlighted feature of the package, they are
 | Catchment areas of cycleway stretches (green lines) specified by Euclidean distance (red) vs. traversing the street network (blue)|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/catchment-area-cycle-lanes.png" style="width:70%">|
-| _Image from the stplanr paper in The R Journal_|
+| [_Image from the **stplanr** paper in The R Journal_](https://cran.rstudio.com/web/packages/stplanr/vignettes/stplanr-paper.html)|
 
 
 # dodgr
@@ -140,17 +139,32 @@ According to the package site, **dodgr** has a fourfold unique proposition:
 | A dual directed graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
-| _Image from the dodgr CRAN vignette page._|
+| [_Image from the **dodgr** CRAN vignette page._](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html)|
 
 # tidytransit
-Use **tidytransit** to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes.
+**tidytransit** is used to map transit stops and routes, calculate transit frequencies, and validate transit feeds. **tidytransit** reads the General Transit Feed Specification (GTFS) into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes. The underlying dataframes and spatial objects allow GTFS to be part of a bigger analyses - for example, possible integration with stplanr for catchment analysis of bus routes.
 
 | Different aggregations of public transport data|
 |:--:|
 | <img src="/images/2019-08-02-R-for-geospatial/tidy-transit-agg.png" style="width:70%">|
-| _Image from tidytransit main vignette_|
+| [_Image from **tidytransit** frequency vignette_](http://tidytransit.r-transit.org/articles/frequency.html)|
+
 
 # Other packages worth considering
 
+## gtfs-router
+**stplanr** and **dodgr** provide graph and API routing algorithms to traverse street networks. **gtfs-router** can calculate routes given a GTFS feed. The package also has route isochrone functionality that can complement any catchment area analyses.
+
+
+| Isoschrone tracing stops along route|
+|:--:|
+| <img src="/images/2019-08-02-R-for-geospatial/gtfs-router-isochrone.png" style="width:70%">|
+| [_Image from **gtfs-router** main vignette_](https://atfutures.github.io/gtfs-router/)|
+
 ## moveability
 An experimental analysis suite that does some clever number crunching of movability. An R version of pandana without needing POIs for walkability analysis. Pictures below show walkability calculations of Munster, Germany.
+
+| Three different aggregations of moveability|
+|:--:|
+| <img src="/images/2019-08-02-R-for-geospatial/moveability.png" style="width:100%">|
+| [_Image from **moveability** Readme_](https://github.com/moveability/moveability)|
