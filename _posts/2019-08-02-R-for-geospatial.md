@@ -122,6 +122,12 @@ An acronym for _Distances On Directed Graphs in R_. [**dodgr**](https://cran.r-p
 > The dodgr package has been intentionally developed to be adaptable to any type of network, with a particular focus on flow aggregation through street networks.
 
 
+| A dual directed graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network|
+|:--:|
+| <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
+| [_Image from the **dodgr** CRAN vignette page._](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html)|
+
+
 [According to the package site](https://github.com/ATFutures/dodgr), **dodgr** has a fourfold unique proposition:
 
 - Accurate calculation of distances on street networks
@@ -129,15 +135,28 @@ An acronym for _Distances On Directed Graphs in R_. [**dodgr**](https://cran.r-p
 - Routines to aggregate flows throughout a network
 - Highly realistic and fully-customisable profiles for routing through street networks with various modes of transport, and using either distance- or time-based routing
 
+**dodgr** is a highly customisable package for aggregating metrics along a street network - much more so than **stplanr**. I suspect that large calculations (e.g. an entire city's street network) of travel times by different modes (car, bus, cycle etc.) might be better done with this package. One benchmark given for **dodgr** is [4s for 1 Million pairwise flow aggregations](https://transportfindings.org/article/6945-dodgr-an-r-package-for-network-flow-aggregation). However, since there is no explicit comparison to another package, we'll have to trust the author's claim.
 
-| A dual directed graph. Grey lines could indicated bicycle flows and black lines can be car flows between points on the street network|
+Flows from street segmnents can be easily aggregated and merged and then used to visualise and analyse bottlenecks in road networks. For example, Nur-Sultan road network in the figure below. From my own interests of trying to understand bottlenecks in non-grid cities (like Wellington, New Zealand), this feature holds the greatest appeal and potential for interesting analyses.
+
+| Aggregated flows of 1 Million journeys in Astana (Nur-Sultan), Kazakhstan|
 |:--:|
-| <img src="/images/2019-08-02-R-for-geospatial/weighted-directed-dual-graph.png" style="width:70%">|
-| [_Image from the **dodgr** CRAN vignette page._](https://cran.r-project.org/web/packages/dodgr/vignettes/dodgr.html)|
-
+| <img src="/images/2019-08-02-R-for-geospatial/dodgr-flow-agg.jpeg" style="width:70%">|
+| _Image from a [recent publication by the package author](https://transportfindings.org/article/6945-dodgr-an-r-package-for-network-flow-aggregation)_|
 
 # tidytransit
-**tidytransit** is used to map transit stops and routes, calculate transit frequencies, and validate transit feeds by reading the General Transit Feed Specification (GTFS) into **tidyverse** and **sf** dataframes. The package can also do some insightful spatial aggregations along routes. The underlying dataframes and spatial objects allow GTFS to be part of bigger analyses. For example, integration with **stplanr** for catchment analysis of bus routes.
+**tidytransit** can map transit stops and routes, calculate transit frequencies, and validate transit feeds by reading the General Transit Feed Specification (GTFS) into **tidyverse** and **sf** dataframes.
+
+GTFS data are quite large and verbose. To ease understanding, **tidytransit** can do some nifty visualisations - especially from route timetables.
+
+
+| Frequency of services departing from Time Square|
+|:--:|
+| <img src="/images/2019-08-02-R-for-geospatial/tidytransit-timetable-viz.png" style="width:70%">|
+| [_Image from **tidytransit** timetable vignette_](http://tidytransit.r-transit.org/articles/timetable.html)|
+
+
+The package can also do some insightful spatial aggregations along routes. The underlying dataframes and spatial objects would allow GTFS to be part of bigger analyses in concert with other geospatial packages. For example, integration with **stplanr** for catchment analysis of bus routes.
 
 | Different aggregations of public transport data|
 |:--:|
