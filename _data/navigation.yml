@@ -6,10 +6,12 @@
     #   url: https://mmistakes.github.io/minimal-mistakes/about/
     # - title: "Sample Posts"
     #   url: /year-archive/
-    # - title: "Sample Collections"
-    #   url: /collection-archive/
+    - title: "Essays"
+       url: /essays/
     # - title: "Sitemap"
     #   url: /sitemap/
+
+# Series of posts
   spatial_review_series:
     - title: "Geospatial Tools Review Series"
       children:
