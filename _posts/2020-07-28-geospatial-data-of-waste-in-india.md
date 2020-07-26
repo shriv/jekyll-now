@@ -7,6 +7,7 @@ sidebar:
   nav: spatial_review_series"
 ---
 
+# DRAFT 
 # Summary
 India's problems with waste are reviewed by academics Assa Doron and Robin Jeffrey in their recent work, Waste of a Nation [1]. They cite poor availability of 'on the ground' data as an important weakness of local urban government in India. In this essay, I highlight two examples of citizen and volunteer-led data projects in two separate Indian meagacities (Chennai and Hyderabad) that have engaged with marginalised commmunities to generate open data about their waste infrastructure issues. 
 
@@ -38,9 +39,9 @@ Luckily for India, this challenge of creating geospatial data and understanding 
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
 - Hyderabad Urban Lab [3]
 </p>
+<br>
 
-
-## Data generation through volunteer mapping and surveys
+# Data generation through volunteer mapping and surveys
 
 The fishing village, Urur Olcott kuppam, depicted in the figure below, is situated next to an affluent fringe suburb of Chennai. Despite this proximitiy, the fishing village was not  connected to water mains and the villagers had to make do with significantly fewer garbage truck visits.  The unsanitary conditions in the village prompted further worry for the villagers about unlawful land grabbing by property developers wanting to extend the affluent fringes further. 
 
@@ -49,7 +50,7 @@ The fishing village, Urur Olcott kuppam, depicted in the figure below, is situat
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
 - Urban Design Collective [2]
 </p>
-
+<br>
 
 | Urur Olcott kuppam's lack of water and sanitation infrastructure._Image from [2]_ |
 |:--:|
@@ -66,16 +67,16 @@ After the initial contact from the panchayat leader, volunteers mapped out the k
 | <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/urur-olcott-mapping.png">|
 
 
-## Data to action
+# Data to action
 
 The Urur Olcott kuppam project systematically collected data and built development options around data before building proposals that could be presented before sources of funding and the relevant government agencies. 
 
 | Timeline of a volunteer-led project. Project plan to proposal. _Image from [2]_|
 |:--:|
-| <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/data-to-action.png" style="width:70%">|
+| <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/data-to-action.png">|
 
 
-## Realistic policies and enforcement
+# Realistic policies and enforcement
 
 Swacch Bharat Abhiyan (Clean India Mission) is a nation-wide program that aims to clean up India. One of its clear aims is to stop open defecation. An estimated 24% of households in small urban areas (<100k people) and 6% of households in large urban areas (>100k people) engage in open defaction [4]. This practice that is not only rooted in rural habits ported to urban locales through recent migations but also severe limitations in accessible and culturally acceptable options of toilets. 
 
@@ -91,6 +92,7 @@ Doron and Jeffrey illustrate that diverting people's practice from open defecati
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
 - Hyderabad Urban Lab [3]
 </p>
+<br>
 
 Even a cursory glance of the public toilets and the slum map shows that there is very poor overlap of public toilets and slums. Maps like these from HUL highlight not only the inaccessibility of necessary infrastructure but also indicate the deep folly of penalties and enforcements for actions that are intrinsically impossible due to the access issues. 
 
@@ -117,17 +119,3 @@ Even a cursory glance of the public toilets and the slum map shows that there is
 
 6. [A Civic Mapping Project in an Indian Megacity](https://notanatlas.org/maps/a-civic-mapping-project-in-an-indian-megacity/)
 
-
-
-## Purpose
-
-- Many of our mapping exercis-es are conducted in this audit modality with which we hope to be able to persuade the government to plan public amenities and im-plement policies with greater care.
-- The community members quickly understood the usefulness of the map and also that they had taken ownership of it. The idea that community mapping might be an empowering process was affirmed by maps drawn to contest the government's view of Bholakpur.Taking ownership of these maps also enables the community to make claims on their own knowledge of the place.
-- The map generated from this database is useful for citizens but it also helps us to understand areas in the city that are deprived of public transportation.
-- ..we are trying to push the government towards improving their data practices. This is a long-term project because we believe that apart from civic mapping projects, public data itself should be publically accessible in general
-
-## Collecting data
-
-- Members of the community responded eagerly and played a ma-jor role in facilitating the process. They helped us to collect GPS tracks and to identify the key objects represented on the map.
-- As an experiment, we put out a public call for people to contribute shared auto rickshaw routes that they knew of. Within 8 hours, we had details on 85 routes in the city.
-- The data was collected through a public audit conducted by the HUL team and some volunteers.
