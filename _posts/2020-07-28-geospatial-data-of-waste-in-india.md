@@ -15,13 +15,13 @@ India's problems with waste are reviewed by academics Assa Doron and Robin Jeffr
 [![](https://img.youtube.com/vi/tf1VA5jqmRo/0.jpg)](https://www.youtube.com/watch?v=tf1VA5jqmRo)
 
 
-The introduction to Assa Doron and Robin Jeffrey's opus, Waste of a Nation [1], begins with the provocatory question posed by Anamik Nagrik (A.N.): Why is India so filthy? A.N. asserts that it is the poor civic-mindedness of the Indian people. While true to an extent, Doron and Jeffrey delve into the much deeper quagmire of interwoven complexities that belie the vision of filth in India. The authors prise apart layers of human and systemic issues to show that there is much more than the reductive view that Indians are lazy and not civic minded. The enmeshed complexities range from weak local governments, poor political goals for keeping up with the demands of rapid urbanisation, caste politics to incentive structures for  waste management initiatives. 
+The introduction to Assa Doron and Robin Jeffrey's opus, Waste of a Nation [1], begins with the provocatory question posed by Anamik Nagrik: Why is India so filthy? He asserts that it is the poor civic-mindedness of the Indian people. While true to an extent, Doron and Jeffrey delve into the much deeper quagmire of interwoven complexities that belie the vision of filth in India. The authors prise apart layers of human and systemic issues to show that there is much more than the reductive view that Indians are lazy and not civic minded. The enmeshed complexities range from weak local governments, poor political goals for keeping up with the demands of rapid urbanisation, caste politics to incentive structures for  waste management initiatives. 
 
 # Weak local governments with poor geospatial data
 
 A first order analysis of local government functionality, without involving their ability or motivation, is to provide good service to the people. But good service is predicated on knowing what the issues are, what fixes can be possible and how the fixes are working. 'Fix' being a generic term for both reactive work (e.g. a blocked drain) and ongoing work (e.g. water for communities without connected water mains). 
 
-Managing an area to an appropriate level of liveability is a delicate dance between services provided by the municipality and the citizens. A.N's vents highlight the disinterest of the citizens to protect their public spaces by doing their bit to keep them clean and useable by anyone. His suggestions allow for the combined participation of municipality and citizen to make the changes they want to see in their surroundings. 
+Managing an area to an appropriate level of liveability is a delicate dance between services provided by the municipality and the citizens. In his TED talk, Anamik Nagrik highlights the disinterest of the citizens to protect their public spaces by doing their bit to keep them clean and useable by anyone. His suggestions allow for the combined participation of municipality and citizen to make the changes they want to see in their surroundings. 
 
 While citizens must do their part, the service provision requires an active local government that has a good purview of the problems and the available / possible / implemented fixes. Thus, data about the issues at hand are a critical resource for the service provider. However, Doron and Jeffrey highlight poor data as a key weakness of local governments. They go through two examples in their book:
 
@@ -67,18 +67,9 @@ After the initial contact from the panchayat leader, volunteers mapped out the k
 | <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/urur-olcott-mapping.png">|
 
 
-# Data to action
+# Using data for realistic policies
 
-The Urur Olcott kuppam project systematically collected data and built development options around data before building proposals that could be presented before sources of funding and the relevant government agencies. 
-
-| Timeline of a volunteer-led project. Project plan to proposal. _Image from [2]_|
-|:--:|
-| <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/data-to-action.png">|
-
-
-# Realistic policies and enforcement
-
-Swacch Bharat Abhiyan (Clean India Mission) is a nation-wide program that aims to clean up India. One of its clear aims is to stop open defecation. An estimated 24% of households in small urban areas (<100k people) and 6% of households in large urban areas (>100k people) engage in open defaction [4]. This practice that is not only rooted in rural habits ported to urban locales through recent migations but also severe limitations in accessible and culturally acceptable options of toilets. 
+Swacch Bharat Abhiyan (Clean India Mission) is a nation-wide program that aims to clean up India. One of its clear aims is to stop open defecation. An estimated 24% of households in small urban areas (<100k people) and 6% of households in large urban areas (>100k people) engage in open defecation [1]. This practice that is not only due to ingrained rural habits ported to urban locales by recent migrants but also severe limitations in accessible and culturally acceptable options of toilets. 
 
 Doron and Jeffrey illustrate that diverting people's practice from open defecation to public toilets is more than just building a brick shack over a hole in the ground. The latrines have to maintained carefully to convert excrement to benign fertilizer in a way that preserves their dignity and is congruent with their cultural practice. But perhaps, most important of all, they need to be available for use. There is little point in penalising or shaming people for open defecation when there is no other alternative. 
 
@@ -107,7 +98,7 @@ Even a cursory glance of the public toilets and the slum map shows that there is
 
 ## References
 
-1. Doron & Jeffrey, Waste of a Nation (2018) 
+1. [Doron & Jeffrey, Waste of a Nation (2018)](https://www.amazon.com/Waste-Nation-Garbage-Growth-India-ebook/dp/B07B874C22/)
 
 2. [Urban Design Collective](http://urbandesigncollective.org/)
 
