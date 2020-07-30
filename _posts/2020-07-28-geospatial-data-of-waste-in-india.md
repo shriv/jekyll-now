@@ -7,7 +7,6 @@ sidebar:
   nav: spatial_review_series"
 ---
 
-# DRAFT 
 # Summary
 India's problems with waste are reviewed by academics Assa Doron and Robin Jeffrey in their recent work, Waste of a Nation [1]. They cite poor availability of 'on the ground' data as an important weakness of local urban government in India. In this essay, I highlight two examples of citizen and volunteer-led data projects in two separate Indian meagacities (Chennai and Hyderabad) that have engaged with marginalised commmunities to generate open data about their waste infrastructure issues. 
 
@@ -37,7 +36,7 @@ Luckily for India, this challenge of creating geospatial data and understanding 
 > Public audits and fact-finding missions have long been a useful methodology employed by activist groups and other civil society organisations in India for holding the government accountable for the rights of citizens. We believe that the addition of maps as a tool will be invaluable to this methodology.
 
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
-- Hyderabad Urban Lab [3]
+- Hyderabad Urban Lab [6]
 </p>
 <br>
 
@@ -48,11 +47,11 @@ The fishing village, Urur Olcott kuppam, depicted in the figure below, is situat
 > It is in this spirit of the community of taking initiative to bring about change that led the secretary of the village panchayat Saravanan to approach the Madras Office for Architects and Designers (MOAD) and Urban Design Collective (UDc) through Coastal Resource Centre in the pursuit of a liveable Urur Olcott Kuppam.
 
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
-- Urban Design Collective [2]
+- Urban Design Collective [4]
 </p>
 <br>
 
-| Urur Olcott kuppam's lack of water and sanitation infrastructure._Image from [2]_ |
+| Urur Olcott kuppam's lack of water and sanitation infrastructure._Image from [4]_ |
 |:--:|
 | <img src="/images/2020-07-28-geospatial-data-of-waste-in-india/urur-olcott-picture.png" style="width:70%">|
 
@@ -62,7 +61,7 @@ After the initial contact from the panchayat leader, volunteers mapped out the k
 - Garbage trucks only visited the village twice a week while they visited the affluent area twice a day.
 - Without any sanitation infrastructure, the raw sewage was contaminating the very water the villagers derived their living from.
 
-|Digitised map of Urur Olcott kuppam's built environment layered with opportunities for redesigned public spaces. _Image from [2]_ |
+|Digitised map of Urur Olcott kuppam's built environment layered with opportunities for redesigned public spaces. _Image from [4]_ |
 |:--:|
 | <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/urur-olcott-mapping.png">|
 
@@ -74,29 +73,29 @@ Swacch Bharat Abhiyan (Clean India Mission) is a nation-wide program that aims t
 Doron and Jeffrey illustrate that diverting people's practice from open defecation to public toilets is more than just building a brick shack over a hole in the ground. The latrines have to maintained carefully to convert excrement to benign fertilizer in a way that preserves their dignity and is congruent with their cultural practice. But perhaps, most important of all, they need to be available for use. There is little point in penalising or shaming people for open defecation when there is no other alternative. 
 
 
-| Mapping public toilets in Hyderabad. _Image from [3]_|
+| Mapping public toilets in Hyderabad. _Image from [5]_|
 |:--:|
 | <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/public-toilets-hul.png" style="width:70%">|
 
 
 > While the government was targeting the people's attitude towards defecation in public, we published our map in order to put these attitudes in the context of the available infrastructure. Hyderabad, a city of more than 6 million peo-ple, has only 186 public toilets. Our map highlights the unjust and sparse distribution of toilets in the city.
 <p style='font-size: 90%; text-align: right; font-style:italic;'>
-- Hyderabad Urban Lab [3]
+- Hyderabad Urban Lab [6]
 </p>
 <br>
 
 Even a cursory glance of the public toilets and the slum map shows that there is very poor overlap of public toilets and slums. Maps like these from HUL highlight not only the inaccessibility of necessary infrastructure but also indicate the deep folly of penalties and enforcements for actions that are intrinsically impossible due to the access issues. 
 
 
-| Mapping slums in Hyderabad. _Image from [3]_|
+| Mapping slums in Hyderabad. _Image from [5]_|
 |:--:|
 | <img src="../images/2020-07-28-geospatial-data-of-waste-in-india/slumscapes.png" style="width:70%">|
 
 
-## Conclusions
+# Conclusions
+The examples from Urban Design Collective and Hyderabad Urban Lab highlight how urban-focused NGOs can muster people and skills to fill important gaps in India's data infrastructure. I would personally be very keen to find out how the collected datasets and knowledge is being used to spawn new projects and / or made available for others to continue the virtuous cycle. 
 
-
-## References
+# References
 
 1. [Doron & Jeffrey, Waste of a Nation (2018)](https://www.amazon.com/Waste-Nation-Garbage-Growth-India-ebook/dp/B07B874C22/)
 
@@ -106,7 +105,7 @@ Even a cursory glance of the public toilets and the slum map shows that there is
 
 4. [City Observer, Volume 4 Issue 1](https://issuu.com/urbandesigncollective/docs/city_observer_volume_4_issue_1) (p134-149)
 
-5. [Counter Geographies](https://www.transcript-verlag.de/shopMedia/openaccess/pdf/oa9783839445198.pdf) (p120-124)
+5. [A Civic Mapping Project in an Indian Megacity](https://notanatlas.org/maps/a-civic-mapping-project-in-an-indian-megacity/)
 
-6. [A Civic Mapping Project in an Indian Megacity](https://notanatlas.org/maps/a-civic-mapping-project-in-an-indian-megacity/)
+6. [Counter Geographies](https://www.transcript-verlag.de/shopMedia/openaccess/pdf/oa9783839445198.pdf) (p120-124)
 
