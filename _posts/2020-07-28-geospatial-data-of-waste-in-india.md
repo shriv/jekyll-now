@@ -29,7 +29,7 @@ While citizens must do their part, the service provision requires an active loca
 
 # A virtuous cycle of NGOs, citizens and government
 
-The lack of useable geospatial data is a disability for functioning public services. As illustrated in the two cases of Chennai and Hyderabd, it can manifest in blatant ignorance of issues or worse, enforcing policies that are simply not realistic for many (particularly the marginalised). 
+The lack of useable geospatial data is a disability for functioning public services. As illustrated in the two cases of Chennai and Hyderabad, it can manifest in blatant ignorance of issues or worse, enforcing policies that are simply not realistic for many (particularly the marginalised). 
 
 Luckily for India, this challenge of creating geospatial data and understanding of communities has been taken on by activists and NGOs. As part of this research, I have found two notable entities draw together stories of people and places from around the world: Urban Design Collective (through their bi-annual publication City Observer) and the counter geographies publication, Not an Atlas. The maps in the sections below showcase some incredible work done by individuals and entities represented in these open publications. 
 
@@ -70,7 +70,7 @@ After the initial contact from the panchayat leader, volunteers mapped out the k
 
 Swacch Bharat Abhiyan (Clean India Mission) is a nation-wide program that aims to clean up India. One of its clear aims is to stop open defecation. An estimated 24% of households in small urban areas (<100k people) and 6% of households in large urban areas (>100k people) engage in open defecation [1]. This practice that is not only due to ingrained rural habits ported to urban locales by recent migrants but also severe limitations in accessible and culturally acceptable options of toilets. 
 
-Doron and Jeffrey illustrate that diverting people's practice from open defecation to public toilets is more than just building a brick shack over a hole in the ground. The latrines have to maintained carefully to convert excrement to benign fertilizer in a way that preserves their dignity and is congruent with their cultural practice. But perhaps, most important of all, they need to be available for use. There is little point in penalising or shaming people for open defecation when there is no other alternative. 
+Doron and Jeffrey illustrate that diverting people's practice from open defecation to public toilets is more than just building a brick shack over a hole in the ground. The latrines have to be maintained carefully to convert excrement to benign fertilizer in a way that preserves their dignity and is congruent with their cultural practice. But perhaps, most important of all, they need to be available for use. There is little point in penalising or shaming people for open defecation when there is no other alternative. 
 
 
 | Mapping public toilets in Hyderabad. _Image from [5]_|
