@@ -293,3 +293,20 @@ defaults:
       comments: # true
       share: true
       related: true
+#_mini-investigations
+  - scope:
+      path: ""
+      type: mini-investigations
+    values:
+      layout: article
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      
+collections:
+  mini-investigations:
+    output: true
+    permalink: /:categories/:title/
+
