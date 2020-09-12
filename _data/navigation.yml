@@ -1,7 +1,7 @@
-  # main links
+# main links
   main:
     - title: "Mini Investigations"
-    url: /mini-investigations/
+      url: /mini-investigations/
     - title: "Blog"
       url: /blog/
     - title: "About"
