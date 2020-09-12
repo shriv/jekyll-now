@@ -1,15 +1,11 @@
   # main links
   main:
-    #- title: "Quick-Start Guide"
-    #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-    # - title: "About"
-    #   url: https://mmistakes.github.io/minimal-mistakes/about/
-    # - title: "Sample Posts"
-    #   url: /year-archive/
-    # - title: "Essays"
-    #    url: /essays/
-    # - title: "Sitemap"
-    #   url: /sitemap/
+    - title: "Mini Investigations"
+    url: /mini-investigations/
+    - title: "Blog"
+      url: /blog/
+    - title: "About"
+      url: /about/
 
 # Series of posts
   spatial_review_series:
