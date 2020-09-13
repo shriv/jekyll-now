@@ -304,9 +304,21 @@ defaults:
       comments: true
       share: true
       related: true
-      
+#_essays
+  - scope:
+      path: ""
+      type: essays
+    values:
+      layout: article
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true      
 collections:
   mini-investigations:
     output: true
     permalink: /:categories/:title/
-
+  essays:
+    output: true
+    permalink: /:categories/:title/
