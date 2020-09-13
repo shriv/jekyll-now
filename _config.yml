@@ -298,10 +298,10 @@ defaults:
       path: ""
       type: mini-investigations
     values:
-      layout: article
+      layout: single
       author_profile: true
       read_time: true
-      comments: true
+      comments: # true
       share: true
       related: true
 #_essays
@@ -309,12 +309,12 @@ defaults:
       path: ""
       type: essays
     values:
-      layout: article
+      layout: single
       author_profile: true
       read_time: true
-      comments: true
+      comments: # true
       share: true
-      related: true      
+      related: true    
 collections:
   mini-investigations:
     output: true

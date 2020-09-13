@@ -1,5 +1,4 @@
 ---
-layout: post
 mathjax: true
 toc: true
 toc_sticky: true
