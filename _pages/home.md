@@ -13,7 +13,7 @@ excerpt: "Data Science Portfolio"
 description: "Personal Summary to come"
 og_image: "/images/puppy-gaussian-logo.png"
 feature_collections:
-  - image_path: /images/mini-investigations.jpg
+  - image_path: /images/mini-investigation.jpg
     alt: "Image of a few pens"
     title: "Mini Investigations"
     excerpt: 'to come'
