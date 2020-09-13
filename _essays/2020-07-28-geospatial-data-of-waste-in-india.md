@@ -1,10 +1,9 @@
 ---
+layout: post
 mathjax: true
 toc: true
 toc_sticky: true
 toc_label: "Table of Contents"
-sidebar:
-  nav: spatial_review_series"
 ---
 
 # Summary
