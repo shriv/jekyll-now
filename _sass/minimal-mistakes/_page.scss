@@ -39,7 +39,9 @@
     width: 100%;
     clear: both;
 
-    .page__content,
+    .page__content {
+      font-size: $type-size-5;
+      }
     .page__meta,
     .page__share {
       position: relative;
